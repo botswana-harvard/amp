@@ -1,24 +1,23 @@
 from django import forms
 from django.conf import settings
-from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
+# from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 
 from edc_constants.constants import YES, NO
 from lab_requisition.forms import RequisitionFormMixin
 
-from tshilo_dikotla.choices import STUDY_SITES
 # from tshilo_dikotla.td_infant.models import InfantStoolCollection
 
-from ..models import InfantRequisition
+from ..models import SubjectRequisition
 
 
 class InfantRequisitionForm(RequisitionFormMixin):
 
-    study_site = forms.ChoiceField(
-        label='Study site',
-        choices=STUDY_SITES,
-        initial=settings.DEFAULT_STUDY_SITE,
-        help_text="",
-        widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
+#     study_site = forms.ChoiceField(
+#         label='Study site',
+#         choices=STUDY_SITES,
+#         initial=settings.DEFAULT_STUDY_SITE,
+#         help_text="",
+#         widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
 
     def __init__(self, *args, **kwargs):
         super(InfantRequisitionForm, self).__init__(*args, **kwargs)
@@ -76,5 +75,5 @@ class InfantRequisitionForm(RequisitionFormMixin):
                 ' Please Correct.')
 
     class Meta:
-        model = InfantRequisition
+        model = SubjectRequisition
         fields = '__all__'

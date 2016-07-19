@@ -21,4 +21,4 @@ class AliquotProfile(BaseProfile, BaseUuidModel):
 
     class Meta:
         app_label = 'amp_lab'
-        db_table = 'td_lab_profile'
+        db_table = 'amp_lab_profile'

@@ -12,3 +12,4 @@ fake-factory
 -e git+https://github.com/botswana-harvard/edc-locator@develop#egg=edc_locator
 -e git+https://github.com/botswana-harvard/edc-identifier@develop#egg=edc_identifier
 -e git+https://github.com/botswana-harvard/edc-constants@develop#egg=edc_constants
+-e git+https://github.com/botswana-harvard/edc-lab@develop#egg=edc_lab
