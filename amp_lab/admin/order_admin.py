@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from edc_base.modeladmin.admin import BaseTabularInline
 
-from tshilo_dikotla.base_model_admin import MembershipBaseModelAdmin
+from amp.base_model_admin import MembershipBaseModelAdmin
 
 from ..models import Order, OrderItem
 

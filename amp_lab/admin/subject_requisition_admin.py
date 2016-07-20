@@ -4,21 +4,17 @@ from django.contrib import admin
 
 from lab_requisition.admin import RequisitionAdminMixin
 
-from tshilo_dikotla.base_model_admin import BaseModelAdmin
-from tshilo_dikotla.constants import INFANT
-from td_infant.models import InfantVisit
-
-from ..forms import InfantRequisitionForm
-from ..models import InfantRequisition, Panel
+from amp.base_model_admin import BaseModelAdmin
+from ..forms import SubjectRequisitionForm
+from ..models import SubjectRequisition, Panel
 
 
-class InfantRequisitionAdmin(RequisitionAdminMixin, BaseModelAdmin):
+class SubjectRequisitionAdmin(RequisitionAdminMixin, BaseModelAdmin):
 
-    dashboard_type = INFANT
-    form = InfantRequisitionForm
+    form = SubjectRequisitionForm
     label_template_name = 'requisition_label'
-    visit_attr = 'infant_visit'
-    visit_model = InfantVisit
+    visit_attr = 'subject_visit'
+    #visit_model = SubjectVisit
     panel_model = Panel
 
     def get_fieldsets(self, request, obj=None):
@@ -38,4 +34,4 @@ class InfantRequisitionAdmin(RequisitionAdminMixin, BaseModelAdmin):
             pass
         return [(None, {'fields': fields})]
 
-admin.site.register(InfantRequisition, InfantRequisitionAdmin)
+admin.site.register(SubjectRequisition, SubjectRequisitionAdmin)

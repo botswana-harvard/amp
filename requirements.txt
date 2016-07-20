@@ -13,3 +13,6 @@ fake-factory
 -e git+https://github.com/botswana-harvard/edc-identifier@develop#egg=edc_identifier
 -e git+https://github.com/botswana-harvard/edc-constants@develop#egg=edc_constants
 -e git+https://github.com/botswana-harvard/edc-lab@develop#egg=edc_lab
+-e git+https://github.com/botswana-harvard/lab-requisition@e90bfd28465c10565edd3d37d15a91f39fe51f2e#egg=lab_requisition
+-e git+https://github.com/botswana-harvard/lis@780cb9b56aaa87d71bacd90037185f680bb4e734#egg=lis
+-e git+https://github.com/botswana-harvard/edc-registration@7a289d2c06d35e7af3e5ac70ebb8d8ec8f0c9bb0#egg=edc_registration

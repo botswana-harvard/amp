@@ -3,7 +3,7 @@ from django.contrib import admin
 from edc_base.modeladmin.admin import BaseTabularInline
 from edc_lab.lab_profile.admin import BaseProfileAdmin, BaseProfileItemAdmin
 
-from tshilo_dikotla.base_model_admin import MembershipBaseModelAdmin
+from amp.base_model_admin import MembershipBaseModelAdmin
 
 from ..models import AliquotProfileItem, AliquotProfile
 

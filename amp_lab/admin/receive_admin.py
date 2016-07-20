@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from tshilo_dikotla.base_model_admin import MembershipBaseModelAdmin
+from amp.base_model_admin import MembershipBaseModelAdmin
 
 from ..models import Receive
 

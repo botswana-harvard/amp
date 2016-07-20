@@ -10,7 +10,7 @@ from lab_requisition.forms import RequisitionFormMixin
 from ..models import SubjectRequisition
 
 
-class InfantRequisitionForm(RequisitionFormMixin):
+class SubjectRequisitionForm(RequisitionFormMixin):
 
 #     study_site = forms.ChoiceField(
 #         label='Study site',
@@ -20,11 +20,11 @@ class InfantRequisitionForm(RequisitionFormMixin):
 #         widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
 
     def __init__(self, *args, **kwargs):
-        super(InfantRequisitionForm, self).__init__(*args, **kwargs)
+        super(SubjectRequisitionForm, self).__init__(*args, **kwargs)
         self.fields['item_type'].initial = 'tube'
 
     def clean(self):
-        cleaned_data = super(InfantRequisitionForm, self).clean()
+        cleaned_data = super(SubjectRequisitionForm, self).clean()
 #         self.validate_requisition_and_drawn_datetime()
 #         self.validate_sample_swabs()
 #         self.validate_dna_pcr_and_cytokines()

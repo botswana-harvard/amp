@@ -7,6 +7,4 @@ from .aliquot_type_admin import AliquotTypeAdmin
 # from .order_admin import OrderAdmin
 from .packing_list_admin import PackingListAdmin
 from .panel_admin import PanelAdmin
-from .maternal_requisition_admin import MaternalRequisitionAdmin
-from .infant_requisition_admin import InfantRequisitionAdmin
-
+from .subject_requisition_admin import SubjectRequisitionAdmin
