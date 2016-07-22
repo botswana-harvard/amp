@@ -3,8 +3,6 @@ from django.db import models
 from edc_base.model.models import BaseUuidModel
 from edc_lab.lab_profile.models import BaseProcessing
 
-from ..managers import AliquotProcessingManager
-
 from .aliquot import Aliquot
 from .aliquot_profile import AliquotProfile
 
@@ -20,8 +18,6 @@ class AliquotProcessing(BaseProcessing, BaseUuidModel):
         AliquotProfile,
         verbose_name='Profile',
         help_text='Create aliquots according to this profile.')
-
-    objects = AliquotProcessingManager()
 
     class Meta:
         app_label = 'amp_lab'

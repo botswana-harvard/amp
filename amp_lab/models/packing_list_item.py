@@ -10,7 +10,6 @@ from .aliquot import Aliquot
 from .subject_requisition import SubjectRequisition
 from .panel import Panel
 
-from ..managers import PackingListItemManager
 from .packing_list import PackingList
 
 
@@ -22,8 +21,6 @@ class PackingListItem(BasePackingListItem, BaseUuidModel):
         Panel,
         null=True,
         blank=True)
-
-    objects = PackingListItemManager()
 
 #     history = SyncHistoricalRecords()
 

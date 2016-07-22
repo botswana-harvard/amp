@@ -4,12 +4,8 @@ from django.db import models
 from edc_base.model.models import BaseUuidModel
 from edc_lab.lab_packing.models import PackingListMixin
 
-from ..managers import PackingListManager
-
 
 class PackingList(PackingListMixin, BaseUuidModel):
-
-    objects = PackingListManager()
 
 #     @property
 #     def item_models(self):
@@ -18,7 +14,7 @@ class PackingList(PackingListMixin, BaseUuidModel):
 #         item_m.append(models.get_model('mb_lab', 'MaternalRequisition'))
 #         item_m.append(models.get_model('mb_lab', 'Aliquot'))
 #         return item_m
-# 
+#  
 #     @property
 #     def packing_list_item_model(self):
 #         return models.get_model('mb_lab', 'PackingListItem')

@@ -3,8 +3,6 @@ from django.utils import timezone
 
 from edc_base.model.models import BaseUuidModel
 
-from ..managers import OrderItemManager
-
 from .aliquot import Aliquot
 from .order import Order
 from .panel import Panel
@@ -36,8 +34,6 @@ class OrderItem(BaseUuidModel):
         max_length=50,
         null=True,
         help_text="non-user helper field to simplify search and filtering")
-
-    objects = OrderItemManager()
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.aliquot.receive.registered_subject.subject_identifier

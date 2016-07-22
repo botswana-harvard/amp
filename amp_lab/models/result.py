@@ -5,7 +5,7 @@ from django.db import models
 from edc_base.model.models import BaseUuidModel
 from lis.specimen.lab_result.models import BaseResult
 
-from ..managers import ResultManager
+#from ..managers import ResultManager
 
 from .order_item import OrderItem
 
@@ -20,8 +20,6 @@ class Result(BaseResult, BaseUuidModel):
         editable=False,
         db_index=True,
         help_text="non-user helper field to simplify search and filtering")
-
-    objects = ResultManager()
 
     def save(self, *args, **kwargs):
         self.subject_identifier = self.order.aliquot.receive.registered_subject.subject_identifier

@@ -7,8 +7,6 @@ from lis.specimen.lab_panel.models import BasePanel
 
 from .aliquot_type import AliquotType
 
-from ..managers import PanelManager
-
 
 class Panel(BasePanel):
 
@@ -19,8 +17,6 @@ class Panel(BasePanel):
         help_text='Choose all that apply',)
 
     panel_type = models.CharField(max_length=15, choices=PANEL_TYPE, default='TEST')
-
-    objects = PanelManager()
 
     def natural_key(self):
         return (self.name, )

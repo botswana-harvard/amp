@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'amp.apps.DjangoCryptoFieldsAppConfig',
     'amp.apps.EdcConsentAppConfig',
-    'amp.apps.AmpAppConfig'
+    'amp.apps.AmpAppConfig',
+    'amp_lab',
 ]
 
 MIDDLEWARE_CLASSES = [
