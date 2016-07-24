@@ -22,4 +22,4 @@ class AliquotProfileItem(BaseProfileItem, BaseUuidModel):
     class Meta:
         app_label = 'amp_lab'
         unique_together = ('profile', 'aliquot_type')
-        db_table = 'td_lab_profileitem'
+        db_table = 'amp_lab_profileitem'

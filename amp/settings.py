@@ -30,7 +30,6 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,6 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'edc_lab.lab_packing',
+    'edc_lab.lab_clinic_api',
+    'edc_lab.lab_clinic_reference',
+    'edc_appointment',
+    'edc_registration',
+    'edc_visit_schedule',
+    'edc_visit_tracking',
+    'edc_content_type_map',
+
     'amp.apps.DjangoCryptoFieldsAppConfig',
     'amp.apps.EdcConsentAppConfig',
     'amp.apps.AmpAppConfig',

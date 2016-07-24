@@ -43,5 +43,5 @@ class OrderItem(BaseUuidModel):
         return (self.order_identifier, )
 
     class Meta:
-        app_label = 'td_lab'
+        app_label = 'amp_lab'
         ordering = ['-order_datetime', ]

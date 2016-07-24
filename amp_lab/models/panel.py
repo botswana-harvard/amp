@@ -10,7 +10,7 @@ from .aliquot_type import AliquotType
 
 class Panel(BasePanel):
 
-    test_code = models.ManyToManyField(TestCode, null=True, blank=True, related_name='+')
+    test_code = models.ManyToManyField(TestCode, related_name='+')
 
     aliquot_type = models.ManyToManyField(
         AliquotType,
@@ -25,4 +25,4 @@ class Panel(BasePanel):
         return self.name
 
     class Meta:
-        app_label = 'td_lab'
+        app_label = 'amp_lab'

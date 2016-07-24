@@ -73,5 +73,5 @@ class PackingListItem(BasePackingListItem, BaseUuidModel):
         return (self.item_reference, )
 
     class Meta:
-        app_label = "td_lab"
+        app_label = "amp_lab"
         verbose_name = 'Packing List Item'
