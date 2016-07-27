@@ -25,8 +25,8 @@ site_sections.register(SectionAdministrationView, replaces='administration')
 
 
 class SectionScreeningConsentView(BaseSectionView):
-    section_name = 'screeningcosent'
-    section_display_name = 'subjects'
+    section_name = 'subject'
+    section_display_name = 'Subjects'
     section_display_index = 10
     section_template = 'section_screening.html'
     dashboard_url_name = 'subject_dashboard_url'

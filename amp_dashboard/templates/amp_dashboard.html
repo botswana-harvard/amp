@@ -1,30 +1,24 @@
 {% extends "base_registered_subject_dashboard.html"%}
-{% load common_tags %}{% load crypto_tags %}
+{% load common_tags %}
+{% load crypto_tags%}
+{% load admin_urls %}
 
 {% block clinic_dashboard_marquee %}
-    {% if infant_birth%}
-    <table>
+<table>
     <tr style="background:lightyellow;">
-    <td><B>Name:</B> {{infant_birth.first_name|encrypted }} ({{ infant_birth.initials|encrypted }})</td>  
-    <td><B>Gender:</B> {{infant_birth.gender|gender }} </td> 
-    <td><B>Born:</B> {{infant_birth.dob|date:"Y-m-d" }}</td> 
-    <td><B>Age:</B> {% if infant_birth.dob %}{{infant_birth.dob|age }}{% endif %} </td> 
-    {% else %}
-    <td><B>Name:</B> BABY-{{maternal_consent.first_name|encrypted}}</td>
-    {% endif %}
-    </tr>
-    <tr style=background:lightyellow;">
-        <td><B>HIV status:</B> {{ infant_hiv_status }}</td>
+        <td><B>Name:</B> {{maternal_consent.first_name|encrypted }} ({{ maternal_consent.initials|encrypted }}) </td>
+        <td><B>Born:</B> {{maternal_consent.dob|date:"Y-m-d" }}</td> 
+        <td><B>Age:</B> {{maternal_consent.dob|age }}</td>
+        <td><B>Consented:</B> {{maternal_consent.consent_datetime|date:"Y-m-d H:i" }}</td>
     </tr>
 </table>
-    
-{% endblock %}
-
-{% if maternal_consent %}
-    {% block maternal_consent %}
-    <tr name="top right"><td>
-    <H3>Subject Consent</H3>
-        <ul><A href="{% url 'subject_dashboard_url' dashboard_type='maternal' dashboard_model='maternal_eligibility' dashboard_id=maternal_eligibility.pk show='appointments' %}">{{ maternal_eligibility.registered_subject.subject_identifier }} [{{ maternal_consent.initials|encrypted }}]</A>
-    </td></tr>
-    {% endblock maternal_consent %}
-{% endif %}
+<table>
+	<tr style=background:lightyellow;>
+		<td><B>Antenatal enrollment status: </B>{% if antenatal_enrollment.pending_ultrasound %} pending ultrasound {% elif antenatal_enrollment.is_eligible %} passed {% elif antenatal_enrollment.is_eligible == False %} failed {%else%}<i>not filled</i>{% endif %}</td>
+        <td><B>Enrollment HIV status:</B> <i>{{enrollment_hiv_status}}</i></td>
+        <td><B>Current HIV status:</B> <i>{{current_hiv_status}}</i></td>
+        <td><B>{% if currently_pregnant == True %} Pregnant, GA:</B><i>{{gestational_age}} weeks</i>{% else %}<B>Delivery GA:</B> <i>{{gestational_age}} weeks</i>{% endif %}</td>
+        <td><B>{% if currently_pregnant == True %} Planned delivery site:</B><i>{{planned_delivery_site}}</i>{% else %}<B>Delivery Clinic:</B> <i>{{delivery_site}}</i>{% endif %}</td>
+    </tr>
+</table>
+{% endblock %} 

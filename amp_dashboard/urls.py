@@ -9,4 +9,3 @@ for pattern in AmpDashboard.get_urlpatterns():
         url(pattern,
             login_required(AmpDashboard.as_view()),
             name=AmpDashboard.dashboard_url_name))
-

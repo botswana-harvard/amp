@@ -4,7 +4,7 @@ from django.db import models
 from edc_base.model.models import BaseUuidModel
 from edc_constants.constants import NOT_APPLICABLE
 from edc_lab.lab_packing.models import BasePackingListItem
-#from edc_registration.models import RegisteredSubject
+from edc_registration.models import RegisteredSubject
 
 from .aliquot import Aliquot
 from .subject_requisition import SubjectRequisition
@@ -22,7 +22,7 @@ class PackingListItem(BasePackingListItem, BaseUuidModel):
         null=True,
         blank=True)
 
-#     history = SyncHistoricalRecords()
+    #history = SyncHistoricalRecords()
 
 #     def get_subject_type(self):
 #         aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
@@ -68,9 +68,6 @@ class PackingListItem(BasePackingListItem, BaseUuidModel):
 #             registered_subject = RegisteredSubject.objects.get(subject_identifier=aliquot.subject_identifier)
 #             retval = registered_subject.gender
 #         return retval
-
-    def natural_key(self):
-        return (self.item_reference, )
 
     class Meta:
         app_label = "amp_lab"
