@@ -9,6 +9,9 @@ from edc_consent.models.fields.citizen_fields_mixin import CitizenFieldsMixin
 from edc_consent.models.fields.vulnerability_fields_mixin import VulnerabilityFieldsMixin
 from simple_history.models import HistoricalRecords
 from edc_constants.constants import MALE, FEMALE
+from edc_visit_tracking.models.visit_model_mixin import VisitModelMixin
+from edc_consent.models.requires_consent_mixin import RequiresConsentMixin
+from edc_appointment.model_mixins import AppointmentModelMixin, CreateAppointmentsMixin
 
 
 class AlreadyAllocatedError(Exception):
@@ -113,3 +116,20 @@ class StudyConsent(BaseConsent, IdentityFieldsMixin, ReviewFieldsMixin,
         get_latest_by = 'consent_datetime'
         unique_together = (('first_name', 'dob', 'initials', 'version'), )
         ordering = ('created', )
+
+
+class SubjectVisit(VisitModelMixin, CreatesMetadataModelMixin, RequiresConsentMixin,
+                   PreviousVisitModelMixin, BaseUuidModel):
+
+    appointment = models.OneToOneField(Appointment)
+
+    class Meta:
+        consent_model = 'amp.studyconsent'
+        app_label = 'amp'
+
+
+class Appointment(AppointmentModelMixin, RequiresConsentMixin, BaseUuidModel):
+
+    class Meta:
+        consent_model = 'amp.studyconsent'
+        app_label = 'amp'

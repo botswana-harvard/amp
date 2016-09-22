@@ -1,17 +1,11 @@
 from django.db import models
 
-# from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
-from edc_export.models import ExportTrackingFieldsMixin
-from edc_lab.lab_packing.models import PackingListMixin
-from edc_sync.models import SyncModelMixin, SyncHistoricalRecords
-
-#from ..managers import PackingListManager
+from edc_lab.packing.model_mixins import PackingListModelMixin
+from edc_sync.models import SyncHistoricalRecords
 
 
-class PackingList(PackingListMixin, SyncModelMixin, ExportTrackingFieldsMixin, BaseUuidModel):
-
-    #objects = PackingListManager()
+class PackingList(PackingListModelMixin, BaseUuidModel):
 
     history = SyncHistoricalRecords()
 
@@ -22,7 +16,7 @@ class PackingList(PackingListMixin, SyncModelMixin, ExportTrackingFieldsMixin, B
 #         item_m.append(models.get_model('mb_lab', 'MaternalRequisition'))
 #         item_m.append(models.get_model('mb_lab', 'Aliquot'))
 #         return item_m
-# 
+
 #     @property
 #     def packing_list_item_model(self):
 #         return models.get_model('mb_lab', 'PackingListItem')

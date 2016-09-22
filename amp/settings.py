@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'edc_visit_schedule',
     'edc_visit_tracking',
     'edc_content_type_map',
+    'edc_meta_data',
+    'edc_offstudy',
 
     'amp.apps.DjangoCryptoFieldsAppConfig',
     'amp.apps.EdcConsentAppConfig',

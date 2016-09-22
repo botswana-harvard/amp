@@ -2,17 +2,21 @@ from django.db import models
 
 # from edc_base.audit_trail import AuditTrail
 from edc_base.model.models.base_uuid_model import BaseUuidModel
-from edc_export.models import ExportTrackingFieldsMixin
 from edc_meta_data.managers import RequisitionMetaDataManager
-from edc_visit_tracking.models import CrfModelManager, CrfModelMixin
-from lab_requisition.models import RequisitionModelMixin
 
-#from td_infant.models import InfantVisit
+from edc_visit_tracking.models import CrfModelManager, CrfModelMixin
+from edc_metadata.model_mixins import (
+    CrfMetadataModelMixin, RequisitionMetadataModelMixin, CreatesMetadataModelMixin,
+    UpdatesCrfMetadataModelMixin, UpdatesRequisitionMetadataModelMixin)
 
 from .aliquot import Aliquot
 from .aliquot_type import AliquotType
 from .packing_list import PackingList
 from .panel import Panel
+from edc_lab.requisition.model_mixins import RequisitionModelMixin
+from edc_lab.requisition.managers import RequisitionManager
+from edc_consent.models.requires_consent_mixin import RequiresConsentMixin
+from amp.models.subject_visit import SubjectVisit
 
 
 class SubjectRequisitionManager(CrfModelManager):
@@ -21,11 +25,12 @@ class SubjectRequisitionManager(CrfModelManager):
         return self.get(requisition_identifier=requisition_identifier)
 
 
-class SubjectRequisition(CrfModelMixin, RequisitionModelMixin, BaseUuidModel):
+class SubjectRequisition(CrfModelMixin, RequisitionModelMixin, RequiresConsentMixin,
+                         UpdatesRequisitionMetadataModelMixin, BaseUuidModel):
 
     aliquot_model = Aliquot
 
-    #subject_visit = models.ForeignKey(SubjectVisit)
+    subject_visit = models.ForeignKey(SubjectVisit)
 
     packing_list = models.ForeignKey(PackingList, null=True, blank=True)
 
@@ -33,15 +38,15 @@ class SubjectRequisition(CrfModelMixin, RequisitionModelMixin, BaseUuidModel):
 
     panel = models.ForeignKey(Panel)
 
-    objects = SubjectRequisitionManager()
+    objects = RequisitionManager()
 
-    #entry_meta_data_manager = RequisitionMetaDataManager(InfantVisit)
+    entry_meta_data_manager = RequisitionMetaDataManager(SubjectVisit)
 
     def get_visit(self):
-        return self.infant_visit
+        return self.subject_visit
 
     class Meta:
         app_label = 'amp_lab'
         verbose_name = 'Subject Requisition'
         verbose_name_plural = 'Subject Laboratory Requisition'
-        #unique_together = ('infant_visit', 'panel', 'is_drawn')
+        consent_model = 'amp.subjectconsent'

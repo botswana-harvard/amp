@@ -1,16 +1,13 @@
 from django.db import models
-
-# from edc_base.audit_trail import AuditTrail
-from edc_base.model.models import BaseUuidModel
-from lis.specimen.lab_aliquot.managers import AliquotManager
-from lis.specimen.lab_aliquot.models import BaseAliquot
-
-from .aliquot_condition import AliquotCondition
-from .aliquot_type import AliquotType
-from .receive import Receive
+from edc_lab.aliquot.model_mixins import AliquotModelMixin
+from edc_lab.aliquot.aliquot import Aliquot
+from edc_lab.aliquot.managers import AliquotManager
+from amp_lab.models.receive import Receive
+from amp_lab.models.aliquot_type import AliquotType
+from edc_base.model.models.base_uuid_model import BaseUuidModel
 
 
-class Aliquot(BaseAliquot, BaseUuidModel):
+class Aliquot(AliquotModelMixin, Aliquot, BaseUuidModel):
 
     receive = models.ForeignKey(
         Receive,
@@ -20,16 +17,6 @@ class Aliquot(BaseAliquot, BaseUuidModel):
         AliquotType,
         verbose_name="Aliquot Type",
         null=True)
-
-    aliquot_condition = models.ForeignKey(
-        AliquotCondition,
-        verbose_name="Aliquot Condition",
-        null=True,
-        blank=True)
-
-    is_rejected = models.BooleanField(
-        verbose_name='rejected',
-        default=False)
 
     objects = AliquotManager()
 
@@ -49,6 +36,5 @@ class Aliquot(BaseAliquot, BaseUuidModel):
     def visit_code(self):
         return self.receive.visit
 
-    class Meta:
+    class Meta(AliquotModelMixin.Meta):
         app_label = 'amp_lab'
-        unique_together = (('receive', 'count'), )

@@ -1,23 +1,14 @@
 from django.core.urlresolvers import reverse
 from django.db import models
-
-from edc_base.model.models import BaseUuidModel
-from edc_registration.models import RegisteredSubject
-
-from lis.specimen.lab_receive.models import BaseReceive
+from edc_lab.receive.model_mixins import ReceiveModelMixin
+from edc_lab.receive.managers import ReceiveManager
 
 
-class Receive(BaseReceive, BaseUuidModel):
+class Receive(ReceiveModelMixin):
 
-    registered_subject = models.ForeignKey(RegisteredSubject, null=True, related_name='microbiome_receive')
-
-    requisition_model_name = models.CharField(max_length=25, null=True, editable=False)
+    objects = ReceiveManager()
 
     subject_type = models.CharField(max_length=25, null=True, editable=False)
-
-#     def save(self, *args, **kwargs): kell
-#         self.subject_type = self.registered_subject.subject_type
-#         super(Receive, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return self.receive_identifier or u''

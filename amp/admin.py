@@ -50,10 +50,10 @@ class ScreeningConsentAdmin(MembershipBaseModelAdmin):
     dashboard_type = 'maternal'
     form = ScreeningConsentForm
 
-    fields = ('report_datetime')
+    fields = ('report_datetime',)
     # readonly_fields = ('edd_by_lmp', 'ga_lmp_enrollment_wks', 'enrollment_hiv_status')
     # radio_fields = {'is_diabetic': admin.VERTICAL}
-    list_display = ('report_datetime')
+    list_display = ('report_datetime',)
 
 
 #     def formfield_for_foreignkey(self, db_field, request, **kwargs):

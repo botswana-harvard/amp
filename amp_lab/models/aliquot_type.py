@@ -1,7 +1,7 @@
-from lis.specimen.lab_aliquot_list.models import BaseAliquotType
+from edc_lab.aliquot.aliquot_type import AliquotType
 
 
-class AliquotType(BaseAliquotType):
+class AliquotType(AliquotType):
 
     class Meta:
         app_label = 'amp_lab'

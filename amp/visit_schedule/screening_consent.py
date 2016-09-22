@@ -22,7 +22,7 @@ class ScreeningConsentVisitSchedule(VisitScheduleConfiguration):
     visit_definitions = OrderedDict()
 
     visit_definitions['100'] = {
-        'title': 'Maternal Enrollment Visit',
+        'title': 'Screening Consent Visit',
         'time_point': 0,
         'base_interval': 0,
         'base_interval_unit': 'D',
