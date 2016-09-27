@@ -1,19 +1,19 @@
 from django.core.exceptions import ValidationError
 
 from edc_base.model.models import BaseUuidModel
-from edc_consent.models import RequiresConsentMixin
+from edc_consent.model_mixins import RequiresConsentMixin
 from edc_export.models import ExportTrackingFieldsMixin
-from edc_offstudy.models import OffStudyMixin
+from edc_offstudy.model_mixins import OffStudyMixin
 from edc_sync.models import SyncModelMixin
-from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES, COMPLETED_PROTOCOL_VISIT, LOST_VISIT
-from edc_visit_tracking.models import VisitModelMixin, PreviousVisitMixin, CaretakerFieldsMixin
+# from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES, COMPLETED_PROTOCOL_VISIT, LOST_VISIT
+from edc_visit_tracking.model_mixins import VisitModelMixin, PreviousVisitModelMixin, CaretakerFieldsMixin
 
 from amp.choices import VISIT_REASON
 
 from amp.models import ScreeningConsent
 
 
-class SubjectVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin,
+class SubjectVisit(OffStudyMixin, SyncModelMixin, PreviousVisitModelMixin,
                    RequiresConsentMixin, CaretakerFieldsMixin, VisitModelMixin,
                    ExportTrackingFieldsMixin, BaseUuidModel):
 
@@ -45,14 +45,14 @@ class SubjectVisit(OffStudyMixin, SyncModelMixin, PreviousVisitMixin,
         eligible = False
         return eligible
 
-    def get_visit_reason_no_follow_up_choices(self):
-        """ Returns the visit reasons that do not imply any data
-        collection; that is, the subject is not available. """
-        dct = {}
-        for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
-            if item not in [COMPLETED_PROTOCOL_VISIT, LOST_VISIT]:
-                dct.update({item: item})
-        return dct
+#     def get_visit_reason_no_follow_up_choices(self):
+#         """ Returns the visit reasons that do not imply any data
+#         collection; that is, the subject is not available. """
+#         dct = {}
+#         for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
+#             if item not in [COMPLETED_PROTOCOL_VISIT, LOST_VISIT]:
+#                 dct.update({item: item})
+#         return dct
 
     class Meta:
         app_label = 'amp'

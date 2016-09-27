@@ -8,8 +8,6 @@ class Receive(ReceiveModelMixin):
 
     objects = ReceiveManager()
 
-    subject_type = models.CharField(max_length=25, null=True, editable=False)
-
     def __unicode__(self):
         return self.receive_identifier or u''
 

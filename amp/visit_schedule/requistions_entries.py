@@ -7,10 +7,10 @@ visit_100_requisition = (
         'Screening Hiv Test', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
     RequisitionPanelTuple(
         20, 'amp_lab', 'subjectrequisition',
-        'Hematology', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
+        'Hematology', 'TEST', 'WB', REQUIRED, ADDITIONAL),
     RequisitionPanelTuple(
         30, 'amp_lab', 'subjectrequisition',
-        'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
+        'Chemistry', 'TEST', 'WB', REQUIRED, ADDITIONAL),
 )
 
 visit_200_requisition = (

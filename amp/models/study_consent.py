@@ -1,19 +1,20 @@
 from django.db import models
 from edc_base.model.models.base_uuid_model import BaseUuidModel
-from edc_consent.models.base_consent import BaseConsent, ConsentManager
-from edc_consent.models.fields.bw.identity_fields_mixin import IdentityFieldsMixin
-from edc_consent.models.fields.review_fields_mixin import ReviewFieldsMixin
-from edc_consent.models.fields.personal_fields_mixin import PersonalFieldsMixin
-from edc_consent.models.fields.citizen_fields_mixin import CitizenFieldsMixin
-from edc_consent.models.fields.vulnerability_fields_mixin import VulnerabilityFieldsMixin
 from simple_history.models import HistoricalRecords
 from edc_constants.constants import MALE, FEMALE
+from edc_consent.managers import ConsentManager
+from edc_consent.field_mixins.bw.identity_fields_mixin import IdentityFieldsMixin
+from edc_consent.field_mixins import ReviewFieldsMixin, PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin
 
 from .subject_identifier import SubjectIdentifier
 
+from edc_consent.model_mixins import ConsentModelMixin
+from edc_registration.model_mixins import RegistrationMixin
 
-class StudyConsent(BaseConsent, IdentityFieldsMixin, ReviewFieldsMixin,
+
+class StudyConsent(ConsentModelMixin, RegistrationMixin, IdentityFieldsMixin, ReviewFieldsMixin,
                    PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin, BaseUuidModel):
+
     MIN_AGE_OF_CONSENT = 18
     MAX_AGE_OF_CONSENT = 99
     AGE_IS_ADULT = 18

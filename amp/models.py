@@ -11,6 +11,7 @@ from simple_history.models import HistoricalRecords
 from edc_constants.constants import MALE, FEMALE
 from edc_visit_tracking.models.visit_model_mixin import VisitModelMixin
 from edc_consent.models.requires_consent_mixin import RequiresConsentMixin
+from edc_registration.model_mixins import RegisteredSubjectModelMixin, RegisteredSubjectMixin
 from edc_appointment.model_mixins import AppointmentModelMixin, CreateAppointmentsMixin
 
 
@@ -40,6 +41,18 @@ class SubjectIdentifier(BaseUuidModel):
     class Meta:
         app_label = 'amp'
         ordering = ('subject_identifier', )
+
+
+class Enrollment(CreateAppointmentsMixin, RegisteredSubjectMixin, RequiresConsentMixin, BaseUuidModel):
+
+    report_datetime = models.DateTimeField(default=timezone.now)
+
+    is_eligible = models.BooleanField(default=True)
+
+    class Meta:
+        visit_schedule_name = 'subject_visit_schedule'
+        consent_model = 'amp.screeningconsent'
+        app_label = 'amp'
 
 
 class ScreeningConsent(BaseConsent, IdentityFieldsMixin, ReviewFieldsMixin,
@@ -132,4 +145,10 @@ class Appointment(AppointmentModelMixin, RequiresConsentMixin, BaseUuidModel):
 
     class Meta:
         consent_model = 'amp.studyconsent'
+        app_label = 'amp'
+
+
+class RegisteredSubject(RegisteredSubjectModelMixin, BaseUuidModel):
+
+    class Meta:
         app_label = 'amp'

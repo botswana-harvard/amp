@@ -37,21 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'edc_lab.lab_packing',
-    'edc_lab.lab_clinic_api',
-    'edc_lab.lab_clinic_reference',
     'edc_appointment',
     'edc_registration',
     'edc_visit_schedule',
     'edc_visit_tracking',
     'edc_content_type_map',
-    'edc_meta_data',
     'edc_offstudy',
-
+    'edc_lab.apps.AppConfig',
     'amp.apps.DjangoCryptoFieldsAppConfig',
     'amp.apps.EdcConsentAppConfig',
+    'edc_metadata.apps.AppConfig',
+    'edc_protocol.apps.AppConfig',
     'amp.apps.AmpAppConfig',
-    'amp_lab',
+    'amp_lab.apps.AmpLabConfig',
+    'edc_device.apps.AppConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
