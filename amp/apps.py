@@ -1,7 +1,10 @@
+import os
+from django.conf import settings
 from datetime import datetime
 
 from django.apps import AppConfig
 from django_crypto_fields.apps import DjangoCryptoFieldsAppConfig as DjangoCryptoFieldsAppConfigParent
+from edc_label.apps import AppConfig as EdcLabelAppConfigParent
 
 from edc_consent.apps import AppConfig as EdcConsentAppConfigParent
 from edc_timepoint.apps import AppConfig as EdcTimepointAppConfig
@@ -45,3 +48,9 @@ class EdcTimepointAppConfig(EdcTimepointAppConfig):
             closed_status='CLOSED'
         )
     ]
+
+
+class EdcLabelAppConfig(EdcLabelAppConfigParent):
+    default_cups_server_ip = None
+    default_printer_label = 'AmpZplPrinter'
+    extra_templates_folder = os.path.join(settings.STATIC_ROOT, 'amp', 'label_templates')

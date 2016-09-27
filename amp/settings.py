@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'edc_metadata.apps.AppConfig',
     'edc_protocol.apps.AppConfig',
     'amp.apps.AmpAppConfig',
+    'amp.apps.EdcLabelAppConfig',
     'amp_lab.apps.AmpLabConfig',
     'edc_device.apps.AppConfig',
 ]

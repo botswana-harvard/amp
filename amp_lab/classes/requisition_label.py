@@ -1,16 +1,14 @@
 from datetime import date, datetime
 
-from edc_registration.models import RegisteredSubject
-
-from lis.labeling.classes import ModelLabel
-from lis.labeling.models import ZplTemplate
+from amp.models.registered_subject import RegisteredSubject
+from edc_label.mixins import EdcLabelMixin
 
 
-class RequisitionLabel(ModelLabel):
+class RequisitionLabel(EdcLabelMixin):
 
-    def __init__(self):
-        super(RequisitionLabel, self).__init__()
-        self.zpl_template = ZplTemplate.objects.get(name='requisition_label')
+#     def __init__(self):
+#         super(RequisitionLabel, self).__init__()
+#         self.zpl_template = ZplTemplate.objects.get(name='requisition_label')
 
     def test(self, client_addr, label_printer=None):
         """Passes a test label the printer.
