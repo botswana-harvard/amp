@@ -1,10 +1,9 @@
-from edc_registration.models import RegisteredSubject
-
 from django.contrib import messages
 
 from lis.labeling.classes import ModelLabel
 from lis.labeling.exceptions import LabelPrinterError
 from lis.labeling.models import ZplTemplate
+from amp.models import RegisteredSubject
 
 
 class AliquotLabeling(ModelLabel):

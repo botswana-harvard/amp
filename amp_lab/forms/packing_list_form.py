@@ -1,12 +1,14 @@
-from edc_lab.lab_packing.forms import BasePackingListForm, BasePackingListItemForm
+from edc_lab.packing.forms_mixins import PackingListFormMixin, PackingListItemFormMixin
 
-from ..models import SubjectRequisition, PackingList, PackingListItem, Aliquot
+from ..models import SubjectRequisition
+from amp_lab.models.packing_list import PackingList
+from edc_lab.models import PackingListItem
 
 
-class PackingListForm (BasePackingListForm):
+class PackingListForm (PackingListFormMixin):
 
     def clean(self):
-        self.requisition = [SubjectRequisition, Aliquot]
+        self.requisition = [SubjectRequisition]
         return super(PackingListForm, self).clean()
 
     class Meta:
@@ -14,11 +16,11 @@ class PackingListForm (BasePackingListForm):
         fields = '__all__'
 
 
-class PackingListItemForm (BasePackingListItemForm):
+class PackingListItemForm (PackingListItemFormMixin):
 
     def clean(self):
-        self.requisition = [SubjectRequisition, Aliquot]
-        return super(BasePackingListItemForm, self).clean()
+        self.requisition = [SubjectRequisition]
+        return super(PackingListItemFormMixin, self).clean()
 
     class Meta:
         model = PackingListItem

@@ -3,10 +3,7 @@ from django.db import models
 # from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_constants.constants import NOT_APPLICABLE
-from edc_lab.lab_packing.models import BasePackingListItem
-from edc_registration.models import RegisteredSubject
 
-from .aliquot import Aliquot
 from .subject_requisition import SubjectRequisition
 from .panel import Panel
 
@@ -21,53 +18,6 @@ class PackingListItem(BasePackingListItem, BaseUuidModel):
         Panel,
         null=True,
         blank=True)
-
-    #history = SyncHistoricalRecords()
-
-#     def get_subject_type(self):
-#         aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
-#         registered_subject = RegisteredSubject.objects.get(subject_identifier=aliquot.subject_identifier)
-#         return registered_subject.subject_type
-
-    def save(self, *args, **kwargs):
-        if self.item_reference:
-            aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
-            requisition = SubjectRequisition.objects.get(
-                requisition_identifier=aliquot.receive.requisition_identifier)
-
-            self.panel = requisition.panel
-            self.item_priority = requisition.priority
-        super(PackingListItem, self).save(*args, **kwargs)
-
-    def drawn_datetime(self):
-        retval = NOT_APPLICABLE
-        if self.item_reference:
-            aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
-            requisition = SubjectRequisition.objects.get(
-                requisition_identifier=aliquot.receive.requisition_identifier)
-        retval = requisition.drawn_datetime
-        return retval
-
-#     def clinician(self):
-#         retval = NOT_APPLICABLE
-#         if self.item_reference:
-#             aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
-#             if self.get_subject_type() == INFANT:
-#                 requisition = InfantRequisition.objects.get(
-#                     requisition_identifier=aliquot.receive.requisition_identifier)
-#             else:
-#                 requisition = MaternalRequisition.objects.get(
-#                     requisition_identifier=aliquot.receive.requisition_identifier)
-#             retval = requisition.user_created
-#         return retval
-
-#     def gender(self):
-#         retval = NOT_APPLICABLE
-#         if self.item_reference:
-#             aliquot = Aliquot.objects.get(aliquot_identifier=self.item_reference)
-#             registered_subject = RegisteredSubject.objects.get(subject_identifier=aliquot.subject_identifier)
-#             retval = registered_subject.gender
-#         return retval
 
     class Meta:
         app_label = "amp_lab"

@@ -1,7 +1,7 @@
 import factory
 
 from amp.models import ScreeningConsent
-from datetime import timezone
+from datetime import datetime
 
 
 class ScreeningConsentFactory(factory.DjangoModelFactory):
@@ -9,14 +9,16 @@ class ScreeningConsentFactory(factory.DjangoModelFactory):
     class Meta:
         model = ScreeningConsent
 
-    consent_datetime = timezone.datetime.now()
+    consent_datetime = datetime.today()
 
-    identity = factory.Sequences(lambda n: '31791851{}'.format(n))
+    identity = factory.Sequence(lambda n: '31791851{}'.format(n))
 
     identity_type = 'omang'
 
+    is_literate = 'Yes'
+
     confirm_identity = identity
 
-    first_name = factory.Sequences(lambda n: 'TEST{}'.format(n))
+    first_name = factory.Sequence(lambda n: 'TEST{}'.format(n))
 
-    last_name = factory.Sequences(lambda n: 'TEST{}'.format(n))
+    last_name = factory.Sequence(lambda n: 'TEST{}'.format(n))

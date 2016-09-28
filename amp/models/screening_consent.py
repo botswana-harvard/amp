@@ -22,12 +22,6 @@ class ScreeningConsent(ConsentModelMixin, RegistrationMixin, IdentityFieldsMixin
                        PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin,
                        BaseUuidModel):
 
-    MIN_AGE_OF_CONSENT = 18
-    MAX_AGE_OF_CONSENT = 99
-    AGE_IS_ADULT = 18
-    GENDER_OF_CONSENT = [MALE, FEMALE]
-    SUBJECT_TYPES = ['subject']
-
     interviewed = models.BooleanField(default=False, editable=False)
 
     idi = models.BooleanField(default=False, editable=False)
@@ -46,9 +40,15 @@ class ScreeningConsent(ConsentModelMixin, RegistrationMixin, IdentityFieldsMixin
     def natural_key(self):
         return (self.subject_identifier, )
 
+    @property
+    def identifier(self):
+        subject_identifier = SubjectIdentifier.objects.filter(
+            allocated_datetime=None).order_by('created').first()
+        return subject_identifier.subject_identifier
+
     def save(self, *args, **kwargs):
         if not self.id:
-            self.subject_identifier = None  # SubjectIdentifier(site_code='99').get_identifier()
+            self.subject_identifier = self.identifier  # SubjectIdentifier(site_code='99').get_identifier()
         super(ScreeningConsent, self).save(*args, **kwargs)
 
     class Meta:
