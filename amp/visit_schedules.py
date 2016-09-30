@@ -20,7 +20,7 @@ subject_visit_schedule = VisitSchedule(
 )
 
 # add schedules
-schedule = Schedule(name='schedule-1', enrollment_model='amp.enrollment')
+schedule = Schedule(name='amp.enrollment', enrollment_model='amp.enrollment')
 
 # add visits to this schedule
 schedule.add_visit(

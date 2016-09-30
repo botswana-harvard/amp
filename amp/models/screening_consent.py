@@ -6,7 +6,6 @@ from edc_consent.field_mixins.bw.identity_fields_mixin import IdentityFieldsMixi
 from edc_consent.field_mixins import ReviewFieldsMixin, PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin
 
 from simple_history.models import HistoricalRecords
-from edc_constants.constants import MALE, FEMALE
 
 from .subject_identifier import SubjectIdentifier
 

@@ -15,7 +15,7 @@ from lis.specimen.lab_aliquot_list.classes import AliquotTypeTuple
 from lis.specimen.lab_panel.classes import PanelTuple
 
 study_start_datetime = datetime(2016, 07, 22, 8, 00, 00)
-study_end_datetime = datetime(2018, 07, 20, 23, 49, 40)
+study_end_datetime = datetime(2016, 9, 30, 23, 49, 40)
 
 
 class AppConfiguration(BaseAppConfiguration):

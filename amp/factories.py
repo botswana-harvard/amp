@@ -2,6 +2,7 @@ import factory
 
 from amp.models import ScreeningConsent
 from datetime import datetime
+from amp.models.enrollment import Enrollment
 
 
 class ScreeningConsentFactory(factory.DjangoModelFactory):
@@ -22,3 +23,8 @@ class ScreeningConsentFactory(factory.DjangoModelFactory):
     first_name = factory.Sequence(lambda n: 'TEST{}'.format(n))
 
     last_name = factory.Sequence(lambda n: 'TEST{}'.format(n))
+
+
+class EnrollmentFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = Enrollment
