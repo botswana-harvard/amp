@@ -1,59 +1,40 @@
-from django.core.exceptions import ValidationError
+from django.db import models
 
 from edc_base.model.models import BaseUuidModel
 from edc_consent.model_mixins import RequiresConsentMixin
-from edc_export.models import ExportTrackingFieldsMixin
-from edc_offstudy.model_mixins import OffStudyMixin
-from edc_sync.models import SyncModelMixin
-# from edc_visit_tracking.constants import VISIT_REASON_NO_FOLLOW_UP_CHOICES, COMPLETED_PROTOCOL_VISIT, LOST_VISIT
-from edc_visit_tracking.model_mixins import VisitModelMixin, PreviousVisitModelMixin, CaretakerFieldsMixin
-
-from amp.choices import VISIT_REASON
-
-from amp.models import ScreeningConsent
+from edc_metadata.model_mixins import CreatesMetadataModelMixin
+from edc_visit_tracking.model_mixins import VisitModelMixin, PreviousVisitModelMixin
 
 
-class SubjectVisit(OffStudyMixin, SyncModelMixin, PreviousVisitModelMixin,
-                   RequiresConsentMixin, CaretakerFieldsMixin, VisitModelMixin,
-                   ExportTrackingFieldsMixin, BaseUuidModel):
+from .appointment import Appointment
+from .screening_consent import ScreeningConsent
+from amp.models.registered_subject import RegisteredSubject
 
-    """ Subject visit form """
 
-    consent_model = ScreeningConsent
+class SubjectVisit(VisitModelMixin, CreatesMetadataModelMixin, RequiresConsentMixin,
+                   PreviousVisitModelMixin, BaseUuidModel):
 
-    off_study_model = ('amp', 'SubjectOffStudy')
+    appointment = models.OneToOneField(Appointment)
 
-#     history = AuditTrail()
+    @property
+    def metadata_query_options(self):
+        options = super().metadata_query_options
+        options.update({'appointment': self.appointment})
+        options.update({'registered_subject': self.registered_subject})
+        return options
 
-    def __unicode__(self):
-        return '{} {} {}'.format(self.appointment.registered_subject.subject_identifier,
-                                 self.appointment.registered_subject.first_name,
-                                 self.appointment.visit_definition.code)
+    @property
+    def registered_subject(self):
+        try:
+            registered_subject = RegisteredSubject.objects.get(subject_identifier=self.subject_identifier)
+        except RegisteredSubject.DoesNotExist:
+            return RegisteredSubject.objects.none()
+        return registered_subject
 
-    def save(self, *args, **kwargs):
-        self.subject_identifier = self.appointment.registered_subject.subject_identifier
-#         if not self.is_eligible():
-#             self.reason = FAILED_ELIGIBILITY
-#         self.subject_failed_eligibility()
-        super(SubjectVisit, self).save(*args, **kwargs)
-
-    def get_visit_reason_choices(self):
-        return VISIT_REASON
-
-    def is_eligible(self):
-        """Returns True if participant is either eligible antenataly."""
-        eligible = False
-        return eligible
-
-#     def get_visit_reason_no_follow_up_choices(self):
-#         """ Returns the visit reasons that do not imply any data
-#         collection; that is, the subject is not available. """
-#         dct = {}
-#         for item in VISIT_REASON_NO_FOLLOW_UP_CHOICES:
-#             if item not in [COMPLETED_PROTOCOL_VISIT, LOST_VISIT]:
-#                 dct.update({item: item})
-#         return dct
+    def metadata_run_rules(self, source_model=None):
+        pass
 
     class Meta:
+        consent_model = 'amp.screeningconsent'
         app_label = 'amp'
         verbose_name = 'Subject Visit'

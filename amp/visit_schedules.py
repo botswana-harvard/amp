@@ -8,8 +8,8 @@ crfs = (
 )
 
 requisitions = (
-    Requisition(show_order=10, model='amp_lab.SubjectRequisition', panel=rdb_panel),
-    Requisition(show_order=20, model='amp_lab.SubjectRequisition', panel=viral_load_panel),
+    Requisition(show_order=10, model='amp.SubjectRequisition', panel=rdb_panel),
+    Requisition(show_order=20, model='amp.SubjectRequisition', panel=viral_load_panel),
 )
 
 subject_visit_schedule = VisitSchedule(

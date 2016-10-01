@@ -1,8 +1,12 @@
+from datetime import datetime
 from django.test.testcases import TestCase
-from amp.models import ScreeningConsent, SubjectIdentifier
+
+from amp.models import ScreeningConsent, SubjectIdentifier, Appointment
 from amp.factories import ScreeningConsentFactory, EnrollmentFactory
 from amp.models.enrollment import Enrollment
 from amp.models.registered_subject import RegisteredSubject
+from amp.models.subject_visit import SubjectVisit
+from amp.models.requisition_meta_data import RequisitionMetadata, CrfMetadata
 
 
 class TestScreeningConsentIdentifierAllocation(TestCase):
@@ -70,3 +74,22 @@ class TestScreeningConsentIdentifierAllocation(TestCase):
         screening = ScreeningConsentFactory()
         EnrollmentFactory(subject_identifier=screening.subject_identifier)
         self.assertEqual(Enrollment.objects.all().count(), 1)
+
+    def test_create_enrollment_post_save_appointments(self):
+        screening = ScreeningConsentFactory()
+        EnrollmentFactory(subject_identifier=screening.subject_identifier)
+
+        self.assertEqual(Appointment.objects.all().count(), 1)
+
+    def test_create_subject_visit_and_metadata_at_enrollment(self):
+        screening = ScreeningConsentFactory()
+        EnrollmentFactory(subject_identifier=screening.subject_identifier)
+        appointment = Appointment.objects.first()
+
+        SubjectVisit.objects.create(
+            appointment=appointment,
+            report_datetime=datetime.today(),
+            reason='scheduled',
+        )
+        self.assertEqual(CrfMetadata.objects.all().count(), 0)
+        self.assertEqual(RequisitionMetadata.objects.all().count(), 2)
