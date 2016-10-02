@@ -3,7 +3,6 @@ from django.db import models
 # from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.model_mixins import RequiresConsentMixin
-from edc_export.models import ExportTrackingFieldsMixin
 
 from edc_offstudy.model_mixins import OffStudyModelMixin
 # from edc_sync.models import SyncModelMixin
@@ -14,7 +13,7 @@ from .subject_visit import SubjectVisit
 
 
 class SubjectOffStudy(OffStudyModelMixin, CrfModelMixin,
-                      RequiresConsentMixin, ExportTrackingFieldsMixin, BaseUuidModel):
+                      RequiresConsentMixin, BaseUuidModel):
 
     """ A model completed by the user on the visit when the subject is taken off-study. """
 
