@@ -1,13 +1,9 @@
-from django.db import models
-
 from edc_base.model.models import BaseUuidModel
 from edc_lab.packing.model_mixins import PackingListModelMixin
-from edc_sync.models import SyncHistoricalRecords
 
 
 class PackingList(PackingListModelMixin, BaseUuidModel):
 
-    history = SyncHistoricalRecords()
 
 #     @property
 #     def item_models(self):
