@@ -10,9 +10,10 @@ from .subject_identifier import SubjectIdentifier
 
 from edc_consent.model_mixins import ConsentModelMixin
 from edc_registration.model_mixins import RegistrationMixin
+from edc_appointment.model_mixins import CreateAppointmentsMixin
 
 
-class StudyConsent(ConsentModelMixin, RegistrationMixin, IdentityFieldsMixin, ReviewFieldsMixin,
+class StudyConsent(CreateAppointmentsMixin, ConsentModelMixin, RegistrationMixin, IdentityFieldsMixin, ReviewFieldsMixin,
                    PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin, BaseUuidModel):
 
     MIN_AGE_OF_CONSENT = 18

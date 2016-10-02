@@ -29,7 +29,7 @@ class SubjectRequisition(CrfModelMixin, RequisitionModelMixin, RequiresConsentMi
 
     packing_list = models.ForeignKey(PackingList, null=True, blank=True)
 
-    panel = models.ForeignKey(Panel)
+    #panel = models.ForeignKey(Panel)
 
     objects = RequisitionManager()
 
