@@ -1,372 +1,61 @@
-from edc_visit_schedule.classes.visit_schedule_configuration import RequisitionPanelTuple
-from edc_constants.constants import NOT_REQUIRED, REQUIRED, ADDITIONAL, NOT_ADDITIONAL
 
-visit_100_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'Screening Hiv Test', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Hematology', 'TEST', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Chemistry', 'TEST', 'WB', REQUIRED, ADDITIONAL),
+from edc_visit_schedule.site_visit_schedules import site_visit_schedules
+from edc_visit_schedule.visit_schedule import VisitSchedule
+from edc_visit_schedule.visit import Requisition
+from edc_visit_schedule.schedule import Schedule
+
+from amp_lab.lab_profiles import (
+    hiv_diagnostics_panel, vl_iso_seq_panel, serum_panel, hema_panel, rdb_panel, viral_load_panel, syphillis_panel,
+    chem_panel, pbmc_panel)
+
+
+requisitions_hvs = (
+    Requisition(show_order=10, model='amp.SubjectRequisition', panel=hiv_diagnostics_panel),
+    Requisition(show_order=20, model='amp.SubjectRequisition', panel=vl_iso_seq_panel),
+    Requisition(show_order=30, model='amp.SubjectRequisition', panel=serum_panel),
 )
 
-visit_200_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Hematology', 'TEST', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Syphillis', 'TEST', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        40, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
+visit_100_requisitions = (
+    Requisition(show_order=10, model='amp.SubjectRequisition', panel=rdb_panel),
+    Requisition(show_order=20, model='amp.SubjectRequisition', panel=viral_load_panel),
 )
 
-visit_400_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
+visit_200_requisitions = (
+    Requisition(show_order=10, model='amp.SubjectRequisition', panel=hiv_diagnostics_panel),
+    Requisition(show_order=20, model='amp.SubjectRequisition', panel=hema_panel),
+    Requisition(show_order=30, model='amp.SubjectRequisition', panel=syphillis_panel),
+    Requisition(show_order=40, model='amp.SubjectRequisition', panel=vl_iso_seq_panel),
 )
 
-visit_800_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Hematology', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        40, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        50, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
+visit_1600_requisitions = (
+    Requisition(show_order=10, model='amp.SubjectRequisition', panel=hiv_diagnostics_panel),
+    Requisition(show_order=20, model='amp.SubjectRequisition', panel=hema_panel),
+    Requisition(show_order=30, model='amp.SubjectRequisition', panel=chem_panel),
+    Requisition(show_order=40, model='amp.SubjectRequisition', panel=vl_iso_seq_panel),
+    Requisition(show_order=50, model='amp.SubjectRequisition', panel=serum_panel),
 )
 
-visit_1200_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
+visit_4800_requisitions = (
+    Requisition(show_order=10, model='amp.SubjectRequisition', panel=hiv_diagnostics_panel),
+    Requisition(show_order=30, model='amp.SubjectRequisition', panel=vl_iso_seq_panel),
+    Requisition(show_order=20, model='amp.SubjectRequisition', panel=syphillis_panel),
+    Requisition(show_order=40, model='amp.SubjectRequisition', panel=serum_panel),
 )
 
-visit_1600_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Hematology', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        40, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        50, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
+visit_9200_requisitions = (
+    Requisition(show_order=10, model='amp.SubjectRequisition', panel=hiv_diagnostics_panel),
+    Requisition(show_order=20, model='amp.SubjectRequisition', panel=vl_iso_seq_panel),
+    Requisition(show_order=30, model='amp.SubjectRequisition', panel=serum_panel),
+    Requisition(show_order=40, model='amp.SubjectRequisition', panel=pbmc_panel),
 )
 
-visit_2000_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        40, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        50, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_2400_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Hematology', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        40, 'amp_lab', 'subjectrequisition',
-        'Syphillis', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        50, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        60, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_2800_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        50, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        60, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_3200_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Hematology', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        40, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        50, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_3600_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_4000_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Hematology', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        40, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        50, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_4400_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_4800_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Hematology', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        40, 'amp_lab', 'subjectrequisition',
-        'Syphillis', 'TEST', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        50, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        60, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_5200_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_5600_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Hematology', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        40, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        50, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-
-visit_6000_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_6400_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Hematology', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        40, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        50, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_6800_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_7200_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Hematology', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Chemistry', 'TEST', 'WB', NOT_REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        40, 'amp_lab', 'subjectrequisition',
-        'Syphillis', 'TEST', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        50, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        60, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_7600_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_8000_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_8400_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_8800_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
-
-visit_9200_requisition = (
-    RequisitionPanelTuple(
-        10, 'amp_lab', 'subjectrequisition',
-        'HIV Diagnostics', 'TEST', 'WB', REQUIRED, NOT_ADDITIONAL),
-    RequisitionPanelTuple(
-        20, 'amp_lab', 'subjectrequisition',
-        'Viral Isolation/Sequencing', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        30, 'amp_lab', 'subjectrequisition',
-        'Serum', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-    RequisitionPanelTuple(
-        40, 'amp_lab', 'subjectrequisition',
-        'PBMC', 'STORAGE', 'WB', REQUIRED, ADDITIONAL),
-)
+visits = [
+    ('100', visit_100_requisitions), ('200', visit_200_requisitions), ('400', requisitions_hvs),
+    ('800', requisitions_hvs), ('1200', requisitions_hvs), ('1600', visit_1600_requisitions),
+    ('2000', requisitions_hvs), ('2400', requisitions_hvs), ('2800', requisitions_hvs),
+    ('3200', requisitions_hvs), ('3600', requisitions_hvs), ('4000', requisitions_hvs),
+    ('4400', requisitions_hvs), ('4800', visit_4800_requisitions), ('5200', requisitions_hvs),
+    ('5600', requisitions_hvs), ('6000', requisitions_hvs), ('6400', requisitions_hvs),
+    ('6800', requisitions_hvs), ('7200', requisitions_hvs), ('7600', requisitions_hvs),
+    ('8000', requisitions_hvs), ('8400', requisitions_hvs), ('8800', requisitions_hvs),
+    ('9200', visit_9200_requisitions)]

@@ -78,8 +78,9 @@ class TestScreeningConsentIdentifierAllocation(TestCase):
     def test_create_enrollment_post_save_appointments(self):
         screening = ScreeningConsentFactory()
         EnrollmentFactory(subject_identifier=screening.subject_identifier)
-
-        self.assertEqual(Appointment.objects.all().count(), 1)
+        apt = Appointment.objects.all().first()
+        print(apt.__dict__)
+        self.assertEqual(Appointment.objects.all().count(), 25)
 
     def test_create_subject_visit_and_metadata_at_enrollment(self):
         screening = ScreeningConsentFactory()

@@ -24,7 +24,7 @@ BASE_DIR = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SECRET_KEY = 're+uw%kaz#7i+y4063lvt$z*h)*%ng=(8410)obn#y_62jv=5c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -38,13 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'edc_visit_schedule.apps.AppConfig',
-    'edc_visit_tracking.apps.AppConfig',
     'edc_content_type_map',
     'edc_offstudy.apps.AppConfig',
     'edc_lab.apps.AppConfig',
     'amp.apps.EdcMetaDataAppConfig',
     'edc_protocol.apps.AppConfig',
     'edc_device.apps.AppConfig',
+    'amp.apps.EdcVisitTrackingAppConfig',
     'amp.apps.EdcRegistrationAppConfig',
     'amp.apps.DjangoCryptoFieldsAppConfig',
     'amp.apps.EdcConsentAppConfig',

@@ -4,6 +4,8 @@ from edc_visit_schedule.visit import Requisition
 from edc_visit_schedule.schedule import Schedule
 from amp_lab.lab_profiles import rdb_panel, viral_load_panel
 
+from .requistions_entries import visits
+
 crfs = (
 )
 
@@ -12,7 +14,7 @@ requisitions = (
     Requisition(show_order=20, model='amp_lab.SubjectRequisition', panel=viral_load_panel),
 )
 
-subject_visit_schedule = VisitSchedule(
+subject_visit_schedule_screeningconsent = VisitSchedule(
     name='subject_visit_schedule',
     verbose_name='Amp Visit Schedule',
     app_label='amp',
@@ -20,18 +22,19 @@ subject_visit_schedule = VisitSchedule(
 )
 
 # add schedules
-schedule = Schedule(name='schedule-1', enrollment_model='amp.enrollment')
+schedule_screening_consent = Schedule(name='schedule-1', enrollment_model='amp.enrollment')
 
 # add visits to this schedule
-schedule.add_visit(
-    code='100',
-    title='Visit 100',
-    timepoint=0,
-    base_interval=0,
-    requisitions=requisitions,
-    crfs=crfs)
+interval = 4
+for visit in visits:
+    code, reqs = visit
+    interval = interval + 4
+    schedule_screening_consent.add_visit(
+        code=code,
+        title='Visit {}'.format(code),
+        timepoint=interval,
+        base_interval=interval,
+        requisitions=reqs,
+        crfs=crfs)
 
-subject_visit_schedule.add_schedule(schedule)
-
-# register the visit_schedule
-site_visit_schedules.register(subject_visit_schedule)
+subject_visit_schedule_screeningconsent.add_schedule(schedule_screening_consent)

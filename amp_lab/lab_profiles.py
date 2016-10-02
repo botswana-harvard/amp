@@ -31,6 +31,54 @@ viral_load_panel = RequisitionPanel('Viral Load', wb)  # link this to the visit_
 viral_load_panel.processing_profile = viral_load_processing
 lab_profile.add_panel(viral_load_panel)
 
+hema_panel = RequisitionPanel('Hematology', wb)  # link this to the visit_schedule
+lab_profile.add_panel(hema_panel)
+
+syphillis_panel = RequisitionPanel('Syphillis', wb)  # link this to the visit_schedule
+lab_profile.add_panel(syphillis_panel)
+
+vl_iso_seq_panel = RequisitionPanel('Viral Isolation/Sequencing', wb)  # link this to the visit_schedule
+lab_profile.add_panel(vl_iso_seq_panel)
+
+hema_arv_panel = RequisitionPanel('Hematology (ARV)', wb)  # link this to the visit_schedule
+lab_profile.add_panel(hema_arv_panel)
+
+serum_panel = RequisitionPanel('Serum', wb)  # link this to the visit_schedule
+lab_profile.add_panel(serum_panel)
+
+dbs_panel = RequisitionPanel('Dried Blood Spot', 'DBS', '01')
+lab_profile.add_panel(dbs_panel)
+
+hiv_diagnostics_panel = RequisitionPanel('HIV Diagnostics', 'WB')
+lab_profile.add_panel(hiv_diagnostics_panel)
+
+cd4_arv_panel = RequisitionPanel('CD4 (ARV)', wb)  # link this to the visit_schedule
+lab_profile.add_panel(cd4_arv_panel)
+
+chem_nvp_panel = RequisitionPanel('Chemistry NVP/LFT + ALPL6 (ARV)', wb)  # link this to the visit_schedule
+lab_profile.add_panel(chem_nvp_panel)
+
+chem_panel = RequisitionPanel('Chemistry', wb)  # link this to the visit_schedule
+lab_profile.add_panel(chem_panel)
+
+chem_non_lpv_panel = RequisitionPanel('BHP086 Chemistry NON-LPV', wb)  # link this to the visit_schedule
+lab_profile.add_panel(chem_non_lpv_panel)
+
+dna_pcr_panel = RequisitionPanel('ELISA', wb)  # link this to the visit_schedule
+lab_profile.add_panel(dna_pcr_panel)
+
+pharma_cokienetics_panel = RequisitionPanel('Pharmacokinetics', wb)  # link this to the visit_schedule
+lab_profile.add_panel(pharma_cokienetics_panel)
+
+pbmc_panel = RequisitionPanel('PBMC', wb)  # link this to the visit_schedule
+lab_profile.add_panel(pbmc_panel)
+
+pl_and_coat_panel = RequisitionPanel('Plasma and Buffy Coat Storage', wb)  # link this to the visit_schedule
+lab_profile.add_panel(pl_and_coat_panel)
+
+hiv_genotyping_panel = RequisitionPanel('HIV Genotyping', wb)  # link this to the visit_schedule
+lab_profile.add_panel(hiv_genotyping_panel)
+
 rdb_panel = RequisitionPanel('Research Blood Draw', wb)  # link this to the visit_schedule
 lab_profile.add_panel(rdb_panel)
 

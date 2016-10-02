@@ -13,6 +13,7 @@ from edc_timepoint.apps import AppConfig as EdcTimepointAppConfig
 from edc_timepoint.timepoint import Timepoint
 from edc_consent.consent_config import ConsentConfig
 from edc_metadata.apps import AppConfig as EdcMetaDataAppConfigParent
+from edc_visit_tracking.apps import AppConfig as EdcVisitTrackingAppConfigParent
 from datetime import datetime
 
 
@@ -36,18 +37,18 @@ class EdcConsentAppConfig(EdcConsentAppConfigParent):
             age_is_adult=18,
             age_max=64,
             gender=['M', 'F']
-        )
+        ),
+        ConsentConfig(
+            'amp.studyconsent',
+            version='2',
+            start=datetime(2016, 10, 21, 0, 0, 0).replace(tzinfo=None),
+            end=datetime(2017, 5, 1, 0, 0, 0).replace(tzinfo=None),
+            age_min=16,
+            age_is_adult=18,
+            age_max=64,
+            gender=['M', 'F']
+        ),
     ]
-#         ConsentConfig(
-#             'amp.studyconsent',
-#             version='2',
-#             start=datetime(2016, 9, 30, 0, 0, 0).replace(tzinfo=None),
-#             end=datetime(2017, 5, 1, 0, 0, 0).replace(tzinfo=None),
-#             age_min=16,
-#             age_is_adult=18,
-#             age_max=64,
-#             gender=['M', 'F']
-#         ),
 
 
 class DjangoCryptoFieldsAppConfig(DjangoCryptoFieldsAppConfigParent):
@@ -90,3 +91,7 @@ class EdcMetaDataAppConfig(EdcMetaDataAppConfigParent):
     model_attrs = [('amp', 'crfmetadata'), ('amp', 'requisitionmetadata')]
     reason_field = {'amp.subjectvisit': 'reason'}
     app_label = 'amp'
+
+
+class EdcVisitTrackingAppConfig(EdcVisitTrackingAppConfigParent):
+    visit_models = {'amp': ('subject_visit', 'amp.subjectvisit')}
