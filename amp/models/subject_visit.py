@@ -7,7 +7,6 @@ from edc_visit_tracking.model_mixins import VisitModelMixin, PreviousVisitModelM
 
 
 from .appointment import Appointment
-from .screening_consent import ScreeningConsent
 from amp.models.registered_subject import RegisteredSubject
 
 

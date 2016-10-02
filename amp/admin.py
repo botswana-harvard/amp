@@ -5,9 +5,9 @@ from edc_base.modeladmin.mixins import (
     ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin, ModelAdminFormAutoNumberMixin,
     ModelAdminAuditFieldsMixin)
 
-from amp.models import SubjectIdentifier, ScreeningConsent
+from amp.models import SubjectIdentifier, ScreeningConsent, StudyConsent, SubjectVisit, SubjectOffStudy, SubjectRequisition
 
-from .forms import ScreeningConsentForm
+from .forms import ScreeningConsentForm, StudyConsentForm, SubjectOffStudyForm, SubjectVisitForm, SubjectRequisitionForm
 
 admin.register(SubjectIdentifier)
 
@@ -50,25 +50,36 @@ class ScreeningConsentAdmin(MembershipBaseModelAdmin):
     dashboard_type = 'maternal'
     form = ScreeningConsentForm
 
-    fields = ('report_datetime',)
-    # readonly_fields = ('edd_by_lmp', 'ga_lmp_enrollment_wks', 'enrollment_hiv_status')
-    # radio_fields = {'is_diabetic': admin.VERTICAL}
-    list_display = ('report_datetime',)
-
-
-#     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-#         if db_field.name == "registered_subject":
-#             if request.GET.get('registered_subject'):
-#                 kwargs["queryset"] = RegisteredSubject.objects.filter(
-#                     id__exact=request.GET.get('registered_subject', 0))
-#             else:
-#                 self.readonly_fields = list(self.readonly_fields)
-#                 try:
-#                     self.readonly_fields.index('registered_subject')
-#                 except ValueError:
-#                     self.readonly_fields.append('registered_subject')
-#         return super(ScreeningConsentAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-
 admin.site.register(ScreeningConsent, ScreeningConsentAdmin)
 
 
+class StudyConsentAdmin(MembershipBaseModelAdmin):
+
+    dashboard_type = 'maternal'
+    form = StudyConsentForm
+
+admin.site.register(StudyConsent, StudyConsentAdmin)
+
+
+class SubjectOffStudyAdmin(MembershipBaseModelAdmin):
+
+    dashboard_type = 'maternal'
+    form = SubjectOffStudyForm
+
+admin.site.register(SubjectOffStudy, SubjectOffStudyAdmin)
+
+
+class SubjectVisitAdmin(MembershipBaseModelAdmin):
+
+    dashboard_type = 'maternal'
+    form = SubjectVisitForm
+
+admin.site.register(SubjectVisit, SubjectVisitAdmin)
+
+
+class SubjectRequisitionAdmin(MembershipBaseModelAdmin):
+
+    dashboard_type = 'maternal'
+    form = SubjectRequisitionForm
+
+admin.site.register(SubjectRequisition, SubjectRequisitionAdmin)
