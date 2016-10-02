@@ -31,6 +31,12 @@ class SubjectVisit(VisitModelMixin, CreatesMetadataModelMixin, RequiresConsentMi
             return RegisteredSubject.objects.none()
         return registered_subject
 
+    def has_previous_visit_or_raise(self, exception_cls=None):
+        if not self.appointment.visit_code == '100':
+            return True
+        else:
+            return False
+
     def metadata_run_rules(self, source_model=None):
         pass
 
