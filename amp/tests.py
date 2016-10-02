@@ -75,20 +75,22 @@ class TestScreeningConsentIdentifierAllocation(TestCase):
             self.assertEqual(ScreeningConsent.objects.filter(subject_identifier=identifier).count(), 1)
 
     def test_create_enrollment_post_save(self):
-        screening = ScreeningConsentFactory()
-        EnrollmentFactory(subject_identifier=screening.subject_identifier)
-        self.assertEqual(Enrollment.objects.all().count(), 1)
+        screening = ScreeningConsent.objects.create(
+            consent_datetime=datetime.today(),
+            identity='317918515',
+            is_literate='Yes',
+            confirm_identity='317918515',
+            first_name='TESTA',
+            last_name='TESTA',
+        )
+        self.assertEqual(Enrollment.objects.filter(subject_identifier=screening.subject_identifier).count(), 1)
 
     def test_create_enrollment_post_save_appointments(self):
-        screening = ScreeningConsentFactory()
-        EnrollmentFactory(subject_identifier=screening.subject_identifier)
-        apt = Appointment.objects.all().first()
-        print(apt.__dict__)
+        ScreeningConsentFactory()
         self.assertEqual(Appointment.objects.all().count(), 25)
 
     def test_create_subject_visit_and_metadata_at_enrollment(self):
-        screening = ScreeningConsentFactory()
-        EnrollmentFactory(subject_identifier=screening.subject_identifier)
+        ScreeningConsentFactory()
         appointment = Appointment.objects.all().order_by('visit_code').first()
 
         SubjectVisit.objects.create(
@@ -101,8 +103,7 @@ class TestScreeningConsentIdentifierAllocation(TestCase):
 
     def test_create_subject_requisition(self):
 
-        screening = ScreeningConsentFactory()
-        EnrollmentFactory(subject_identifier=screening.subject_identifier)
+        ScreeningConsentFactory()
         appointment = Appointment.objects.all().order_by('visit_code').first()
 
         subject_visit = SubjectVisit.objects.create(

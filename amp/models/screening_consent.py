@@ -11,6 +11,7 @@ from .subject_identifier import SubjectIdentifier
 
 from edc_consent.model_mixins import ConsentModelMixin
 from edc_registration.model_mixins import RegistrationMixin
+from amp.models.enrollment import Enrollment
 
 
 class AlreadyAllocatedError(Exception):
@@ -44,6 +45,15 @@ class ScreeningConsent(ConsentModelMixin, RegistrationMixin, IdentityFieldsMixin
         subject_identifier = SubjectIdentifier.objects.filter(
             allocated_datetime=None).order_by('created').first()
         return subject_identifier.subject_identifier
+
+    def create_enrollment(self):
+        try:
+            Enrollment.objects.get(subject_identifier=self.subject_identifier)
+        except Enrollment.DoesNotExist:
+            Enrollment.objects.create(
+                subject_identifier=self.subject_identifier,
+                is_eligible=False
+            )
 
     def save(self, *args, **kwargs):
         if not self.id:
