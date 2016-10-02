@@ -23,6 +23,7 @@ class AmpAppConfig(AppConfig):
     datafax_site_name = 'Botswana, Gabarone'
     institution = 'Botswana Harvard AIDS Institute Partnership'
     verbose_name = 'AMP Study'
+    device_id = 91
 
 
 class EdcConsentAppConfig(EdcConsentAppConfigParent):
@@ -70,8 +71,8 @@ class EdcLabelAppConfig(EdcLabelAppConfigParent):
     default_cups_server_ip = None
     default_printer_label = 'AmpZplPrinter'
     print ("settings.STATIC_ROOT", settings.STATIC_ROOT)
-    #default_template_folder = os.path.join(settings.STATIC_ROOT, 'templates', 'label_templates')
-    #extra_templates_folder = os.path.join(settings.STATIC_ROOT, 'amp', 'label_templates')
+    default_template_folder = os.path.join(settings.STATIC_ROOT, 'templates', 'label_templates')
+    extra_templates_folder = os.path.join(settings.STATIC_ROOT, 'amp', 'label_templates')
 
 
 class EdcRegistrationAppConfig(EdcRegistrationAppConfigParent):
