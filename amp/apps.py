@@ -70,8 +70,7 @@ class EdcTimepointAppConfig(EdcTimepointAppConfig):
 
 class EdcLabelAppConfig(EdcLabelAppConfigParent):
     default_cups_server_ip = None
-    default_printer_label = 'AmpZplPrinter'
-    print ("settings.STATIC_ROOT", settings.STATIC_ROOT)
+    default_printer_label = 'amp_zpl_printer_label'
     default_template_folder = os.path.join(settings.STATIC_ROOT, 'templates', 'label_templates')
     extra_templates_folder = os.path.join(settings.STATIC_ROOT, 'amp', 'label_templates')
 

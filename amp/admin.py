@@ -8,6 +8,8 @@ from edc_base.modeladmin.mixins import (
 from amp.models import SubjectIdentifier, ScreeningConsent, StudyConsent, SubjectVisit, SubjectOffStudy, SubjectRequisition
 
 from .forms import ScreeningConsentForm, StudyConsentForm, SubjectOffStudyForm, SubjectVisitForm, SubjectRequisitionForm
+from .admin_mixin import EdcLabelAdminMixin
+
 
 admin.register(SubjectIdentifier)
 
@@ -77,7 +79,14 @@ class SubjectVisitAdmin(MembershipBaseModelAdmin):
 admin.site.register(SubjectVisit, SubjectVisitAdmin)
 
 
-class SubjectRequisitionAdmin(MembershipBaseModelAdmin):
+class SubjectRequisitionAdmin(EdcLabelAdminMixin, MembershipBaseModelAdmin):
+
+    actions = ['print_requisition_zpl_labels']
+
+    def print_requisition_zpl_labels(self, request, queryset):
+        for requisition in queryset:
+            self.printer_label('amp_zpl_printer_label', context=requisition.label_context())
+    print_requisition_zpl_labels.short_description = "Print requisitions labels"
 
     dashboard_type = 'maternal'
     form = SubjectRequisitionForm
