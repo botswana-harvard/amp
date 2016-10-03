@@ -1,0 +1,4 @@
+
+
+class MarkeyViewMixin:
+    pass
