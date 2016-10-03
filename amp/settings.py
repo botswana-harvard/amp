@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'amp_lab.apps.AmpLabConfig',
     'amp.apps.EdcAppointmentAppConfig',
     'amp.apps.EdcTimepointAppConfig',
+    'amp_dashboard.apps.AmpDashboardConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
