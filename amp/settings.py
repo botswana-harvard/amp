@@ -24,10 +24,13 @@ BASE_DIR = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SECRET_KEY = 're+uw%kaz#7i+y4063lvt$z*h)*%ng=(8410)obn#y_62jv=5c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
+APP_NAME = 'amp'
+
+PROJECT_TITLE = 'AMP'
 
 # Application definition
 INSTALLED_APPS = [
@@ -37,8 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_revision.apps.AppConfig',
+    'crispy_forms',
     'edc_visit_schedule.apps.AppConfig',
     'edc_content_type_map',
+    'edc_base.apps.AppConfig',
     'edc_offstudy.apps.AppConfig',
     'edc_lab.apps.AppConfig',
     'amp.apps.EdcMetaDataAppConfig',

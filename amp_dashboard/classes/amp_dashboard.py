@@ -4,27 +4,27 @@
 # from edc_registration.models import RegisteredSubject
 # from edc_base.utils import convert_from_camel
 # from edc_constants.constants import YES, POS, NEG, IND, NEVER, UNKNOWN, DWTA, OTHER
-from edc_dashboard.subject import RegisteredSubjectDashboard
+# from edc_dashboard.subject import RegisteredSubjectDashboard
 from amp.models.subject_visit import SubjectVisit
-from amp_lab.models.subject_requisition import SubjectRequisition
+from amp.models import SubjectRequisition
 from amp.models import ScreeningConsent
 
 
-class AmpDashboard(RegisteredSubjectDashboard):
+class AmpDashboard():
 
     view = 'amp_dashboard'
     dashboard_url_name = 'subject_dashboard_url'
     dashboard_name = 'AMP Dashboard'
     urlpattern_view = 'mp_dashboard.views'
     template_name = 'amp_dashboard.html'
-    urlpatterns = [
-        RegisteredSubjectDashboard.urlpatterns[0][:-1] +
-        '(?P<appointment_code>{appointment_code})/$'] + RegisteredSubjectDashboard.urlpatterns
-    urlpattern_options = dict(
-        RegisteredSubjectDashboard.urlpattern_options,
-        dashboard_model=RegisteredSubjectDashboard.urlpattern_options['dashboard_model'] + '|screeningconsent',
-        dashboard_type='subject',
-        appointment_code='100|200|400|800|1200|1600|2000|2400|2800|3200|3600|4000|4400|4800|5200|5600|6000|6400|6800|7200|7600|8000|8400|8800|9200', )
+#     urlpatterns = [
+#         RegisteredSubjectDashboard.urlpatterns[0][:-1] +
+#         '(?P<appointment_code>{appointment_code})/$'] + RegisteredSubjectDashboard.urlpatterns
+#     urlpattern_options = dict(
+#         RegisteredSubjectDashboard.urlpattern_options,
+#         dashboard_model=RegisteredSubjectDashboard.urlpattern_options['dashboard_model'] + '|screeningconsent',
+#         dashboard_type='subject',
+#         appointment_code='100|200|400|800|1200|1600|2000|2400|2800|3200|3600|4000|4400|4800|5200|5600|6000|6400|6800|7200|7600|8000|8400|8800|9200', )
 
     def __init__(self, **kwargs):
         super(AmpDashboard, self).__init__(**kwargs)

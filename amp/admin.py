@@ -5,6 +5,11 @@ from edc_base.modeladmin.mixins import (
     ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin, ModelAdminFormAutoNumberMixin,
     ModelAdminAuditFieldsMixin)
 
+# from lab_requisition.admin import RequisitionAdminMixin
+
+from amp.base_model_admin import BaseModelAdmin
+from amp_lab.models import Panel
+
 from amp.models import SubjectIdentifier, ScreeningConsent, StudyConsent, SubjectVisit, SubjectOffStudy, SubjectRequisition
 
 from .forms import ScreeningConsentForm, StudyConsentForm, SubjectOffStudyForm, SubjectVisitForm, SubjectRequisitionForm
@@ -77,9 +82,28 @@ class SubjectVisitAdmin(MembershipBaseModelAdmin):
 admin.site.register(SubjectVisit, SubjectVisitAdmin)
 
 
-class SubjectRequisitionAdmin(MembershipBaseModelAdmin):
+class SubjectRequisitionAdmin(MembershipBaseModelAdmin, BaseModelAdmin):
 
-    dashboard_type = 'maternal'
     form = SubjectRequisitionForm
+    label_template_name = 'requisition_label'
+    visit_attr = 'subject_visit'
+    panel_model = Panel
+
+    def get_fieldsets(self, request, obj=None):
+        fields = copy(self.fields)
+        try:
+            panel = Panel.objects.get(id=request.GET.get('panel'))
+            if panel.name in ['Rectal swab (Storage)']:
+                try:
+                    fields.remove(fields.index('estimated_volume'))
+                except ValueError:
+                    pass
+        except self.panel_model.DoesNotExist:
+            pass
+        try:
+            fields.remove(fields.index('test_code'))
+        except ValueError:
+            pass
+        return [(None, {'fields': fields})]
 
 admin.site.register(SubjectRequisition, SubjectRequisitionAdmin)
