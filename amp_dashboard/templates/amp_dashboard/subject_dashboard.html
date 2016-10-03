@@ -5,19 +5,47 @@
 <div class="container">
 
 <!-- Beginning of Demographic Div -->
-<div class="row" style="min-height:100px; border:1px solid black;">
+<div class="row" style="border:1px solid #eeeeee;">
+<address>
+  <strong>Maternal Dashboard</strong> 
+  <hr style="margin-top:4px; margin-bottom:4px;">
+  	<mark>
+		{% for key, value in markey_data.items %}
+		    <strong>{{key}}:</strong><span style="margin-left:5px;">{{value}}</span>
+		    {% if forloop.counter == markey_next_row %}
+		    	<br>
+		    {% endif %}
+		{% endfor %}
+  	</mark>
+  	<mark>
+  		<strong>Name:</strong><span style="margin-left:5px;">BAKGOSI (BB)</span>
+  		<strong style="margin-left:5px;">Born:</strong><span style="margin-left:5px;"></span>
+  		<strong style="margin-left:5px;">Consented:</strong><span style="margin-left:5px;">2016-10-03 12:36</span>
+  	</mark> 
+</address>
 </div>
 <!-- End of Demographic Div -->
 
 <!-- Begin Visits Div -->
 <div class="row">
 <!-- 9-col-visits -->
-	<div class="col-md-9" style="min-height:200px; border:1px solid black;">
+	<div class="col-md-9" style="min-height:200px; border:1px solid #eeeeee;">
+	 <blockquote class="blockquote" style="margin:0px">
+  		<ul class="list-inline text-primary">
+  			<li class="list-inline-item small">
+  				 {% for consent in consents %}
+  					<a href="">066-40630025-1 (BCPP Year 2) V5 (complete)</a>
+	 			{% endfor %}
+	 			 <a>066-40630025-1 (BCPP Year 2) V5 (complete) |</a>
+  			</li>
+		</ul>
+	</blockquote>
+	 <hr style="margin-top:4px; margin-bottom:4px;">
 	</div>
 <!-- End 9-col-visits -->
 
 <!-- Begin 3-col-visits -->
-	<div class="col-md-3" style="min-height:200px; border:1px solid black;">
+	<div class="col-md-3" style="min-height:200px; border:1px solid #eeeeee;">
 	</div>
 <!-- End 3-col-visits -->
 
