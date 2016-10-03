@@ -1,7 +1,6 @@
 
 from edc_dashboard.subject import RegisteredSubjectDashboard
 from amp.models.subject_visit import SubjectVisit
-
 from amp.models import ScreeningConsent
 from amp.models.subject_requisition import SubjectRequisition
 
@@ -27,7 +26,7 @@ class AmpDashboard(RegisteredSubjectDashboard):
         self.subject_dashboard_url = 'subject_dashboard_url'
         self.visit_model = SubjectVisit
         self.dashboard_type_list = ['subject']
-        self.membership_form_category = ['screeningconsent', 'follow_up']
+        self.membership_form_category = ['screeningconsent', 'enrollment', 'follow_up']
         self.dashboard_models['screening_consent'] = ScreeningConsent
         self.dashboard_models['visit'] = self.visit_model
         self._requisition_model = SubjectRequisition
@@ -56,7 +55,10 @@ class AmpDashboard(RegisteredSubjectDashboard):
         try:
             screening_consent = ScreeningConsent.objects.get(subject_identifier=self.subject_identifier)
         except ScreeningConsent.DoesNotExist:
-            return screening_consent
+            try:
+                screening_consent = ScreeningConsent.objects.get(pk=self.dashboard_id)
+            except ScreeningConsent.DoesNotExist:
+                return None
         return screening_consent
 
     @property
