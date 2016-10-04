@@ -5,7 +5,6 @@ from edc_constants.constants import MALE, FEMALE
 from edc_consent.managers import ConsentManager
 from edc_consent.field_mixins.bw.identity_fields_mixin import IdentityFieldsMixin
 from edc_consent.field_mixins import ReviewFieldsMixin, PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin
-
 from .subject_identifier import SubjectIdentifier
 
 from edc_consent.model_mixins import ConsentModelMixin

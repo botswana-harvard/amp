@@ -1,0 +1,30 @@
+<p>
+	<h5>Appointments</h5>                        
+	<a href="#">add continuation appointment</a>
+</p>             
+<table>
+	<thead>
+    	<tr>
+    		<th>Code</th>
+    		<th>Description</th>
+    		<th>Type</th>
+    		<th>Appt. Date</th>
+    		<th>Status</th>
+    		<th>Visit Report</th>
+    		<th>Visit Reason</th>
+    		<th>Action</th>                                    
+    	</tr>
+    </thead>
+    <tbody>
+	    <tr>
+	    	<td><b>{{visit_code}}</b></td>
+	        <td><b>{{model}}</b></td>
+			<td>{{appt_type}}</td>
+			<td>{{appt_date}}</td>
+			<td><a href="{{appt_status_link}}">Done</a></td>
+	        <td><a href="{{appt_visit_link}}">2016-10-03 Mon</a></td>
+	        <td><b>{{visit_reason}}</b></td>
+		    <td><a href="#">show appointments</a></td>
+	   	</tr>
+    </tbody>
+</table>
