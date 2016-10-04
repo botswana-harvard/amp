@@ -13,11 +13,28 @@
 <div class="row">
 <!-- 9-col-visits -->
 	<div class="col-md-9" style="min-height:200px; border:1px solid black;">
+	{% block appointments %}
+    
+	{% endblock appointments %}
+
+    {% block scheduled_data_collection %}
+ 
+        {{ rendered_scheduled_forms }}
+        
+    {% endblock scheduled_data_collection %}
+
+    {% block scheduled_requisitions %}
+
+        {{ rendered_scheduled_requisitions }}
+        
+    {% endblock scheduled_requisitions %}
 	</div>
 <!-- End 9-col-visits -->
 
 <!-- Begin 3-col-visits -->
 	<div class="col-md-3" style="min-height:200px; border:1px solid black;">
+	{% block locator_information %}
+	{% endblock locator_information %}
 	</div>
 <!-- End 3-col-visits -->
 
