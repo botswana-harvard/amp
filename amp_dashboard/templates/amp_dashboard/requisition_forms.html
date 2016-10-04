@@ -1,4 +1,4 @@
-<h5>Scheduled Labs  for Visit 1000M</h5>
+<h5>Scheduled Labs  for Visit {{visit_code}}</h5>
 <i> Hint: To edit the labs below, change the selected appointment's status to 'In Progress'</i> 
 <table class="table table-striped">
 	<thead>
@@ -16,18 +16,19 @@
 		</tr>
 	</thead>
 	<tbody>
+	{% for requisition in requisitions %}
     	<tr>
-    		<td></td>
-    		<td></td>
-    		<td></td>
-    		<td></td>
-    		<td></td>
-    		<td></td>
-    		<td></td>
-    		<td></td>                        
-			<td></td>
-			<td></td>
-			<td></td>   
+    		<td>{{forloop.counter}}</td>
+    		<td>{{requisition.panel_name}}</td>
+    		<td>{{requisition.current_entry_title}}</td>
+    		<td>{{requisition.entry_status}}</td>
+    		<td>{{requisition.due_datetime}}</td>
+    		<td>{{requisition.user_created}}</td>
+    		<td>{{requisition.created}}</td>
+    		<td>{{requisition.entry_comment}}</td>
+    		<td>{{requisition.entry_comment}}</td>                        
+			<td>{{requisition.visit_code}}</td>  
     	</tr>
+    {% endfor %}
 	</tbody>
 </table>

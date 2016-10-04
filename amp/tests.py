@@ -101,6 +101,18 @@ class TestScreeningConsentIdentifierAllocation(TestCase):
         self.assertEqual(CrfMetadata.objects.all().count(), 0)
         self.assertEqual(RequisitionMetadata.objects.all().count(), 2)
 
+    def test_get_requisitions(self):
+        ScreeningConsentFactory()
+        appointment = Appointment.objects.all().order_by('visit_code').first()
+
+        SubjectVisit.objects.create(
+            appointment=appointment,
+            report_datetime=datetime.today(),
+            reason='scheduled',
+        )
+        self.assertEqual(CrfMetadata.objects.all().count(), 0)
+        self.assertEqual(RequisitionMetadata.objects.all().count(), 2)
+
     def test_create_subject_requisition(self):
 
         ScreeningConsentFactory()
