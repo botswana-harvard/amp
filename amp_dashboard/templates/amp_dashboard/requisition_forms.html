@@ -20,7 +20,9 @@
     	<tr>
     		<td>{{forloop.counter}}</td>
     		<td>{{requisition.panel_name}}</td>
-    		<td>{{requisition.current_entry_title}}</td>
+    		<td>
+    			<a href="{% url 'admin:amp_subjectrequisition_add' %}?appointment_id={{appointment.id}}&subject_identifier={{appointment.subject_identifier}}">Add Subject Requisition</a>
+    		</td>
     		<td>{{requisition.entry_status}}</td>
     		<td>{{requisition.due_datetime}}</td>
     		<td>{{requisition.user_created}}</td>

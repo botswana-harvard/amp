@@ -4,6 +4,8 @@ from edc_consent.form_mixins import ConsentFormMixin
 from amp.models.screening_consent import ScreeningConsent
 from .models import StudyConsent, SubjectOffStudy, SubjectRequisition, SubjectVisit
 
+from amp.choices import PANELS
+
 
 class ScreeningConsentForm(ConsentFormMixin, forms.ModelForm):
 
@@ -27,6 +29,13 @@ class SubjectOffStudyForm(ConsentFormMixin, forms.ModelForm):
 
 
 class SubjectRequisitionForm(ConsentFormMixin, forms.ModelForm):
+
+    panel_name = forms.ChoiceField(
+        choices=PANELS,
+        required=True,
+        widget=forms.RadioSelect(),
+        label="Panel"
+    )
 
     class Meta:
         model = SubjectRequisition

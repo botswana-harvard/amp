@@ -13,7 +13,7 @@ from edc_lab.requisition.model_mixins import RequisitionModelMixin
 from edc_lab.requisition.managers import RequisitionManager
 from amp.models.subject_visit import SubjectVisit
 from amp_lab.models.packing_list import PackingList
-from amp_lab.models.panel import Panel
+from django.core.urlresolvers import reverse
 
 
 class SubjectRequisitionManager(CrfModelManager):
@@ -29,11 +29,21 @@ class SubjectRequisition(CrfModelMixin, RequisitionModelMixin, RequiresConsentMi
 
     packing_list = models.ForeignKey(PackingList, null=True, blank=True)
 
-    #panel = models.ForeignKey(Panel)
-
     objects = RequisitionManager()
 
-    #entry_meta_data_manager = CrfMetaDataManager(SubjectVisit)
+    def dashboard(self):
+        """Returns a hyperink for the Admin page."""
+        url = reverse(
+            'subject_dashboard_url',
+            kwargs={
+                'dashboard_type': self.registered_subject.subject_type.lower(),
+                'dashboard_model': 'appointment',
+                'dashboard_id': self.pk,
+                'show': 'appointments'
+            })
+        ret = """<a href="{url}" />dashboard</a>""".format(url=url)
+        return ret
+    dashboard.allow_tags = True
 
     def label_context(self, extra_context=None):
         context = {}

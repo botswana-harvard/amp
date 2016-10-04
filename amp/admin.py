@@ -5,11 +5,6 @@ from edc_base.modeladmin.mixins import (
     ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin, ModelAdminFormAutoNumberMixin,
     ModelAdminAuditFieldsMixin)
 
-# from lab_requisition.admin import RequisitionAdminMixin
-
-from amp.base_model_admin import BaseModelAdmin
-from amp_lab.models import Panel
-
 from amp.models import SubjectIdentifier, ScreeningConsent, StudyConsent, SubjectVisit, SubjectOffStudy, SubjectRequisition
 
 from .forms import ScreeningConsentForm, StudyConsentForm, SubjectOffStudyForm, SubjectVisitForm, SubjectRequisitionForm
@@ -53,8 +48,61 @@ class MembershipBaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormIns
 
 
 class ScreeningConsentAdmin(MembershipBaseModelAdmin):
+    fields = (
+        'first_name',
+        'last_name',
+        'initials',
+        'language',
+        'study_site',
+        'is_literate',
+        'witness_name',
+        'consent_datetime',
+        'dob',
+        'is_dob_estimated',
+        'citizen',
+        'identity',
+        'identity_type',
+        'confirm_identity',
+        'comment',
+        'consent_reviewed',
+        'study_questions',
+        'assessment_score',
+        'consent_signature',
+        'consent_copy'
+    )
 
-    dashboard_type = 'maternal'
+    search_fields = ('subject_identifier', 'id', 'identity', 'first_name', 'last_name')
+
+    radio_fields = {
+        'assessment_score': admin.VERTICAL,
+        'citizen': admin.VERTICAL,
+        'consent_copy': admin.VERTICAL,
+        'consent_reviewed': admin.VERTICAL,
+        'consent_signature': admin.VERTICAL,
+        'identity_type': admin.VERTICAL,
+        'is_dob_estimated': admin.VERTICAL,
+        'is_literate': admin.VERTICAL,
+        'language': admin.VERTICAL,
+        'study_questions': admin.VERTICAL}
+
+    list_display = ('subject_identifier',
+                    'is_verified',
+                    'is_verified_datetime',
+                    'first_name',
+                    'initials',
+                    'gender',
+                    'dob',
+                    'consent_datetime',
+                    'created',
+                    'modified',
+                    'user_created',
+                    'user_modified')
+    list_filter = ('language',
+                   'is_verified',
+                   'is_literate',
+                   'identity_type')
+
+    dashboard_type = 'subject'
     form = ScreeningConsentForm
 
 admin.site.register(ScreeningConsent, ScreeningConsentAdmin)
@@ -85,6 +133,51 @@ admin.site.register(SubjectVisit, SubjectVisitAdmin)
 
 
 class SubjectRequisitionAdmin(EdcLabelAdminMixin, MembershipBaseModelAdmin):
+    panel_model = None
+    date_hierarchy = 'requisition_datetime'
+
+    fields = [
+        'subject_visit',
+        'report_datetime',
+        "requisition_datetime",
+        "is_drawn",
+        "reason_not_drawn",
+        "drawn_datetime",
+        "panel_name",
+        "item_type",
+        "estimated_volume",
+        "comments",
+    ]
+
+    radio_fields = {
+        "is_drawn": admin.VERTICAL,
+        "reason_not_drawn": admin.VERTICAL,
+        "item_type": admin.VERTICAL,
+    }
+
+    list_display = [
+        'dashboard',
+        'requisition_identifier',
+        'specimen_identifier',
+        'subject',
+        "requisition_datetime",
+        "panel_name",
+        'hostname_created',
+    ]
+
+    list_filter = [
+        'panel_name',
+        "requisition_datetime",
+        'study_site',
+        'user_created',
+        'hostname_created',
+        'user_modified',
+    ]
+    search_fields = [
+        'specimen_identifier',
+        'requisition_identifier',
+        'panel_name'
+    ]
 
     actions = ['print_requisition_zpl_labels']
 
@@ -96,23 +189,11 @@ class SubjectRequisitionAdmin(EdcLabelAdminMixin, MembershipBaseModelAdmin):
     form = SubjectRequisitionForm
     label_template_name = 'requisition_label'
     visit_attr = 'subject_visit'
-    panel_model = Panel
 
-    def get_fieldsets(self, request, obj=None):
-        fields = copy(self.fields)
-        try:
-            panel = Panel.objects.get(id=request.GET.get('panel'))
-            if panel.name in ['Rectal swab (Storage)']:
-                try:
-                    fields.remove(fields.index('estimated_volume'))
-                except ValueError:
-                    pass
-        except self.panel_model.DoesNotExist:
-            pass
-        try:
-            fields.remove(fields.index('test_code'))
-        except ValueError:
-            pass
-        return [(None, {'fields': fields})]
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "subject_visit":
+            kwargs["queryset"] = SubjectVisit.objects.filter(
+                subject_identifier=request.GET.get('subject_identifier', ''))
+        return super(SubjectRequisitionAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(SubjectRequisition, SubjectRequisitionAdmin)

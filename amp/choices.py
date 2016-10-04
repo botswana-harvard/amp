@@ -7,6 +7,13 @@ STUDY_SITES = (
     ('40', 'Gaborone'),
 )
 
+PANELS = (
+    ('rbd', 'Research Blood Draw'),
+    ('plbcs', 'Plasma and Buffy Coat Storage'),
+    ('hg', 'HIV Genotyping'),
+    ('cnaarv', 'Chemistry NVP/LFT + ALPL6 (ARV)'),
+)
+
 VISIT_INFO_SOURCE = [
     (PARTICIPANT, 'Clinic visit with participant'),
     ('other_contact', 'Other contact with participant (for example telephone call)'),
