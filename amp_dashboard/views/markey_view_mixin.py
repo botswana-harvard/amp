@@ -21,7 +21,7 @@ class MarkeyViewMixin:
                 'Consented': self.consent.consent_datetime,
                 'Omang': self.consent_mode.identity,
                 'Gender': self.gender,
-                'Age Tody': 'UNK',
+                'Age Tody': self.age_today,
                 'Identifier': self.consent.subject_identifier,
             }
         return markey_data
@@ -32,6 +32,10 @@ class MarkeyViewMixin:
 
     @property
     def age(self):
+        return None
+
+    @property
+    def age_today(self):
         return None
 
     @property

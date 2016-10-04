@@ -1,0 +1,24 @@
+<table width="100%" class="table-bordered">
+<thead></thead>
+<tbody>
+    <tr>
+      <td id="lab-results-panel" style="display: none;">
+        <div id="dashboard-link">
+          <button type="button" id="board-link">show dashboard</button>
+        </div>
+        <div id="results-space"></div>
+        <p>{% include "amp_dashboard/add_continuation_appointment.html" %}</p>
+      </td>
+    </tr>
+    <tr>
+    <td>
+      <p>{% include "amp_dashboard/scheduled_forms.html" %} </p>
+    </td>
+    </tr>
+    <tr>
+	    <td>
+	      <p> {% include "amp_dashboard/requisition_forms.html" %}</p>
+	    </td>
+    </tr>
+</tbody>    
+</table>
