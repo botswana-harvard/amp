@@ -36,12 +36,9 @@ class SubjectRequisition(CrfModelMixin, RequisitionModelMixin, RequiresConsentMi
         url = reverse(
             'subject_dashboard_url',
             kwargs={
-                'dashboard_type': self.registered_subject.subject_type.lower(),
-                'dashboard_model': 'appointment',
-                'dashboard_id': self.pk,
-                'show': 'appointments'
+                'subject_identifier': self.subject_identifier
             })
-        ret = """<a href="{url}" />dashboard</a>""".format(url=url)
+        ret = """<a href="{url}" >dashboard</a>""".format(url=url)
         return ret
     dashboard.allow_tags = True
 

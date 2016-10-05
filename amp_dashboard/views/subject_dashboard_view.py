@@ -17,8 +17,11 @@ class SubjectDashboardView(
         MarqueeViewMixin,
         AppointmentSubjectVisitCRFViewMixin, LocatorResultsActionsViewMixin, EdcBaseViewMixin, TemplateView):
 
-    context = {}
-    template_name = 'amp_dashboard/subject_dashboard.html'
+    def __init__(self, **kwargs):
+        super(SubjectDashboardView, self).__init__(**kwargs)
+        self.request = None
+        self.context = {}
+        self.template_name = 'amp_dashboard/subject_dashboard.html'
 
     def get_context_data(self, **kwargs):
         self.context = super().get_context_data(**kwargs)
@@ -31,7 +34,10 @@ class SubjectDashboardView(
             'markey_data': self.markey_data,
             'markey_next_row': self.markey_next_row,
             'requisitions': self.requistions,
-            'scheduled_forms': self.scheduled_forms
+            'scheduled_forms': self.scheduled_forms,
+            'appointments': self.appointments,
+            'show': self.show,
+            'subject_identifier': self.subject_identifier
         })
         return self.context
 
@@ -41,27 +47,21 @@ class SubjectDashboardView(
 
     @property
     def requistions(self):
-        appointment = Appointment.objects.all().order_by('visit_code').first()
-        try:
-            SubjectVisit.objects.get(appointment__subject_identifier='1001243-1')
-        except SubjectVisit.DoesNotExist:
-            SubjectVisit.objects.create(
-                appointment=appointment,
-                report_datetime=datetime.today(),
-                reason='scheduled',
-            )
-        requistions = RequisitionMetadata.objects.filter(subject_identifier='1001243-1')
+        requistions = RequisitionMetadata.objects.filter(subject_identifier=self.subject_identifier)
         return requistions
 
     @property
     def consent(self):
         try:
-            screening_consent = ScreeningConsent.objects.all().first()
+            screening_consent = ScreeningConsent.objects.get(subject_identifier=self.subject_identifier)
         except ScreeningConsent.DoesNotExist:
             screening_consent = None
         return screening_consent
 
     @property
     def subject_identifier(self):
-        subject_identifier = self.context.get('subject_identifier')
-        return subject_identifier
+        return self.context.get('subject_identifier')
+
+    @property
+    def show(self):
+        return self.context.get('show')

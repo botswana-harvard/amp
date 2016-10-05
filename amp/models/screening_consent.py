@@ -12,6 +12,7 @@ from .subject_identifier import SubjectIdentifier
 from edc_consent.model_mixins import ConsentModelMixin
 from edc_registration.model_mixins import RegistrationMixin
 from amp.models.enrollment import Enrollment
+from django.core.urlresolvers import reverse
 
 
 class AlreadyAllocatedError(Exception):
@@ -65,3 +66,14 @@ class ScreeningConsent(ConsentModelMixin, RegistrationMixin, IdentityFieldsMixin
         get_latest_by = 'consent_datetime'
         unique_together = (('first_name', 'dob', 'initials', 'version'), )
         ordering = ('created', )
+
+    def dashboard(self):
+        """Returns a hyperink for the Admin page."""
+        url = reverse(
+            'subject_dashboard_url',
+            kwargs={
+                'subject_identifier': self.subject_identifier
+            })
+        ret = """<a href="{url}" >dashboard</a>""".format(url=url)
+        return ret
+    dashboard.allow_tags = True

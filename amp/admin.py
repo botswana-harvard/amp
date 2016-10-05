@@ -85,7 +85,8 @@ class ScreeningConsentAdmin(MembershipBaseModelAdmin):
         'language': admin.VERTICAL,
         'study_questions': admin.VERTICAL}
 
-    list_display = ('subject_identifier',
+    list_display = ('dashboard',
+                    'subject_identifier',
                     'is_verified',
                     'is_verified_datetime',
                     'first_name',

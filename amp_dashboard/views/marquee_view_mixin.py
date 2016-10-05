@@ -41,9 +41,6 @@ class MarqueeViewMixin:
 
     @property
     def consent(self):
-        self.create_subject_identifiers()
-        if not ScreeningConsent.objects.filter(subject_identifier='1001243-1'):
-            self.consent_model = ScreeningConsentFactory()
         return self.consent_model
 
     @property

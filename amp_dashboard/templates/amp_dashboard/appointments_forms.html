@@ -1,6 +1,10 @@
 {% block appointments %}
+	<p>
+	<h5>Appointments</h5>                        
+	<a href="#">add continuation appointment</a>
+	</p>
 	{% if scheduled_entry_meta_data %} <I>(Hint: to see all appointments, click 'show appointments' in the Action column below)</I>{% endif%}
-	    <table>
+	    <table width="100%" class="table table-bordered">
 	    <thead>
 	    <th>Code</th>
 	    <th>Description</th>
@@ -17,10 +21,17 @@
 	    {% else %}
 	        {% for appointment in appointments %}
 	            <tr class="{% cycle 'row1' 'row2' %}">
-	            {% include appointment_row_template %}            
+	            <td><b>{{visit_code}}</b></td>
+		        <td><b>{{model}}</b></td>
+				<td>{{appt_type}}</td>
+				<td>{{appt_date}}</td>
+				<td><a href="{{appt_status_link}}">Done</a></td>
+		        <td><a href="{{appt_visit_link}}">2016-10-03 Mon</a></td>
+		        <td><b>{{visit_reason}}</b></td>
+			    <td><a href="{% url 'subject_dashboard_url' appointment.pk subject_identifier 'forms' %}">show appointments</a></td>
 	            </tr>
 	        {% endfor %}
 	    {% endif %}
 	    </tbody>
-	    </table>
+	    </table>	    
 {% endblock appointments %}

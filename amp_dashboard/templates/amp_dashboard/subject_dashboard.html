@@ -37,18 +37,20 @@
 	</blockquote>
 	{% endblock membership_forms %}
 	{% block appointments %}
-    	{% include "amp_dashboard/appointment_forms.html" %}
+    	{% include "amp_dashboard/appointments_forms.html" %}
 	{% endblock appointments %}
 
     {% block scheduled_data_collection %}
- 
-        {{ rendered_scheduled_forms }}
+ 		{% if show == 'forms' %}
+        	<p>{% include "amp_dashboard/scheduled_forms.html" %} </p>
+        {% endif %}
         
     {% endblock scheduled_data_collection %}
 
     {% block scheduled_requisitions %}
-
-        {{ rendered_scheduled_requisitions }}
+		{% if show == 'forms' %}
+        	<p> {% include "amp_dashboard/requisition_forms.html" %}</p>
+        {% endif %}
         
     {% endblock scheduled_requisitions %}
 	</div>

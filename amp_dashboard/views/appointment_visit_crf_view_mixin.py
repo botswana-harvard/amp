@@ -5,7 +5,8 @@ class AppointmentSubjectVisitCRFViewMixin:
 
     def __init__(self):
         self.request = None
-        self.subject_identifier
+        self.subject_identifier = None
+        self.show = None
 
     @property
     def appointments(self):
@@ -23,15 +24,13 @@ class AppointmentSubjectVisitCRFViewMixin:
         if self.show == 'forms':
             appointments = [self.appointment]
         else:
-            # or filter appointments for the current membership categories
-            # schedule_group__membership_form
             appointments = Appointment.objects.filter(
                 subject_identifier=self.subject_identifier).order_by('visit_instance', 'appt_datetime')
         return appointments
 
     @property
     def appointment(self):
-        appointment_id = self.request.Get.get('appointment_id', None)
+        appointment_id = self.context.get('appointment_id')
         appointment = None
         try:
             appointment = Appointment.objects.get(pk=appointment_id)

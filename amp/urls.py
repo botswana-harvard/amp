@@ -17,19 +17,17 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from edc_base.views import LoginView, LogoutView
-# from django.views.generic import RedirectView
 from .views import HomeView
-from amp_dashboard.views import SubjectDashboardView
 
 
 APP_NAME = settings.APP_NAME
 
 urlpatterns = [
-    url(r'', include('edc_base.urls', 'edc-base')),
+    url(r'^amp_dashboard/', include('amp_dashboard.urls')),
     url(r'login', LoginView.as_view(), name='login_url'),
     url(r'logout', LogoutView.as_view(pattern_name='login_url'), name='logout_url'),
     url(r'^admin/', admin.site.urls),
     url(r'^home/', HomeView.as_view(), name='home_url'),
-    url(r'^subject_dashboard/$', SubjectDashboardView.as_view(), name='subject_dashboard_url'),
     url(r'^', HomeView.as_view(), name='home_url'),
+    url(r'', include('edc_base.urls', 'edc-base')),
 ]
