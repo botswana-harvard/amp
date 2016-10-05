@@ -28,7 +28,13 @@
 				<td><a href="{{appt_status_link}}">Done</a></td>
 		        <td><a href="{{appt_visit_link}}">2016-10-03 Mon</a></td>
 		        <td><b>{{visit_reason}}</b></td>
-			    <td><a href="{% url 'subject_dashboard_url' appointment.pk subject_identifier 'forms' %}">show appointments</a></td>
+			    <td>
+			    	{% if show %}
+			    		<a href="{% url 'subject_dashboard_url' subject_identifier %}">show appointments</a>
+			    	{% else %} 
+			    		<a href="{% url 'subject_dashboard_url' appointment.str_pk subject_identifier %}?show=forms">show forms</a>
+			    	{% endif %}
+			    </td>
 	            </tr>
 	        {% endfor %}
 	    {% endif %}

@@ -21,6 +21,7 @@ class SubjectDashboardView(
         super(SubjectDashboardView, self).__init__(**kwargs)
         self.request = None
         self.context = {}
+        self.show = None
         self.template_name = 'amp_dashboard/subject_dashboard.html'
 
     def get_context_data(self, **kwargs):
@@ -36,10 +37,17 @@ class SubjectDashboardView(
             'requisitions': self.requistions,
             'scheduled_forms': self.scheduled_forms,
             'appointments': self.appointments,
-            'show': self.show,
             'subject_identifier': self.subject_identifier
         })
+        print(self.context, 'self.context')
         return self.context
+
+    def get(self, request, *args, **kwargs):
+        self.request = request
+        context = self.get_context_data(**kwargs)
+        self.show = request.GET.get('show', None)
+        context.update({'show': self.show})
+        return self.render_to_response(context)
 
     @property
     def scheduled_forms(self):
@@ -59,9 +67,10 @@ class SubjectDashboardView(
         return screening_consent
 
     @property
-    def subject_identifier(self):
-        return self.context.get('subject_identifier')
+    def show_forms(self):
+        show = self.request.GET.get('show', None)
+        return True if show == 'forms' else False
 
     @property
-    def show(self):
-        return self.context.get('show')
+    def subject_identifier(self):
+        return self.context.get('subject_identifier')

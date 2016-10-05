@@ -9,3 +9,7 @@ class Appointment(AppointmentModelMixin, RequiresConsentMixin, BaseUuidModel):
     class Meta:
         consent_model = 'amp.screeningconsent'
         app_label = 'amp'
+
+    @property
+    def str_pk(self):
+        return str(self.pk)
