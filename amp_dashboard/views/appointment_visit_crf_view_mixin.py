@@ -19,7 +19,6 @@ class AppointmentSubjectVisitCRFViewMixin:
             only those for a given membership form
             only those for a visit definition grouping
             """
-        print(self.context.keys(), "self.context .get('show')")
         appointments = []
         if self.appointment:
             appointments = [self.appointment]
@@ -31,7 +30,6 @@ class AppointmentSubjectVisitCRFViewMixin:
     @property
     def appointment(self):
         appointment_id = self.context.get('appointment_pk')
-        print(appointment_id, 'appointment_id')
         appointment = None
         try:
             appointment = Appointment.objects.get(pk=appointment_id)

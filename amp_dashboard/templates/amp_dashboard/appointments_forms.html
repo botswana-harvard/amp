@@ -26,13 +26,21 @@
 				<td>{{appt_type}}</td>
 				<td>{{appt_date}}</td>
 				<td><a href="{{appt_status_link}}">Done</a></td>
-		        <td><a href="{{appt_visit_link}}">2016-10-03 Mon</a></td>
+		        <td>
+		        	{% if appointment.subject_visit %}
+		        		<a href="{% url 'admin:amp_subjectvisit_change' appointment.subject_visit.pk %}?subject_identifier={{ appointment.subject_identifier }}">{{ appointment.subject_visit.report_datetime }}</a>
+		        	{% else %}
+		        		<a href="{% url 'admin:amp_subjectvisit_add' %}?subject_identifier={{ appointment.subject_identifier }}">add visit</a>
+		        	{% endif %}
+		        </td>
 		        <td><b>{{visit_reason}}</b></td>
 			    <td>
 			    	{% if show %}
 			    		<a href="{% url 'subject_dashboard_url' subject_identifier %}">show appointments</a>
-			    	{% else %} 
-			    		<a href="{% url 'subject_dashboard_url' appointment.str_pk subject_identifier %}?show=forms">show forms</a>
+			    	{% else %}
+			    		{% if appointment.subject_visit %} 
+			    			<a href="{% url 'subject_dashboard_url' appointment.str_pk subject_identifier %}?show=forms">show forms</a>
+			    		{% endif %}
 			    	{% endif %}
 			    </td>
 	            </tr>

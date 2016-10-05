@@ -13,3 +13,11 @@ class Appointment(AppointmentModelMixin, RequiresConsentMixin, BaseUuidModel):
     @property
     def str_pk(self):
         return str(self.pk)
+
+    @property
+    def subject_visit(self):
+        from amp.models.subject_visit import SubjectVisit
+        try:
+            return SubjectVisit.objects.get(appointment=self)
+        except SubjectVisit.DoesNotExist:
+            return None

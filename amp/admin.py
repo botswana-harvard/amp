@@ -1,11 +1,16 @@
 
 from django.contrib import admin
+from django import forms
+from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
+
 from django.core.urlresolvers import reverse
 from edc_base.modeladmin.mixins import (
     ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin, ModelAdminFormAutoNumberMixin,
     ModelAdminAuditFieldsMixin)
 
 from amp.models import SubjectIdentifier, ScreeningConsent, StudyConsent, SubjectVisit, SubjectOffStudy, SubjectRequisition
+
+from edc_visit_tracking.admin import VisitAdminMixin
 
 from .forms import ScreeningConsentForm, StudyConsentForm, SubjectOffStudyForm, SubjectVisitForm, SubjectRequisitionForm
 from .admin_mixin import EdcLabelAdminMixin
@@ -35,16 +40,11 @@ class MembershipBaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormIns
     empty_value_display = '-'
 
     def redirect_url(self, request, obj, post_url_continue=None):
-        url_name = request.GET.get(self.querystring_name)
-        dashboard_type = request.GET.get('dashboard_type')
-        dashboard_model = request.GET.get('dashboard_model')
-        dashboard_id = request.GET.get('dashboard_id')
-        show = request.GET.get('show')
+        url_name = 'subject_dashboard_url'
+        print(request.GET)
+        subject_identifier = request.GET.get('subject_identifier')
         return reverse(url_name, kwargs={
-            'dashboard_type': dashboard_type,
-            'dashboard_model': dashboard_model,
-            'dashboard_id': dashboard_id,
-            'show': show})
+            'subject_identifier': subject_identifier})
 
 
 class ScreeningConsentAdmin(MembershipBaseModelAdmin):
@@ -125,9 +125,7 @@ class SubjectOffStudyAdmin(MembershipBaseModelAdmin):
 admin.site.register(SubjectOffStudy, SubjectOffStudyAdmin)
 
 
-class SubjectVisitAdmin(MembershipBaseModelAdmin):
-
-    dashboard_type = 'maternal'
+class SubjectVisitAdmin(VisitAdminMixin, MembershipBaseModelAdmin):
     form = SubjectVisitForm
 
 admin.site.register(SubjectVisit, SubjectVisitAdmin)

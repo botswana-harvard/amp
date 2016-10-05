@@ -39,7 +39,6 @@ class SubjectDashboardView(
             'appointments': self.appointments,
             'subject_identifier': self.subject_identifier
         })
-        print(self.context, 'self.context')
         return self.context
 
     def get(self, request, *args, **kwargs):
