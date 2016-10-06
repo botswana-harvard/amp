@@ -12,6 +12,14 @@ from edc_offstudy.forms import OffStudyFormMixin
 from amp.choices import PANELS, VISIT_REASON, VISIT_INFO_SOURCE
 from edc_constants.constants import ON_STUDY
 from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
+from amp.models.appointment import Appointment
+
+
+class AppointmentForm(forms.ModelForm):
+
+    class Meta:
+        model = Appointment
+        fields = '__all__'
 
 
 class ScreeningConsentForm(ConsentFormMixin, forms.ModelForm):
