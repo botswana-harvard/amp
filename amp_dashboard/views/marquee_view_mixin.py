@@ -1,6 +1,3 @@
-from amp.models.screening_consent import ScreeningConsent
-from amp.factories import ScreeningConsentFactory
-from amp.models.subject_identifier import SubjectIdentifier
 
 
 class MarqueeViewMixin:
@@ -29,15 +26,6 @@ class MarqueeViewMixin:
                 'Identifier': self.consent.subject_identifier,
             }
         return markey_data
-
-    def create_subject_identifiers(self):
-        for identifier in ['1001243-1', '1001243-2', '1001243-3', '1001243-4', '1001243-5']:
-                try:
-                    SubjectIdentifier.objects.get(subject_identifier=identifier)
-                except SubjectIdentifier.DoesNotExist:
-                    SubjectIdentifier.objects.create(
-                        subject_identifier=identifier
-                    )
 
     @property
     def consent(self):
