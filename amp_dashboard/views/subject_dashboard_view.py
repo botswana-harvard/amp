@@ -37,7 +37,8 @@ class SubjectDashboardView(
             'requisitions': self.requistions,
             'scheduled_forms': self.scheduled_forms,
             'appointments': self.appointments,
-            'subject_identifier': self.subject_identifier
+            'subject_identifier': self.subject_identifier,
+            'consents': [("Screening Consent(complete)", self.consent)],
         })
         return self.context
 

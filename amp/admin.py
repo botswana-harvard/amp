@@ -178,12 +178,12 @@ class SubjectRequisitionAdmin(EdcLabelAdminMixin, MembershipBaseModelAdmin):
         'panel_name'
     ]
 
-    actions = ['print_requisition_zpl_labels']
+    actions = ['print_requisition_barcode_labels']
 
-    def print_requisition_zpl_labels(self, request, queryset):
+    def print_requisition_barcode_labels(self, request, queryset):
         for requisition in queryset:
-            self.printer_label('amp_zpl_printer_label', context=requisition.label_context())
-    print_requisition_zpl_labels.short_description = "Print requisitions labels"
+            self.print_barcode_label('amp_requisition_label_template', context=requisition.label_context())
+    print_requisition_barcode_labels.short_description = "Print requisitions labels"
 
     form = SubjectRequisitionForm
     label_template_name = 'requisition_label'
@@ -192,7 +192,7 @@ class SubjectRequisitionAdmin(EdcLabelAdminMixin, MembershipBaseModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "subject_visit":
             kwargs["queryset"] = SubjectVisit.objects.filter(
-                subject_identifier=request.GET.get('subject_identifier', ''))
+                subject_identifier=request.GET.get('subject_identifier', 0))
         return super(SubjectRequisitionAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 admin.site.register(SubjectRequisition, SubjectRequisitionAdmin)

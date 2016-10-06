@@ -1,5 +1,5 @@
 from django.db import models
-
+from amp.apps import AmpAppConfig
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 
 from edc_visit_tracking.model_mixins import CrfModelMixin
@@ -14,6 +14,7 @@ from edc_lab.requisition.managers import RequisitionManager
 from amp.models.subject_visit import SubjectVisit
 from amp_lab.models.packing_list import PackingList
 from django.core.urlresolvers import reverse
+from amp.models.screening_consent import ScreeningConsent
 
 
 class SubjectRequisitionManager(CrfModelManager):
@@ -31,12 +32,15 @@ class SubjectRequisition(CrfModelMixin, RequisitionModelMixin, RequiresConsentMi
 
     objects = RequisitionManager()
 
+    def subject(self):
+        return None
+
     def dashboard(self):
         """Returns a hyperink for the Admin page."""
         url = reverse(
             'subject_dashboard_url',
             kwargs={
-                'subject_identifier': self.subject_identifier
+                'subject_identifier': self.subject_visit.appointment.subject_identifier
             })
         ret = """<a href="{url}" >dashboard</a>""".format(url=url)
         return ret
@@ -46,23 +50,31 @@ class SubjectRequisition(CrfModelMixin, RequisitionModelMixin, RequiresConsentMi
         context = {}
         may_store_samples = None
         context.update({
-            'barcode_value': self.barcode_value(),
+#             'barcode_value': self.barcode_value(),
             'clinician_initials': self.user_created[0:2].upper(),
-            'dob': self.registered_subject.dob,
+            'dob': self.screening_consent.dob,
             'drawn_datetime': self.drawn_datetime,
-            'gender': self.registered_subject.gender,
-            'initials': self.registered_subject.initials,
+            'gender': self.screening_consent.gender,
+            'initials': self.screening_consent.initials,
             'item_count': self.item_count,
             'may_store_samples': may_store_samples,
-            'panel': self.panel.name[0:21],
-            'protocol': '',  # edc_base_app_config.protocol_number
+            'panel_name': self.panel_name,
+            'protocol': AmpAppConfig.protocol_number,
             'requisition_identifier': self.requisition_identifier,
-            'site': self.study_site,
+            'site': self.study_site or '01',
             'specimen_identifier': self.specimen_identifier,
-            'subject_identifier': self.subject_identifier,
+            'subject_identifier': self.screening_consent.subject_identifier,
             'visit': self.subject_visit.appointment.visit_code,
         })
         return context
+
+    @property
+    def screening_consent(self):
+        try:
+            screening_consent = ScreeningConsent.objects.get(subject_identifier=self.subject_visit.subject_identifier)
+        except ScreeningConsent.DoesNotExist:
+            screening_consent = None
+        return screening_consent
 
     def get_visit(self):
         return self.subject_visit

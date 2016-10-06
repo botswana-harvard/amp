@@ -32,7 +32,7 @@ class EdcLabelAdminMixin:
                     self._printers.update({printer: printer_properties})
         return self._printers
 
-    def print_label(self, label_name, copies=None, context=None):
+    def print_barcode_label(self, label_name, copies=None, context=None):
         copies = 1 if copies is None else copies
         label_template = app_config.label_templates.get(label_name)
         context = label_template.test_context if context is None else context

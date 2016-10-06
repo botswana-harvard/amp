@@ -8,10 +8,10 @@ STUDY_SITES = (
 )
 
 PANELS = (
-    ('rbd', 'Research Blood Draw'),
-    ('plbcs', 'Plasma and Buffy Coat Storage'),
-    ('hg', 'HIV Genotyping'),
-    ('cnaarv', 'Chemistry NVP/LFT + ALPL6 (ARV)'),
+    ('Research Blood Draw', 'Research Blood Draw'),
+    ('Plasma and Buffy Coat Storage', 'Plasma and Buffy Coat Storage'),
+    ('HIV Genotyping', 'HIV Genotyping'),
+    ('Chemistry NVP/LFT + ALPL6 (ARV)', 'Chemistry NVP/LFT + ALPL6 (ARV)'),
 )
 
 VISIT_INFO_SOURCE = [

@@ -30,7 +30,10 @@
   		<ul class="list-inline text-primary">
   			<li class="list-inline-item small">
   				 {% for consent in consents %}
-  					<a href="">066-40630025-1 (BCPP Year 2) V5 (complete)</a>
+  				 	{% if forloop.counter > 1%}
+  				 		|
+  				 	{% endif %}
+  					<a href="{{consent.1.get_absolute_url}}">{{consent.0}}</a>
 	 			{% endfor %}
   			</li>
 		</ul>
