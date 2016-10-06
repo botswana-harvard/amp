@@ -1,7 +1,5 @@
 
 from django.contrib import admin
-from django import forms
-from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 
 from django.core.urlresolvers import reverse
 from edc_base.modeladmin.mixins import (
@@ -12,8 +10,11 @@ from amp.models import SubjectIdentifier, ScreeningConsent, StudyConsent, Subjec
 
 from edc_visit_tracking.admin import VisitAdminMixin
 
-from .forms import ScreeningConsentForm, StudyConsentForm, SubjectOffStudyForm, SubjectVisitForm, SubjectRequisitionForm
+from .forms import (
+    ScreeningConsentForm, StudyConsentForm, SubjectOffStudyForm, SubjectVisitForm, SubjectRequisitionForm,
+    AppointmentForm)
 from .admin_mixin import EdcLabelAdminMixin
+from amp.models.appointment import Appointment
 
 
 admin.register(SubjectIdentifier)
@@ -45,6 +46,25 @@ class MembershipBaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormIns
         subject_identifier = request.GET.get('subject_identifier')
         return reverse(url_name, kwargs={
             'subject_identifier': subject_identifier})
+
+
+class AppointmentAdmin(MembershipBaseModelAdmin):
+
+    fields = (
+        'appt_datetime',
+        'appt_type',
+        'appt_status',
+        'appt_reason',
+        'comment',
+    )
+
+    radio_fields = {
+        'appt_type': admin.VERTICAL,
+        'appt_status': admin.VERTICAL}
+
+    form = AppointmentForm
+
+admin.site.register(Appointment, AppointmentAdmin)
 
 
 class ScreeningConsentAdmin(MembershipBaseModelAdmin):

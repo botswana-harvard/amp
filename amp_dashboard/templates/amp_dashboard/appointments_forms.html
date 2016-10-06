@@ -25,7 +25,7 @@
 		        <td><b>{{model}}</b></td>
 				<td>{{appt_type}}</td>
 				<td>{{appt_date}}</td>
-				<td><a href="{{appt_status_link}}">Done</a></td>
+				<td><a href="{% url 'admin:amp_appointment_change' appointment.pk %}?subject_identifier={{ appointment.subject_identifier }}">{{ appointment.appt_status }}</a></td>
 		        <td>
 		        	{% if appointment.subject_visit %}
 		        		<a href="{% url 'admin:amp_subjectvisit_change' appointment.subject_visit.pk %}?subject_identifier={{ appointment.subject_identifier }}">{{ appointment.subject_visit.report_datetime }}</a>
