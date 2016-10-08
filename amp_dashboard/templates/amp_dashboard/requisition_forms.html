@@ -3,7 +3,9 @@
 
 //-->
 $(document).ready(function() {
-
+	
+	$("#print-status-div").hide();
+	
 	$("#all-records-radio").click(function(){
 		 $('input[name=requisition-checkbox]').prop('checked', true);
 	});
@@ -14,7 +16,6 @@ $(document).ready(function() {
 		}).get();
 		
 		var url = "{% url 'subject_dashboard_url' subject_identifier %}";
-		alert(selectedRecordsIds.toString());
 		var printStatus = $.ajax({
 			url: url,
 			type: 'GET',
@@ -25,11 +26,15 @@ $(document).ready(function() {
 		}).promise();
 
 		printStatus.done(function(){
-			alert("all labels printed.");
+			$("#print-status-div").show();
+			$("#print-status-div").removeClass( "alert-danger" ).addClass( "alert-success" );
+			$("#print-status-div").text( "Printing is successful!" );
 		});
 
 		printStatus.fail(function(){
-			alert("Failed to print an error occurred!");
+			$("#print-status-div").show();
+			$("#print-status-div").removeClass( "alert-success" ).addClass( "alert-danger" );
+			$("#print-status-div").text( "Failed to print an error occurred!" );
 		});
 	});
 	
@@ -38,13 +43,14 @@ $(document).ready(function() {
 
 </script>
 <hr>
+<div id ="print-status-div-con"style=" margin-bottom: 1cm;"><span class="alert alert-danger" id="print-status-div">Failed to print an error occurred.</span></div>
 <h5>Scheduled Labs  for Visit {{visit_code}}</h5>
 <i> Hint: To edit the labs below, change the selected appointment's status to 'In Progress'</i>
 <blockquote>
 	<small>
 	<label class="radio-inline"><input type="radio" id="all-records-radio" name="print-records-radio">All Records</label>
 	<label class="radio-inline"><input type="radio" id="selected-records-radio" name="print-records-radio">Selected Record(s)</label> 
-	<button type="button" id="btn-print-label" class="btn btn-primary btn-sm">Print</button></small>
+	<button type="button" id="btn-print-label" class="btn btn-primary btn-sm pull-right"><span class="glyphicon glyphicon-print"></span></button></small>
 </blockquote>
 <table class="table table-condensed">
 	<thead>
@@ -83,9 +89,9 @@ $(document).ready(function() {
     		{% endif %}
     		</td>
     		<td>{{requisition.entry_status}}</td>
-    		<td>{{requisition.due_datetime}}</td>
+    		<td>{{requisition.due_datetime|date:"Y-m-d"|lower}}</td>
     		<td>{{requisition.user_created}}</td>
-    		<td>{{requisition.created}}</td>
+    		<td>{{requisition.created|date:"Y-m-d"|lower}}</td>
     		<td>{{requisition.entry_comment}}</td>
     		<td>{{requisition.entry_comment}}</td>                        
 			<td>{{requisition.visit_code}}</td>
