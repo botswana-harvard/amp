@@ -8,11 +8,15 @@ from .locator_results_actions_view_mixin import LocatorResultsActionsViewMixin
 from .marquee_view_mixin import MarqueeViewMixin
 from amp.models.screening_consent import ScreeningConsent
 from amp.models.requisition_meta_data import RequisitionMetadata
+from amp.models.subject_requisition import SubjectRequisition
+from django.http.response import HttpResponse
+from edc_label.view_mixins import EdcLabelViewMixin
+import json
 
 
 class SubjectDashboardView(
         MarqueeViewMixin,
-        AppointmentSubjectVisitCRFViewMixin, LocatorResultsActionsViewMixin, EdcBaseViewMixin, TemplateView):
+        AppointmentSubjectVisitCRFViewMixin, LocatorResultsActionsViewMixin, EdcBaseViewMixin, EdcLabelViewMixin, TemplateView):
 
     def __init__(self, **kwargs):
         super(SubjectDashboardView, self).__init__(**kwargs)
@@ -44,7 +48,25 @@ class SubjectDashboardView(
         context = self.get_context_data(**kwargs)
         self.show = request.GET.get('show', None)
         context.update({'show': self.show})
+        self.print_barcode_labels(request)
         return self.render_to_response(context)
+
+    def print_barcode_labels(self, request):
+        print_status = False
+        result = {}
+        if request.is_ajax():
+            requisitionsIds = request.GET.get('requisitionids')
+            for requisition_id in requisitionsIds:
+                try:
+                    subject_requistion = SubjectRequisition.objects.get(pk=requisition_id)
+                    super(SubjectDashboardView, self).print_label(
+                        'amp_requisition_label_template', context=subject_requistion.label_context())
+                    print_status = True
+                except SubjectRequisition.DoesNotExist:
+                    pass
+            result = {'labels_printed': len(requisitionsIds)}
+        if print_status:
+            return HttpResponse(json.dumps(result), content_type='application/json')
 
     @property
     def scheduled_forms(self):
