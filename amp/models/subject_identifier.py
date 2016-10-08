@@ -15,7 +15,8 @@ class SubjectIdentifier(BaseUuidModel):
     )
 
     allocated_datetime = models.DateTimeField(
-        null=True
+        null=True,
+        blank=True
     )
 
     def save(self, *args, **kwargs):

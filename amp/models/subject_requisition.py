@@ -12,7 +12,7 @@ from edc_metadata.model_mixins import UpdatesRequisitionMetadataModelMixin
 from edc_lab.requisition.model_mixins import RequisitionModelMixin
 from edc_lab.requisition.managers import RequisitionManager
 from amp.models.subject_visit import SubjectVisit
-from amp_lab.models.packing_list import PackingList
+from .packing_list import PackingList
 from django.core.urlresolvers import reverse
 from amp.models.screening_consent import ScreeningConsent
 
@@ -53,15 +53,13 @@ class SubjectRequisition(CrfModelMixin, RequisitionModelMixin, RequiresConsentMi
 #             'barcode_value': self.barcode_value(),
             'clinician_initials': self.user_created[0:2].upper(),
             'dob': self.screening_consent.dob,
-            'drawn_datetime': self.drawn_datetime,
+            'drawn_datetime': self.drawn_datetime.date(),
             'gender': self.screening_consent.gender,
             'initials': self.screening_consent.initials,
             'item_count': self.item_count,
             'may_store_samples': may_store_samples,
-            'panel_name': self.panel_name,
             'protocol': AmpAppConfig.protocol_number,
-            'requisition_identifier': self.requisition_identifier,
-            'site': self.study_site or '01',
+            'site': self.study_site or '12701',
             'specimen_identifier': self.specimen_identifier,
             'subject_identifier': self.screening_consent.subject_identifier,
             'visit': self.subject_visit.appointment.visit_code,

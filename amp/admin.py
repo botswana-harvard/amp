@@ -17,7 +17,7 @@ from .admin_mixin import EdcLabelAdminMixin
 from amp.models.appointment import Appointment
 
 
-admin.register(SubjectIdentifier)
+admin.site.register(SubjectIdentifier)
 
 
 class BaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin, ModelAdminFormAutoNumberMixin,
@@ -41,11 +41,12 @@ class MembershipBaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormIns
     empty_value_display = '-'
 
     def redirect_url(self, request, obj, post_url_continue=None):
-        url_name = 'subject_dashboard_url'
-        print(request.GET)
-        subject_identifier = request.GET.get('subject_identifier')
-        return reverse(url_name, kwargs={
-            'subject_identifier': subject_identifier})
+        pass
+#         url_name = 'subject_dashboard_url'
+#         print(request.GET)
+#         subject_identifier = request.GET.get('subject_identifier')
+#         return reverse(url_name, kwargs={
+#             'subject_identifier': subject_identifier})
 
 
 class AppointmentAdmin(MembershipBaseModelAdmin):
@@ -72,6 +73,7 @@ class ScreeningConsentAdmin(MembershipBaseModelAdmin):
         'first_name',
         'last_name',
         'initials',
+        'gender',
         'language',
         'study_site',
         'is_literate',
@@ -96,6 +98,7 @@ class ScreeningConsentAdmin(MembershipBaseModelAdmin):
     radio_fields = {
         'assessment_score': admin.VERTICAL,
         'citizen': admin.VERTICAL,
+        'gender': admin.VERTICAL,
         'consent_copy': admin.VERTICAL,
         'consent_reviewed': admin.VERTICAL,
         'consent_signature': admin.VERTICAL,

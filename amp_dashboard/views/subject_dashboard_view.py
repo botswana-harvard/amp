@@ -8,9 +8,6 @@ from .locator_results_actions_view_mixin import LocatorResultsActionsViewMixin
 from .marquee_view_mixin import MarqueeViewMixin
 from amp.models.screening_consent import ScreeningConsent
 from amp.models.requisition_meta_data import RequisitionMetadata
-from datetime import datetime
-from amp.models.subject_visit import SubjectVisit
-from amp.models.appointment import Appointment
 
 
 class SubjectDashboardView(

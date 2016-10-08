@@ -10,6 +10,7 @@ from edc_registration.apps import AppConfig as EdcRegistrationAppConfigParent
 
 from edc_consent.apps import AppConfig as EdcConsentAppConfigParent
 from edc_timepoint.apps import AppConfig as EdcTimepointAppConfig
+from edc_lab.apps import AppConfig as EdcLabAppConfig
 from edc_timepoint.timepoint import Timepoint
 from edc_consent.consent_config import ConsentConfig
 from edc_metadata.apps import AppConfig as EdcMetaDataAppConfigParent
@@ -50,6 +51,11 @@ class EdcConsentAppConfig(EdcConsentAppConfigParent):
             gender=['M', 'F']
         ),
     ]
+
+
+class EdcLabAppConfig(EdcLabAppConfig):
+    app_label = 'amp'
+    requisition = 'amp.subjectrequisition'
 
 
 class DjangoCryptoFieldsAppConfig(DjangoCryptoFieldsAppConfigParent):

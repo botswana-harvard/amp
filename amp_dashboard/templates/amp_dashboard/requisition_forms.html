@@ -6,6 +6,7 @@
 			<th>#</th>
 			<th>Title</th>
 			<th>Requisition</th>
+			<th>Requisition identifier</th>
 			<th>Status</th>
 			<th>Due</th>
 			<th>User</th>
@@ -21,7 +22,18 @@
     		<td>{{forloop.counter}}</td>
     		<td>{{requisition.panel_name}}</td>
     		<td>
-    			<a href="{% url 'admin:amp_subjectrequisition_add' %}?appointment_id={{requisition.appointment.id}}&subject_identifier={{requisition.subject_identifier}}">Add Subject Requisition</a>
+    			{% if requisition.subject_requisition %}
+    				<a href="{% url 'admin:amp_subjectrequisition_change' requisition.subject_requisition.pk %}?subject_visit={{requisition.subject_visit.id}}&appointment_id={{requisition.appointment.id}}&subject_identifier={{requisition.subject_identifier}}">Subject Requisition</a>
+    			{% else %}
+    				<a href="{% url 'admin:amp_subjectrequisition_add' %}?subject_visit={{requisition.subject_visit.id}}&appointment_id={{requisition.appointment.id}}&subject_identifier={{requisition.subject_identifier}}">Add Subject Requisition</a>
+    			{% endif %}
+    		</td>
+    		<td>
+    		{% if requisition.subject_requisition %}
+    			{{ requisition.subject_requisition.requisition_identifier }}
+    		{% else %}
+    			---
+    		{% endif %}
     		</td>
     		<td>{{requisition.entry_status}}</td>
     		<td>{{requisition.due_datetime}}</td>

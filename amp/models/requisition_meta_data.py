@@ -7,6 +7,7 @@ from edc_base.model.models.base_uuid_model import BaseUuidModel
 
 from edc_metadata.model_mixins import (
     CrfMetadataModelMixin, RequisitionMetadataModelMixin)
+from amp.models.subject_requisition import SubjectRequisition
 
 
 class RequisitionMetadata(RequisitionMetadataModelMixin, BaseUuidModel):
@@ -17,6 +18,16 @@ class RequisitionMetadata(RequisitionMetadataModelMixin, BaseUuidModel):
 
     class Meta(RequisitionMetadataModelMixin.Meta):
         app_label = 'amp'
+
+    @property
+    def subject_requisition(self):
+        subject_requisition = None
+        try:
+            subject_requisition = SubjectRequisition.objects.get(subject_visit__appointment=self.appointment, panel_name=self.panel_name)
+            print(subject_requisition.requisition_identifier, "subject_requisition i am in here")
+        except SubjectRequisition.DoesNotExist:
+            pass
+        return subject_requisition
 
 
 class CrfMetadata(CrfMetadataModelMixin, BaseUuidModel):

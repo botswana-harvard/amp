@@ -9,3 +9,5 @@ from .appointment import Appointment
 from .signals import *
 from .subject_requisition import SubjectRequisition
 from .requisition_meta_data import RequisitionMetadata, CrfMetadata
+from .packing_list import PackingList
+from .aliquot_type import AliquotType

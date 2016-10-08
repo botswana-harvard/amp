@@ -9,6 +9,7 @@ STUDY_SITES = (
 
 PANELS = (
     ('Research Blood Draw', 'Research Blood Draw'),
+    ('Viral Load', 'Viral Load'),
     ('Plasma and Buffy Coat Storage', 'Plasma and Buffy Coat Storage'),
     ('HIV Genotyping', 'HIV Genotyping'),
     ('Chemistry NVP/LFT + ALPL6 (ARV)', 'Chemistry NVP/LFT + ALPL6 (ARV)'),

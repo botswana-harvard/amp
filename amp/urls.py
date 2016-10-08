@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'logout', LogoutView.as_view(pattern_name='login_url'), name='logout_url'),
     url(r'^admin/', admin.site.urls),
     url(r'^home/', HomeView.as_view(), name='home_url'),
+    url(r'^(?P<subject_identifier>[-\w]+)/(?P<page>\d+)/$', HomeView.as_view(), name='home_url'),
+    url(r'^(?P<subject_identifier>[-\w]+)/$', HomeView.as_view(), name='home_url'),
     url(r'^', HomeView.as_view(), name='home_url'),
     url(r'', include('edc_base.urls', 'edc-base')),
 ]

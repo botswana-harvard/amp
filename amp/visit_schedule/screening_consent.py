@@ -1,8 +1,7 @@
-from edc_visit_schedule.site_visit_schedules import site_visit_schedules
 from edc_visit_schedule.visit_schedule import VisitSchedule
 from edc_visit_schedule.visit import Requisition
 from edc_visit_schedule.schedule import Schedule
-from amp_lab.lab_profiles import rdb_panel, viral_load_panel
+from amp.lab_profiles import rdb_panel, viral_load_panel
 
 from .requistions_entries import visits
 

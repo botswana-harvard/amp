@@ -2,7 +2,8 @@ from edc_lab.aliquot.processing_profile import ProcessingProfile
 from edc_lab.lab_profile import LabProfile
 from edc_lab.requisition.requisition_panel import RequisitionPanel
 from edc_lab.site_lab_profiles import site_lab_profiles
-from amp_lab.models.aliquot_type import AliquotType
+
+from .models import AliquotType
 
 
 lab_profile = LabProfile('clinic_lab')

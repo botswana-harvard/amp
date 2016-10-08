@@ -2,30 +2,28 @@ from datetime import datetime
 from django.test.testcases import TestCase
 
 from amp.models import ScreeningConsent, SubjectIdentifier, Appointment
-from amp.factories import ScreeningConsentFactory, EnrollmentFactory
+from amp.factories import ScreeningConsentFactory
 from amp.models.enrollment import Enrollment
 from amp.models.registered_subject import RegisteredSubject
 from amp.models.subject_visit import SubjectVisit
 from amp.models.requisition_meta_data import RequisitionMetadata, CrfMetadata
 from amp.models.subject_requisition import SubjectRequisition
-from amp_lab.lab_profiles import rdb_panel
-from edc_lab.requisition.requisition_panel import RequisitionPanel
-from amp_lab.models.panel import Panel
 
 
 class TestScreeningConsentIdentifierAllocation(TestCase):
 
     def setUp(self):
-        for identifier in ['1001243-1', '1001243-2', '1001243-3', '1001243-4', '1001243-5']:
+        for identifier in ['1001243-1', '1001243-2', '1001243-3', '1001243-4', '1001243-5', '1001243-6']:
             SubjectIdentifier.objects.create(
                 subject_identifier=identifier
             )
 
     def test_identifiers(self):
-        self.assertEqual(5, SubjectIdentifier.objects.all().count())
+        self.assertEqual(6, SubjectIdentifier.objects.all().count())
 
     def test_allocate_identifier(self):
 
+        ScreeningConsentFactory()
         ScreeningConsentFactory()
         self.assertEqual(RegisteredSubject.objects.filter(subject_identifier='1001243-1').count(), 1)
 
@@ -40,7 +38,7 @@ class TestScreeningConsentIdentifierAllocation(TestCase):
         screeningconsent = ScreeningConsent.objects.get(subject_identifier='1001243-1')
         screeningconsent.save()
 
-        self.assertEqual(SubjectIdentifier.objects.filter(allocated_datetime=None).count(), 4)
+        self.assertEqual(SubjectIdentifier.objects.filter(allocated_datetime=None).count(), 5)
 
     def test_allocate_identifier2(self):
 
@@ -64,7 +62,7 @@ class TestScreeningConsentIdentifierAllocation(TestCase):
         screeningconsent = ScreeningConsent.objects.get(subject_identifier='1001243-2')
         screeningconsent.save()
 
-        self.assertEqual(SubjectIdentifier.objects.filter(allocated_datetime=None).count(), 3)
+        self.assertEqual(SubjectIdentifier.objects.filter(allocated_datetime=None).count(), 4)
 
     def test_allocate_identifier_all(self):
 
