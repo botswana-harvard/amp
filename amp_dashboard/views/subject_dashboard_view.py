@@ -76,7 +76,8 @@ class SubjectDashboardView(
 
     @property
     def requistions(self):
-        requistions = RequisitionMetadata.objects.filter(subject_identifier=self.subject_identifier, appointment=self.appointment)
+        requistions = RequisitionMetadata.objects.filter(
+            subject_identifier=self.subject_identifier, appointment=self.appointment)
         return requistions
 
     @property
