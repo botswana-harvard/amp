@@ -22,7 +22,7 @@ class MarqueeViewMixin:
                 'Consented': self.consent.consent_datetime,
                 'Omang': self.consent.identity,
                 'Gender': self.gender,
-                'Age Tody': self.age_today,
+                'Age Today': self.age_today,
                 'Identifier': self.consent.subject_identifier,
             }
         return markey_data
