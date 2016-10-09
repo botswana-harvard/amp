@@ -41,12 +41,7 @@ class MembershipBaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormIns
     empty_value_display = '-'
 
     def redirect_url(self, request, obj, post_url_continue=None):
-        pass
-#         url_name = 'subject_dashboard_url'
-#         print(request.GET)
-#         subject_identifier = request.GET.get('subject_identifier')
-#         return reverse(url_name, kwargs={
-#             'subject_identifier': subject_identifier})
+        return request.GET.get('next')
 
 
 class AppointmentAdmin(MembershipBaseModelAdmin):

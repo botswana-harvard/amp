@@ -52,7 +52,7 @@
               </div>
             <div class="panel-body">
               <table id="tbl-dispense-data" class="table table-striped table-responsive">
-                <thead><th>Requisition ID</th><th>Specimen ID</th><th>Drawn Date</th><th>Pannel name</th><th>User Created</th><th></th></thead>
+                <thead><th>Requisition ID</th><th>Specimen ID</th><th>Drawn Date</th><th>Pannel name</th><th>Visit</th><th></th></thead>
                 <tbody>
                 {% if not subject_requisitions %}
                   <tr><td colspan=3><i>No Requisitions</i></td></tr>
@@ -63,7 +63,7 @@
                     <td>{{ subject_requisition.specimen_identifier }}</td>
                     <td>{{ subject_requisition.drawn_datetime|date:"D, d M Y" }}</td>
                     <td>{{ subject_requisition.panel_name }}</td>
-                    <td>{{ subject_requisition.user_created }}</td>
+                    <td>{{ subject_requisition.subject_visit.visit_code }}</td>
                     <td><a href="#" class="btn btn-sm btn-default">Print</a></td>                            
                     </tr>
                 {% endfor %}
