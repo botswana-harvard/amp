@@ -1,10 +1,11 @@
 {% block appointments %}
+  	<hr style="margin-top:4px; margin-bottom:4px;">
 	<p>
 	<h5>Appointments</h5>                        
 	<a href="#">add continuation appointment</a>
 	</p>
 	{% if scheduled_entry_meta_data %} <I>(Hint: to see all appointments, click 'show appointments' in the Action column below)</I>{% endif%}
-	    <table width="100%" class="table table-bordered">
+	    <table width="100%" class="table table-bordered table-striped table-hover table-condensed">
 	    <thead>
 	    <th>Code</th>
 	    <th>Description</th>
@@ -21,19 +22,19 @@
 	    {% else %}
 	        {% for appointment in appointments %}
 	            <tr class="{% cycle 'row1' 'row2' %}">
-	            <td><b>{{visit_code}}</b></td>
-		        <td><b>{{model}}</b></td>
-				<td>{{appt_type}}</td>
-				<td>{{appt_date}}</td>
-				<td><a href="{% url 'admin:amp_appointment_change' appointment.pk %}?subject_identifier={{ appointment.subject_identifier }}&next={% url 'subject_dashboard_url' appointment.subject_identifier %}">{{ appointment.appt_status }}</a></td>
+	            <td>{{appointment.visit_code}}</td>
+		        <td>{{appointment.schedule_name}}</td>
+				<td>{{appointment.appt_type | capfirst}}</td>
+				<td>{{appointment.appt_datetime|date:"Y-m-d D"| capfirst}}</td>
+				<td><a href="{% url 'admin:amp_appointment_change' appointment.pk %}?subject_identifier={{ appointment.subject_identifier }}&next={% url 'subject_dashboard_url' appointment.subject_identifier %}">{{ appointment.appt_status | capfirst }}</a></td>
 		        <td>
 		        	{% if appointment.subject_visit %}
-		        		<a href="{% url 'admin:amp_subjectvisit_change' appointment.subject_visit.pk %}?subject_identifier={{ appointment.subject_identifier }}&next={% url 'subject_dashboard_url' appointment.subject_identifier %}">{{ appointment.subject_visit.report_datetime }}</a>
+		        		<a href="{% url 'admin:amp_subjectvisit_change' appointment.subject_visit.pk %}?subject_identifier={{ appointment.subject_identifier }}&next={% url 'subject_dashboard_url' appointment.subject_identifier %}">{{ appointment.subject_visit.report_datetime |date:"Y-m-d D"| capfirst }}</a>
 		        	{% else %}
-		        		<a href="{% url 'admin:amp_subjectvisit_add' %}?subject_identifier={{ appointment.subject_identifier }}&next={% url 'subject_dashboard_url' appointment.subject_identifier %}">add visit</a>
+		        		<a href="{% url 'admin:amp_subjectvisit_add' %}?subject_identifier={{ appointment.subject_identifier }}&next={% url 'subject_dashboard_url' appointment.subject_identifier %}">Add Visit</a>
 		        	{% endif %}
 		        </td>
-		        <td><b>{{visit_reason}}</b></td>
+		        <td><b>{{appointment.appt_reason}}</b></td>
 			    <td>
 			    	{% if show %}
 			    		<a href="{% url 'subject_dashboard_url' subject_identifier %}">show appointments</a>

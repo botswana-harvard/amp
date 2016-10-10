@@ -12,6 +12,7 @@ from amp.models.subject_requisition import SubjectRequisition
 from django.http.response import HttpResponse
 from edc_label.view_mixins import EdcLabelViewMixin
 import json
+from amp.constants import SUBJECT
 
 
 class SubjectDashboardView(
@@ -33,13 +34,14 @@ class SubjectDashboardView(
             site_header=admin.site.site_header,
         )
         self.context.update({
-            'markey_data': self.markey_data,
+            'markey_data': self.markey_data.items(),
             'markey_next_row': self.markey_next_row,
             'requisitions': self.requistions,
             'scheduled_forms': self.scheduled_forms,
             'appointments': self.appointments,
             'subject_identifier': self.subject_identifier,
             'consents': [("Screening Consent(complete)", self.consent)],
+            'dashboard_type': SUBJECT
         })
         return self.context
 
@@ -74,7 +76,8 @@ class SubjectDashboardView(
 
     @property
     def requistions(self):
-        requistions = RequisitionMetadata.objects.filter(subject_identifier=self.subject_identifier, appointment=self.appointment)
+        requistions = RequisitionMetadata.objects.filter(
+            subject_identifier=self.subject_identifier, appointment=self.appointment)
         return requistions
 
     @property

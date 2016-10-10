@@ -3,6 +3,7 @@ from django.conf import settings
 
 from django.apps import AppConfig
 from edc_protocol.apps import AppConfig as EdcProtocolAppConfigParent
+from edc_base.apps import AppConfig as EdcBaseAppConfigParent
 from edc_appointment.apps import AppConfig as EdcAppointmentAppConfigParent
 from django_crypto_fields.apps import DjangoCryptoFieldsAppConfig as DjangoCryptoFieldsAppConfigParent
 from edc_label.apps import AppConfig as EdcLabelAppConfigParent
@@ -26,6 +27,11 @@ class AmpAppConfig(AppConfig):
     institution = 'Botswana Harvard AIDS Institute Partnership'
     verbose_name = 'AMP Study'
     device_id = 91
+
+
+class EdcBaseAppConfig(EdcBaseAppConfigParent):
+    institution = 'Botswana Harvard AIDS Institute Partnership'
+    project_name = 'AMP STUDY'
 
 
 class EdcConsentAppConfig(EdcConsentAppConfigParent):
@@ -86,6 +92,12 @@ class EdcRegistrationAppConfig(EdcRegistrationAppConfigParent):
 
 
 class EdcProtocolAppConfig(EdcProtocolAppConfigParent):
+    name = 'amp'
+    protocol = 'AMP'
+    protocol_name = 'AMP Study'
+    protocol_title = 'AMP Study'
+    protocol_number = 'HVTN 081'
+    verbose_name = 'AMP Study'
     enrollment_caps = {'amp.enrollment': ('subject', 500)}  # {label_lower: (key, count)}
 
 

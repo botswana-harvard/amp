@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'edc_visit_schedule.apps.AppConfig',
     'edc_content_type_map',
-    'edc_base.apps.AppConfig',
+    'amp.apps.EdcBaseAppConfig',
     'edc_offstudy.apps.AppConfig',
     'amp.apps.EdcLabAppConfig',
     'amp.apps.EdcMetaDataAppConfig',
