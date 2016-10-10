@@ -36,7 +36,7 @@ class SubjectDashboardView(
         self.context.update({
             'markey_data': self.markey_data.items(),
             'markey_next_row': self.markey_next_row,
-            'requisitions': self.requistions,
+            'requisitions_meta_data': self.requisitions_meta_data,
             'scheduled_forms': self.scheduled_forms,
             'appointments': self.appointments,
             'subject_identifier': self.subject_identifier,
@@ -75,7 +75,7 @@ class SubjectDashboardView(
         return {}
 
     @property
-    def requistions(self):
+    def requisitions_meta_data(self):
         requistions = RequisitionMetadata.objects.filter(
             subject_identifier=self.subject_identifier, appointment=self.appointment)
         return requistions

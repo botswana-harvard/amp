@@ -40,7 +40,7 @@
 			    		<a href="{% url 'subject_dashboard_url' subject_identifier %}">show appointments</a>
 			    	{% else %}
 			    		{% if appointment.subject_visit %} 
-			    			<a href="{% url 'subject_dashboard_url' appointment.str_pk subject_identifier %}?show=forms">show forms</a>
+			    			<a href="{% url 'subject_dashboard_url' appointment.str_pk appointment.subject_identifier %}?show=forms">show forms</a>
 			    		{% endif %}
 			    	{% endif %}
 			    </td>
