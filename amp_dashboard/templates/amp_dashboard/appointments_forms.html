@@ -1,7 +1,10 @@
 {% block appointments %}
   	<hr style="margin-top:4px; margin-bottom:4px;">
 	<p>
-	<h5>Appointments</h5>                        
+	<div class="panel-group">
+	<div class="panel panel-default">
+      <div class="panel-heading"><h5>Appointments</h5></div>
+     <div class="panel-body">                              
 	<a href="#">add continuation appointment</a>
 	</p>
 	{% if scheduled_entry_meta_data %} <I>(Hint: to see all appointments, click 'show appointments' in the Action column below)</I>{% endif%}
@@ -48,5 +51,8 @@
 	        {% endfor %}
 	    {% endif %}
 	    </tbody>
-	    </table>	    
+	    </table>
+	    </div>
+	    </div>
+	    </div>	    
 {% endblock appointments %}
