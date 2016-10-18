@@ -16,6 +16,7 @@ class EdcLabelAdminMixin:
     def print_server(self):
         if not self._print_server:
             if self.cups_server_ip:
+                print(self.cups_server_ip, 'self.cups_server_ip')
                 self._print_server = PrintServer(self.cups_server_ip)
             else:
                 self._print_server = PrintServer()

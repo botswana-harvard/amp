@@ -35,9 +35,6 @@ class HomeView(EdcBaseViewMixin, EdcLabelViewMixin, FormView):
             context = self.get_context_data(form=form, subject_requisitions=self.subject_requisitions)
         return self.render_to_response(context)
 
-    def print_label(self):
-        pass
-
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         subject_requisition = None

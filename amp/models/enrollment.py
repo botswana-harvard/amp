@@ -5,7 +5,6 @@ from edc_appointment.model_mixins import CreateAppointmentsMixin
 from edc_base.model.models.base_uuid_model import BaseUuidModel
 from edc_consent.model_mixins import RequiresConsentMixin
 from edc_registration.model_mixins import RegisteredSubjectMixin
-from amp.models.registered_subject import RegisteredSubject
 
 
 class Enrollment(CreateAppointmentsMixin, RegisteredSubjectMixin, RequiresConsentMixin, BaseUuidModel):

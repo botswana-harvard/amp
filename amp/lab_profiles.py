@@ -35,6 +35,9 @@ lab_profile.add_panel(viral_load_panel)
 hema_panel = RequisitionPanel('Hematology', wb)  # link this to the visit_schedule
 lab_profile.add_panel(hema_panel)
 
+urina_panel = RequisitionPanel('Urinalysis', wb)  # link this to the visit_schedule
+lab_profile.add_panel(urina_panel)
+
 syphillis_panel = RequisitionPanel('Syphillis', wb)  # link this to the visit_schedule
 lab_profile.add_panel(syphillis_panel)
 
@@ -44,8 +47,14 @@ lab_profile.add_panel(vl_iso_seq_panel)
 hema_arv_panel = RequisitionPanel('Hematology (ARV)', wb)  # link this to the visit_schedule
 lab_profile.add_panel(hema_arv_panel)
 
+vrc_panel = RequisitionPanel('VRC01 Ab Levels', wb)  # link this to the visit_schedule
+lab_profile.add_panel(vrc_panel)
+
 serum_panel = RequisitionPanel('Serum', wb)  # link this to the visit_schedule
 lab_profile.add_panel(serum_panel)
+
+func_homoral_panel = RequisitionPanel('Functional Humoral Assays(STORAGE)', wb)  # link this to the visit_schedule
+lab_profile.add_panel(func_homoral_panel)
 
 dbs_panel = RequisitionPanel('Dried Blood Spot', 'DBS', '01')
 lab_profile.add_panel(dbs_panel)

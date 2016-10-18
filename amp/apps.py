@@ -81,8 +81,8 @@ class EdcTimepointAppConfig(EdcTimepointAppConfig):
 
 
 class EdcLabelAppConfig(EdcLabelAppConfigParent):
-    default_cups_server_ip = '127.0.0.1'
-    default_printer_label = 'Zebra_Technologies_ZTC_GK420t'
+    default_cups_server_ip = '10.113.201.80'
+    default_printer_label = 'AmpPrinter'
     default_template_folder = os.path.join(settings.STATIC_ROOT, 'templates', 'label_templates')
     extra_templates_folder = os.path.join(settings.STATIC_ROOT, 'templates', 'label_templates')
 

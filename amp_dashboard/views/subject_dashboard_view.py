@@ -8,20 +8,23 @@ from .locator_results_actions_view_mixin import LocatorResultsActionsViewMixin
 from .marquee_view_mixin import MarqueeViewMixin
 from amp.models.screening_consent import ScreeningConsent
 from amp.models.requisition_meta_data import RequisitionMetadata
-from amp.models.subject_requisition import SubjectRequisition
-from django.http.response import HttpResponse
-from edc_label.view_mixins import EdcLabelViewMixin
-import json
+# from edc_label.view_mixins import EdcLabelViewMixin
 from amp.constants import SUBJECT
+from amp.apps import AmpAppConfig
+from amp.models.appointment import Appointment
+from amp.admin_mixin import EdcLabelAdminMixin
+from edc_label.label import Label
+from edc_label.print_server import PrintServer
 
 
 class SubjectDashboardView(
         MarqueeViewMixin,
-        AppointmentSubjectVisitCRFViewMixin, LocatorResultsActionsViewMixin, EdcBaseViewMixin, EdcLabelViewMixin, TemplateView):
+        AppointmentSubjectVisitCRFViewMixin, LocatorResultsActionsViewMixin, EdcBaseViewMixin, EdcLabelAdminMixin, TemplateView):
 
     def __init__(self, **kwargs):
         super(SubjectDashboardView, self).__init__(**kwargs)
         self.request = None
+        self.screening_consent = None
         self.context = {}
         self.show = None
         self.template_name = 'amp_dashboard/subject_dashboard.html'
@@ -36,7 +39,7 @@ class SubjectDashboardView(
         self.context.update({
             'markey_data': self.markey_data.items(),
             'markey_next_row': self.markey_next_row,
-            'requisitions_meta_data': self.requisitions_meta_data,
+            'requisitions_meta_data': self.requisitions_meta_data, # {},
             'scheduled_forms': self.scheduled_forms,
             'appointments': self.appointments,
             'subject_identifier': self.subject_identifier,
@@ -50,25 +53,59 @@ class SubjectDashboardView(
         context = self.get_context_data(**kwargs)
         self.show = request.GET.get('show', None)
         context.update({'show': self.show})
-        self.print_barcode_labels(request)
+        self.print_barcode_label(request)
         return self.render_to_response(context)
 
-    def print_barcode_labels(self, request):
-        print_status = False
-        result = {}
-        if request.is_ajax():
-            requisitionsIds = request.GET.get('requisitionids')
-            for requisition_id in requisitionsIds:
-                try:
-                    subject_requistion = SubjectRequisition.objects.get(pk=requisition_id)
-                    super(SubjectDashboardView, self).print_label(
-                        'amp_requisition_label_template', context=subject_requistion.label_context())
-                    print_status = True
-                except SubjectRequisition.DoesNotExist:
-                    pass
-            result = {'labels_printed': len(requisitionsIds)}
-        if print_status:
-            return HttpResponse(json.dumps(result), content_type='application/json')
+    def label_context(self, visit_code, extra_context=None):
+        context = {}
+        context.update({
+            'dob': self.screening_consent.dob,
+            'gender': self.screening_consent.gender,
+            'initials': self.screening_consent.initials,
+            'protocol': AmpAppConfig.protocol_number,
+            'site': '12701',
+            'subject_identifier': self.screening_consent.subject_identifier,
+            'visit': visit_code,
+        })
+        return context
+
+    def print_barcode_label(self, request, copies=1, context=None):
+        if request:
+            subject_identifier = request.GET.get('subject_identifier')
+            appointment_pk = request.GET.get('appointment_pk')
+            try:
+                appointment = Appointment.objects.get(pk=appointment_pk)
+            except Appointment.DoesNotExist:
+                pass
+        if subject_identifier and appointment_pk:
+            self.screening_consent = ScreeningConsent.objects.get(subject_identifier=subject_identifier)
+            print_value = request.GET.get('print', None)
+            if print_value:
+                copies = 1 if copies is None else copies
+                label_template = 'amp_requisition_label_template'
+                context = self.label_context(appointment.visit_code)
+                label = Label(label_template, print_server=self.print_server, context=context)
+                label.print_label(copies)
+                return label
+
+#     def print_barcode_labels(self, request):
+#         if request:
+#             subject_identifier = request.GET.get('subject_identifier')
+#             appointment_pk = request.GET.get('appointment_pk')
+#             try:
+#                 appointment = Appointment.objects.get(pk=appointment_pk)
+#             except Appointment.DoesNotExist:
+#                 pass
+#             if subject_identifier and appointment_pk:
+#                 self.screening_consent = ScreeningConsent.objects.get(subject_identifier=subject_identifier)
+#                 print_value = request.GET.get('print', None)
+#                 if print_value:
+#                     print('*******************************1')
+#                     label = Label('amp_requisition_label_template', print_server=PrintServer('10.113.201.80'), context=self.label_context(appointment.visit_code))
+#                     print('*******************************2')
+#                     label.print_label(1)
+#                     print('*******************************3')
+#                     return label
 
     @property
     def scheduled_forms(self):

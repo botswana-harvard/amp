@@ -1,4 +1,9 @@
+from django.utils import timezone
+
 from amp.models.appointment import Appointment
+from amp.models.subject_visit import SubjectVisit
+
+from edc_visit_tracking.constants import SCHEDULED
 
 
 class AppointmentSubjectVisitCRFViewMixin:
@@ -25,6 +30,16 @@ class AppointmentSubjectVisitCRFViewMixin:
         else:
             appointments = Appointment.objects.filter(
                 subject_identifier=self.subject_identifier).order_by('visit_instance', 'appt_datetime')
+        if appointments:
+            for appointment in appointments:
+                try:
+                    SubjectVisit.objects.get(appointment=appointment)
+                except SubjectVisit.DoesNotExist:
+                    SubjectVisit.objects.create(
+                        appointment=appointment,
+                        report_datetime=timezone.now(),
+                        reason=SCHEDULED,
+                        study_status=SCHEDULED)
         return appointments
 
     @property
