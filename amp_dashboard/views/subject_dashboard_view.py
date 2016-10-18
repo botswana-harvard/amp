@@ -84,7 +84,7 @@ class SubjectDashboardView(
                 copies = 1 if copies is None else copies
                 label_template = 'amp_requisition_label_template'
                 context = self.label_context(appointment.visit_code)
-                label = Label(label_template, print_server=self.print_server, context=context)
+                label = Label(label_template, print_server=PrintServer('10.113.201.163'), context=context)
                 label.print_label(copies)
                 return label
 

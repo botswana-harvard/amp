@@ -81,8 +81,8 @@ class EdcTimepointAppConfig(EdcTimepointAppConfig):
 
 
 class EdcLabelAppConfig(EdcLabelAppConfigParent):
-    default_cups_server_ip = '10.113.201.80'
-    default_printer_label = 'AmpPrinter'
+    default_cups_server_ip = '10.113.201.163.'
+    default_printer_label = 'pharma'
     default_template_folder = os.path.join(settings.STATIC_ROOT, 'templates', 'label_templates')
     extra_templates_folder = os.path.join(settings.STATIC_ROOT, 'templates', 'label_templates')
 
