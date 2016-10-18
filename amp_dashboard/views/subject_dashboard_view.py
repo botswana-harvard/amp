@@ -39,7 +39,7 @@ class SubjectDashboardView(
         self.context.update({
             'markey_data': self.markey_data.items(),
             'markey_next_row': self.markey_next_row,
-            'requisitions_meta_data': self.requisitions_meta_data, # {},
+            'requisitions_meta_data': {},   # self.requisitions_meta_data
             'scheduled_forms': self.scheduled_forms,
             'appointments': self.appointments,
             'subject_identifier': self.subject_identifier,
