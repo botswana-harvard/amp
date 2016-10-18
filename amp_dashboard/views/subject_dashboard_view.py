@@ -65,7 +65,7 @@ class SubjectDashboardView(
             'protocol': AmpAppConfig.protocol_number,
             'site': '12701',
             'subject_identifier': self.screening_consent.subject_identifier,
-            'visit': visit_code,
+            'visit_code': visit_code,
         })
         return context
 
@@ -84,28 +84,9 @@ class SubjectDashboardView(
                 copies = 1 if copies is None else copies
                 label_template = 'amp_requisition_label_template'
                 context = self.label_context(appointment.visit_code)
-                label = Label(label_template, print_server=PrintServer('10.113.201.163'), context=context)
+                label = Label(label_template, print_server=PrintServer('10.113.201.108'), context=context)
                 label.print_label(copies)
                 return label
-
-#     def print_barcode_labels(self, request):
-#         if request:
-#             subject_identifier = request.GET.get('subject_identifier')
-#             appointment_pk = request.GET.get('appointment_pk')
-#             try:
-#                 appointment = Appointment.objects.get(pk=appointment_pk)
-#             except Appointment.DoesNotExist:
-#                 pass
-#             if subject_identifier and appointment_pk:
-#                 self.screening_consent = ScreeningConsent.objects.get(subject_identifier=subject_identifier)
-#                 print_value = request.GET.get('print', None)
-#                 if print_value:
-#                     print('*******************************1')
-#                     label = Label('amp_requisition_label_template', print_server=PrintServer('10.113.201.80'), context=self.label_context(appointment.visit_code))
-#                     print('*******************************2')
-#                     label.print_label(1)
-#                     print('*******************************3')
-#                     return label
 
     @property
     def scheduled_forms(self):
