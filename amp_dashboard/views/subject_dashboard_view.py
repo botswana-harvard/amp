@@ -8,18 +8,15 @@ from .locator_results_actions_view_mixin import LocatorResultsActionsViewMixin
 from .marquee_view_mixin import MarqueeViewMixin
 from amp.models.screening_consent import ScreeningConsent
 from amp.models.requisition_meta_data import RequisitionMetadata
-# from edc_label.view_mixins import EdcLabelViewMixin
+from edc_label.view_mixins import EdcLabelViewMixin
 from amp.constants import SUBJECT
 from amp.apps import AmpAppConfig
 from amp.models.appointment import Appointment
-from amp.admin_mixin import EdcLabelAdminMixin
-from edc_label.label import Label
-from edc_label.print_server import PrintServer
 
 
 class SubjectDashboardView(
         MarqueeViewMixin,
-        AppointmentSubjectVisitCRFViewMixin, LocatorResultsActionsViewMixin, EdcBaseViewMixin, EdcLabelAdminMixin, TemplateView):
+        AppointmentSubjectVisitCRFViewMixin, LocatorResultsActionsViewMixin, EdcBaseViewMixin, EdcLabelViewMixin, TemplateView):
 
     def __init__(self, **kwargs):
         super(SubjectDashboardView, self).__init__(**kwargs)
@@ -28,6 +25,7 @@ class SubjectDashboardView(
         self.context = {}
         self.show = None
         self.template_name = 'amp_dashboard/subject_dashboard.html'
+        super(EdcLabelViewMixin, self).__init__()
 
     def get_context_data(self, **kwargs):
         self.context = super().get_context_data(**kwargs)
@@ -84,9 +82,8 @@ class SubjectDashboardView(
                 copies = 1 if copies is None else copies
                 label_template = 'amp_requisition_label_template'
                 context = self.label_context(appointment.visit_code)
-                label = Label(label_template, print_server=PrintServer('10.113.201.108'), context=context)
-                label.print_label(copies)
-                return label
+                super(SubjectDashboardView, self).print_label(
+                    label_template, copies=copies, context=context)
 
     @property
     def scheduled_forms(self):
