@@ -56,7 +56,7 @@ visits = [
     ('1.0', visit_1_requisitions), ('2.0', visit_2_requisitions), ('3.0', requisitions_hvs),
     ('4.0', requisitions_hvs), ('5.0', requisitions_hvs), ('6.0', visit_1600_requisitions),
     ('7.0', requisitions_hvs), ('8.0', requisitions_hvs), ('9.0', requisitions_hvs),
-    ('10.0', requisitions_hvs), ('11.0', requisitions_hvs), ('12,0', requisitions_hvs),
+    ('10.0', requisitions_hvs), ('11.0', requisitions_hvs), ('12.0', requisitions_hvs),
     ('13.0', requisitions_hvs), ('14.0', visit_4800_requisitions), ('15.0', requisitions_hvs),
     ('16.0', requisitions_hvs), ('17.0', requisitions_hvs), ('18.0', requisitions_hvs),
     ('19.0', requisitions_hvs), ('20.0', requisitions_hvs), ('21.0', requisitions_hvs),

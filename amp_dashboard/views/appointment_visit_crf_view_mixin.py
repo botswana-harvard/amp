@@ -4,6 +4,7 @@ from amp.models.appointment import Appointment
 from amp.models.subject_visit import SubjectVisit
 
 from edc_visit_tracking.constants import SCHEDULED
+from operator import itemgetter
 
 
 class AppointmentSubjectVisitCRFViewMixin:
@@ -29,9 +30,15 @@ class AppointmentSubjectVisitCRFViewMixin:
             appointments = [self.appointment]
         else:
             appointments = Appointment.objects.filter(
-                subject_identifier=self.subject_identifier).order_by('visit_instance', 'appt_datetime')
+                subject_identifier=self.subject_identifier).order_by('visit_code')
         if appointments:
+            ordered_appointments = []
+            appointments_list = []
             for appointment in appointments:
+                ordered_appointments.append([int(float(appointment.visit_code)), appointment])
+            ordered_appointments = sorted(ordered_appointments, key=itemgetter(0))
+            for _, appointment in ordered_appointments:
+                appointments_list.append(appointment)
                 try:
                     SubjectVisit.objects.get(appointment=appointment)
                 except SubjectVisit.DoesNotExist:
@@ -40,7 +47,7 @@ class AppointmentSubjectVisitCRFViewMixin:
                         report_datetime=timezone.now(),
                         reason=SCHEDULED,
                         study_status=SCHEDULED)
-        return appointments
+        return appointments_list
 
     @property
     def appointment(self):
