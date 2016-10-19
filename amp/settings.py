@@ -139,8 +139,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
-STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-
-GIT_DIR = BASE_DIR.ancestor(1)
+STATIC_URL = '/static/'
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+ETC_DIR = os.path.join(BASE_DIR, 'etc')
+GIT_DIR = BASE_DIR
 KEY_PATH = os.path.join(BASE_DIR, 'crypto_fields')
