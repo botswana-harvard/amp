@@ -5,21 +5,23 @@ from django.views.generic import TemplateView
 from edc_base.views import EdcBaseViewMixin
 from .appointment_visit_crf_view_mixin import AppointmentSubjectVisitCRFViewMixin
 from .locator_results_actions_view_mixin import LocatorResultsActionsViewMixin
+from django.utils.decorators import method_decorator
 from .marquee_view_mixin import MarqueeViewMixin
 from amp.models.screening_consent import ScreeningConsent
 from amp.models.requisition_meta_data import RequisitionMetadata
-# from edc_label.view_mixins import EdcLabelViewMixin
 from amp.constants import SUBJECT
 from amp.apps import AmpAppConfig
 from amp.models.appointment import Appointment
 from amp.admin_mixin import EdcLabelAdminMixin
 from edc_label.label import Label
 from edc_label.print_server import PrintServer
+from edc_label.views import HomeView
+from django.contrib.auth.decorators import login_required
 
 
 class SubjectDashboardView(
         MarqueeViewMixin,
-        AppointmentSubjectVisitCRFViewMixin, LocatorResultsActionsViewMixin, EdcBaseViewMixin, EdcLabelAdminMixin, TemplateView):
+        AppointmentSubjectVisitCRFViewMixin, HomeView, LocatorResultsActionsViewMixin, EdcBaseViewMixin, EdcLabelAdminMixin, TemplateView):
 
     def __init__(self, **kwargs):
         super(SubjectDashboardView, self).__init__(**kwargs)
@@ -84,7 +86,7 @@ class SubjectDashboardView(
                 copies = 1 if copies is None else copies
                 label_template = 'amp_requisition_label_template'
                 context = self.label_context(appointment.visit_code)
-                label = Label(label_template, print_server=PrintServer('10.113.201.108'), context=context)
+                label = Label(label_template, print_server=PrintServer('192.168.4.145'), context=context)
                 label.print_label(copies)
                 return label
 

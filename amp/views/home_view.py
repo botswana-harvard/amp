@@ -2,10 +2,12 @@ from django.core.paginator import Paginator, EmptyPage
 from django.contrib import admin
 from django.conf import settings
 from django.views.generic.edit import FormView
+from django.contrib.auth.decorators import login_required
 from edc_label.view_mixins import EdcLabelViewMixin
 from edc_base.views import EdcBaseViewMixin
 
 from amp.forms import ScreeningConsentSearchForm
+from django.utils.decorators import method_decorator
 from django.core.urlresolvers import reverse
 from amp.models.screening_consent import ScreeningConsent
 from amp.models.subject_requisition import SubjectRequisition
@@ -71,3 +73,8 @@ class HomeView(EdcBaseViewMixin, EdcLabelViewMixin, FormView):
         except EmptyPage:
             subject_requisitions = paginator.page(paginator.num_pages)
         return subject_requisitions
+
+    @method_decorator(login_required)
+    def dispatch(self, args, *kwargs):
+        return super(HomeView, self).dispatch(*args, **kwargs)
+
