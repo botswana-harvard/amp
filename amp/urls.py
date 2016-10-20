@@ -15,19 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.conf import settings
 from edc_base.views import LoginView, LogoutView
 from .views import HomeView
-
-
-APP_NAME = settings.APP_NAME
+from amp.admin_site import amp_admin
 
 urlpatterns = [
-    url(r'^amp_dashboard/', include('amp_dashboard.urls')),
     url(r'login', LoginView.as_view(), name='login_url'),
     url(r'logout', LogoutView.as_view(pattern_name='login_url'), name='logout_url'),
+    url(r'^admin/', amp_admin.urls),
     url(r'^admin/', admin.site.urls),
     url(r'^home/', HomeView.as_view(), name='home_url'),
+    url(r'^amp_dashboard/', include('amp_dashboard.urls')),
     url(r'^(?P<subject_identifier>[-\w]+)/(?P<page>\d+)/$', HomeView.as_view(), name='home_url'),
     url(r'^(?P<subject_identifier>[-\w]+)/$', HomeView.as_view(), name='home_url'),
     url(r'^', HomeView.as_view(), name='home_url'),
