@@ -64,17 +64,19 @@ class HomeView(EdcBaseViewMixin, EdcLabelViewMixin, FormView):
 
     @property
     def subject_requisitions(self):
-        """Returns a dispense queryset after pagination."""
-        print(self.screening_consent, 'self.screening_consent')
-        subject_requisitions = SubjectRequisition.objects.filter(subject_visit__subject_identifier=self.screening_consent.subject_identifier).order_by('subject_visit__appointment__visit_code')
-        paginator = Paginator(subject_requisitions, self.paginate_by)
-        try:
-            subject_requisitions = paginator.page(self.kwargs.get('page', 1))
-        except EmptyPage:
-            subject_requisitions = paginator.page(paginator.num_pages)
+        """Returns subject_requisitions queryset after pagination."""
+        subject_requisitions = []
+        if self.screening_consent:
+            subject_requisitions = SubjectRequisition.objects.filter(
+                subject_visit__subject_identifier=self.screening_consent.subject_identifier
+            ).order_by('subject_visit__appointment__visit_code')
+            paginator = Paginator(subject_requisitions, self.paginate_by)
+            try:
+                subject_requisitions = paginator.page(self.kwargs.get('page', 1))
+            except EmptyPage:
+                subject_requisitions = paginator.page(paginator.num_pages)
         return subject_requisitions
 
     @method_decorator(login_required)
     def dispatch(self, args, *kwargs):
         return super(HomeView, self).dispatch(*args, **kwargs)
-
