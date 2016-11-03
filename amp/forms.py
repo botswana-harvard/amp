@@ -2,7 +2,7 @@ from django import forms
 
 from edc_consent.form_mixins import ConsentFormMixin
 from amp.models.screening_consent import ScreeningConsent
-from .models import StudyConsent, SubjectOffStudy, SubjectRequisition, SubjectVisit
+from .models import SubjectOffStudy, SubjectRequisition, SubjectVisit
 
 from edc_visit_tracking.form_mixins import VisitFormMixin
 from edc_lab.requisition.forms import RequisitionFormMixin
@@ -49,13 +49,6 @@ class ScreeningConsentForm(ConsentFormMixin, forms.ModelForm):
 
     class Meta:
         model = ScreeningConsent
-        fields = '__all__'
-
-
-class StudyConsentForm(ConsentFormMixin, forms.ModelForm):
-
-    class Meta:
-        model = StudyConsent
         fields = '__all__'
 
 

@@ -6,12 +6,12 @@ from edc_base.modeladmin.mixins import (
     ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin, ModelAdminFormAutoNumberMixin,
     ModelAdminAuditFieldsMixin)
 
-from amp.models import SubjectIdentifier, ScreeningConsent, StudyConsent, SubjectVisit, SubjectOffStudy, SubjectRequisition
+from amp.models import SubjectIdentifier, ScreeningConsent, SubjectVisit, SubjectOffStudy, SubjectRequisition
 
 from edc_visit_tracking.admin import VisitAdminMixin
 
 from .forms import (
-    ScreeningConsentForm, StudyConsentForm, SubjectOffStudyForm, SubjectVisitForm, SubjectRequisitionForm,
+    ScreeningConsentForm, SubjectOffStudyForm, SubjectVisitForm, SubjectRequisitionForm,
     AppointmentForm)
 from .admin_mixin import EdcLabelAdminMixin
 from amp.models.appointment import Appointment
@@ -125,14 +125,6 @@ class ScreeningConsentAdmin(MembershipBaseModelAdmin):
     form = ScreeningConsentForm
 
 admin.site.register(ScreeningConsent, ScreeningConsentAdmin)
-
-
-class StudyConsentAdmin(MembershipBaseModelAdmin):
-
-    dashboard_type = 'maternal'
-    form = StudyConsentForm
-
-admin.site.register(StudyConsent, StudyConsentAdmin)
 
 
 class SubjectOffStudyAdmin(MembershipBaseModelAdmin):

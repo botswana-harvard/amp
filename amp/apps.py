@@ -45,17 +45,7 @@ class EdcConsentAppConfig(EdcConsentAppConfigParent):
             age_is_adult=18,
             age_max=64,
             gender=['M', 'F']
-        ),
-        ConsentConfig(
-            'amp.studyconsent',
-            version='2',
-            start=datetime(2016, 10, 21, 0, 0, 0).replace(tzinfo=None),
-            end=datetime(2017, 5, 1, 0, 0, 0).replace(tzinfo=None),
-            age_min=16,
-            age_is_adult=18,
-            age_max=64,
-            gender=['M', 'F']
-        ),
+        )
     ]
 
 
