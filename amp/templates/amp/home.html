@@ -2,11 +2,6 @@
 
   {% load staticfiles %}
   {% load crispy_forms_tags %}
-  
-  {% block settings_url %}
-  <li id="li-topbar-settings"><a class="glyphicon glyphicon-wrench" title="settings" href="{% url 'amp_admin:app_list' 'amp' %}"></a></li>
-  <li id="li-topbar-settings"><a class="fa fa-group" title="settings" href="{% url 'admin:app_list' 'auth' %}"></a></li>
-  {% endblock settings_url %}
 
   {% block main %}
 

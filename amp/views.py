@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView
 
-from edc_base.views import EdcBaseViewMixin
+from edc_base.view_mixins import EdcBaseViewMixin
 from edc_label.view_mixins import EdcLabelViewMixin
 
 from amp.forms import ScreeningConsentSearchForm
@@ -21,7 +21,7 @@ class HomeView(EdcBaseViewMixin, EdcLabelViewMixin, FormView):
     number_of_copies = 1
 
     def __init__(self, **kwargs):
-        self.screening_consent = None
+        self.screening_consents = ScreeningConsent.objects.all().order_by('-consent_datetime')[0:15]
         super(HomeView, self).__init__(**kwargs)
 
     def get_success_url(self):
@@ -31,27 +31,21 @@ class HomeView(EdcBaseViewMixin, EdcLabelViewMixin, FormView):
         if form.is_valid():
             subject_identifier = form.cleaned_data['subject_identifier']
             try:
-                self.screening_consent = ScreeningConsent.objects.filter(subject_identifier__icontains=subject_identifier)
+                self.screening_consents = ScreeningConsent.objects.filter(subject_identifier__icontains=subject_identifier)
             except ScreeningConsent.DoesNotExist:
                 form.add_error('subject_identifier', 'Subject not found. Please search again or add a new Screening Consent.')
             context = self.get_context_data(form=form)
             context.update({
-                'screening_consents': self.screening_consent})
+                'screening_consents': self.screening_consents})
         return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         if self.kwargs.get('subject_requisition_pk'):
             self.print_label()
-        if not self.screening_consent:
-            try:
-                self.screening_consent = ScreeningConsent.objects.get(subject_identifier=self.kwargs.get('subject_identifier'))
-                print(self.screening_consent, 'self.screening_consent')
-            except ScreeningConsent.DoesNotExist:
-                pass
         context.update({'dashboard_url_name': self.dashboard_url_name})
         context.update({
-            'screening_consent': self.screening_consent})
+            'screening_consents': self.screening_consents})
         context.update(
             title=settings.PROJECT_TITLE,
             project_name=settings.PROJECT_TITLE,

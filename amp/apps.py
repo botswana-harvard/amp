@@ -5,7 +5,6 @@ from django.apps import AppConfig
 from edc_protocol.apps import AppConfig as EdcProtocolAppConfigParent
 from edc_base.apps import AppConfig as EdcBaseAppConfigParent
 from edc_appointment.apps import AppConfig as EdcAppointmentAppConfigParent
-from django_crypto_fields.apps import DjangoCryptoFieldsAppConfig as DjangoCryptoFieldsAppConfigParent
 from edc_label.apps import AppConfig as EdcLabelAppConfigParent
 from edc_registration.apps import AppConfig as EdcRegistrationAppConfigParent
 
@@ -52,11 +51,6 @@ class EdcConsentAppConfig(EdcConsentAppConfigParent):
 class EdcLabAppConfig(EdcLabAppConfig):
     app_label = 'amp'
     requisition = 'amp.subjectrequisition'
-
-
-class DjangoCryptoFieldsAppConfig(DjangoCryptoFieldsAppConfigParent):
-    name = 'django_crypto_fields'
-    model = ('django_crypto_fields', 'crypt')
 
 
 class EdcTimepointAppConfig(EdcTimepointAppConfig):

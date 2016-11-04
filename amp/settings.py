@@ -24,7 +24,7 @@ BASE_DIR = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SECRET_KEY = 're+uw%kaz#7i+y4063lvt$z*h)*%ng=(8410)obn#y_62jv=5c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'edc_visit_schedule.apps.AppConfig',
     'edc_content_type_map',
+    'django_crypto_fields.apps.AppConfig',
     'amp.apps.EdcBaseAppConfig',
     'edc_offstudy.apps.AppConfig',
     'amp.apps.EdcLabAppConfig',
@@ -52,7 +53,6 @@ INSTALLED_APPS = [
     'edc_device.apps.AppConfig',
     'amp.apps.EdcVisitTrackingAppConfig',
     'amp.apps.EdcRegistrationAppConfig',
-    'amp.apps.DjangoCryptoFieldsAppConfig',
     'amp.apps.EdcConsentAppConfig',
     'amp.apps.AmpAppConfig',
     'amp.apps.EdcLabelAppConfig',

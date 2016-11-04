@@ -1,5 +1,3 @@
-import dateutil
-
 from operator import itemgetter
 
 from django.conf import settings
@@ -9,7 +7,7 @@ from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 
-from edc_base.views import EdcBaseViewMixin
+from edc_base.view_mixins import EdcBaseViewMixin
 from edc_label.view_mixins import EdcLabelViewMixin
 from edc_visit_tracking.constants import SCHEDULED
 
