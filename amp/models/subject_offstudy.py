@@ -1,11 +1,9 @@
 from django.db import models
 
-# from edc_base.audit_trail import AuditTrail
 from edc_base.model.models import BaseUuidModel
 from edc_consent.model_mixins import RequiresConsentMixin
 
 from edc_offstudy.model_mixins import OffStudyModelMixin
-# from edc_sync.models import SyncModelMixin
 
 from edc_visit_tracking.model_mixins import CrfModelMixin
 from .screening_consent import ScreeningConsent
@@ -20,8 +18,6 @@ class SubjectOffStudy(OffStudyModelMixin, CrfModelMixin,
     consent_model = ScreeningConsent
 
     maternal_visit = models.OneToOneField(SubjectVisit)
-
-    #entry_meta_data_manager = CrfMetaDataManager(SubjectVisit)
 
     class Meta:
         app_label = 'amp'

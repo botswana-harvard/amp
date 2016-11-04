@@ -125,6 +125,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
+LANGUAGES = (
+    ('tn', 'Setswana'),
+    ('en', 'English'),
+)
+
+DEFAULT_STUDY_SITE = '40'
 
 LANGUAGE_CODE = 'en-us'
 

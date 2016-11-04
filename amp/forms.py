@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 
 from edc_consent.form_mixins import ConsentFormMixin
 from amp.models.screening_consent import ScreeningConsent
@@ -18,6 +19,8 @@ from crispy_forms.bootstrap import FieldWithButtons, StrictButton
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout
 from django.core.urlresolvers import reverse
+
+from amp.choices import STUDY_SITES
 
 
 class ScreeningConsentSearchForm(forms.Form):
@@ -46,6 +49,13 @@ class AppointmentForm(forms.ModelForm):
 
 
 class ScreeningConsentForm(ConsentFormMixin, forms.ModelForm):
+
+    study_site = forms.ChoiceField(
+        label='Study site',
+        choices=STUDY_SITES,
+        initial=settings.DEFAULT_STUDY_SITE,
+        help_text="",
+        widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
 
     class Meta:
         model = ScreeningConsent

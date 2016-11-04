@@ -4,12 +4,10 @@
 {% block main %}
 <div class="container">
 <!-- Beginning of Demographic Div -->
-<div class="row" style=" solid #eeeeee;">
   <div class="panel-group">
-	<div class="panel panel-success">
-      <div class="panel-heading"><strong>{{dashboard_type | capfirst}} Dashboard</strong></div>
+	<div class="panel panel-info">
+      <div class="panel-heading">{{subject_identifier}}</div>
      <div class="panel-body"> 
-  <hr style="margin-top:4px; margin-bottom:4px;">
   	<mark>
 		{% for key, value in markey_data %}
 		    <strong>{{key}}:</strong><span style="margin-left:5px;">{{value}}</span>
@@ -19,12 +17,15 @@
 		{% endfor %}
   	</mark>
 </div>
+</div>
+</div>
+
 <!-- End of Demographic Div -->
 
-<!-- Begin Visits Div -->
-<div class="row">
-<!-- 9-col-visits -->
-	<div class="col-md-9" style="min-height:200px; solid #eeeeee;">
+<div class="panel-group">
+<div class="panel panel-warning">
+     <div class="panel-heading">Membership forms</div>
+    <div class="panel-body"> 
 	{% block membership_forms %}
 		<blockquote class="blockquote" style="margin:0px">
   		<ul class="list-inline text-primary">
@@ -39,6 +40,12 @@
 		</ul>
 	</blockquote>
 	{% endblock membership_forms %}
+</div>
+</div>
+</div>
+
+<!-- 9-col-visits -->
+	<div class="col-md-9" style="min-height:200px;">
 	{% block appointments %}
     	{% include "amp_dashboard/appointments_forms.html" %}
 	{% endblock appointments %}
@@ -59,10 +66,8 @@
 <!-- End 9-col-visits -->
 
 <!-- Begin 3-col-visits -->
-	<div class="col-md-3" style="min-height:200px; solid #eeeeee;">
+	<div class="col-md-3" style="min-height:200px;">
 	{% block locator_information %}
-		<p></p>
-		<hr>
  		<div class="panel-group">
  	    	<div class="panel panel-default">
       			<div class="panel-heading">Infant</div>
@@ -76,7 +81,6 @@
   						<b>Home visits?</b> {{visits}}<br>
   						<br>
   						<em>Address:</em><br>
-  						<span style="margin-top:20px;">
   						</span><br><br>
   					<abbr title="Phone">Tel:</abbr>{{tel}}<br>
   					<abbr title="Phone">Alt:</abbr> {{alt}}<br>
@@ -85,7 +89,6 @@
   					<span>Relation: {{name}}</span><br>
   					<br>
   					<em>Address:</em><br>
-  					<span style="margin-top:20px;">
   					</span>
   					<br>
 				</address>
@@ -100,11 +103,7 @@
 	</div>
 <!-- End 3-col-visits -->
 
-</div>
 <!-- End Visits Div -->
 
-</div>
-</div>
-</div>
 </div>
 {% endblock main %}

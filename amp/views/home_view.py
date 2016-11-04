@@ -78,5 +78,5 @@ class HomeView(EdcBaseViewMixin, EdcLabelViewMixin, FormView):
         return subject_requisitions
 
     @method_decorator(login_required)
-    def dispatch(self, args, *kwargs):
+    def dispatch(self, *args, **kwargs):
         return super(HomeView, self).dispatch(*args, **kwargs)
