@@ -1,18 +1,22 @@
+from dateutil.relativedelta import relativedelta
+from django.core.urlresolvers import reverse
 from django.db import models
-from edc_base.model.models.base_uuid_model import BaseUuidModel
 
-from edc_consent.managers import ConsentManager
-from edc_consent.field_mixins.bw.identity_fields_mixin import IdentityFieldsMixin
-from edc_consent.field_mixins import ReviewFieldsMixin, PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin
+from django.utils import timezone
 
 from simple_history.models import HistoricalRecords
 
-from .subject_identifier import SubjectIdentifier
+from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_base.utils.age import formatted_age
 
+from edc_consent.field_mixins import ReviewFieldsMixin, PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin
+from edc_consent.field_mixins.bw.identity_fields_mixin import IdentityFieldsMixin
+from edc_consent.managers import ConsentManager
 from edc_consent.model_mixins import ConsentModelMixin
 from edc_registration.model_mixins import RegistrationMixin
+
+from .subject_identifier import SubjectIdentifier
 from amp.models.enrollment import Enrollment
-from django.core.urlresolvers import reverse
 
 
 class AlreadyAllocatedError(Exception):
@@ -66,6 +70,10 @@ class ScreeningConsent(ConsentModelMixin, RegistrationMixin, IdentityFieldsMixin
         get_latest_by = 'consent_datetime'
         unique_together = (('first_name', 'dob', 'initials', 'version'), )
         ordering = ('created', )
+
+    def age(self):
+        return formatted_age(self.dob, timezone.now().date())
+    age.allow_tags = True
 
     def dashboard(self):
         """Returns a hyperink for the Admin page."""

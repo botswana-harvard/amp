@@ -2,81 +2,62 @@
 
   {% load staticfiles %}
   {% load crispy_forms_tags %}
+  
+  {% block settings_url %}
+  <li id="li-topbar-settings"><a class="glyphicon glyphicon-wrench" title="settings" href="{% url 'amp_admin:app_list' 'amp' %}"></a></li>
+  <li id="li-topbar-settings"><a class="fa fa-group" title="settings" href="{% url 'admin:app_list' 'auth' %}"></a></li>
+  {% endblock settings_url %}
 
   {% block main %}
+
    <div class="container">
       
-   {% if not screening_consent %}
-      <div class="col-md-12">
-   {% else %}   
-      <div class="col-md-3">
-   {% endif %}
-          <div class="panel-group">
-          <div class="panel panel-default">
-            <div class="panel-body">{% crispy form %}
-            <a href="{% url 'admin:amp_screeningconsent_add' %}" class="btn btn-sm btn-default" role="button">Add Screening Consent</a>
-            </div>
-
-          </div>
-          
-          <div class="panel panel-warning">
-		      <div class="panel-heading">Administration</div>
-		      <ul id="nav-pill-home" class="nav nav-pills nav-stacked">
-		      <li><a href="/admin/">Admin<span class="glyphicon glyphicon-wrench pull-right" aria-hidden="true"></span></a></li>
-		      <li>
-		      <a id="link-screening-consent" href="{% url 'admin:amp_screeningconsent_changelist' %}">Screening Consent
-		      </a></li>
-		      <li><a id="link-subject-requisition" href="{% url 'admin:amp_subjectrequisition_changelist' %}">Subject Requisition
-		      </a></li>
-		      <li><a href="#">Label Printers and Templates</a></li>
-		      </ul>
-		    </div>
-          </div>
-      </div>
-
-
-   {% if not screening_consent %}
-      <div class="col-md-12">
-   {% else %}   
-      <div class="col-md-9">
-   {% endif %}
-
+   <div class="col-md-12">
         <div class="panel-group">
-          {% if screening_consent %}
-            <div class="panel panel-success"> 
-              <div class="panel-heading"><b>Subject:</b> <a title="Edit patient information" href="{% url 'admin:amp_screeningconsent_change' screening_consent.pk %}">{{ screening_consent.subject_identifier }}</a> <b>Intials:</b> {{ screening_consent.initials }} <b>Gender:</b> {{ screening_consent.gender }} <b>DOB:</b> {{ screening_consent.dob }}</div>
-            </div>
-            <div class="panel panel-default"> 
-              <div class="panel-heading clearfix">Subject Infor
-                <a href="{% url 'subject_dashboard_url' screening_consent.subject_identifier %}" class="btn btn-sm btn-default pull-right" role="button">Subject dashboard</a>
-              </div>
+          <div class="panel panel-default">
             <div class="panel-body">
-              <table id="tbl-dispense-data" class="table table-striped table-responsive">
-                <thead><th>Requisition ID</th><th>Specimen ID</th><th>Drawn Date</th><th>Pannel name</th><th>Visit</th><th></th></thead>
+            <span class="pull-left"><a href="{% url 'admin:amp_screeningconsent_add' %}?next={% url 'home_url' %}" class="btn btn-sm btn-default" role="button">Add Screening Consent</a></span>
+            <span class="pull-right">{% crispy form %}</span>
+            {% if screening_consents %}
+              <table class="table table-condensed table-striped table-responsive">
                 <tbody>
-                {% if not subject_requisitions %}
-                  <tr><td colspan=3><i>No Requisitions</i></td></tr>
-                {% endif %}
-                {% for subject_requisition in subject_requisitions %}
-                  <tr> 
-                    <td><a href="{% url 'admin:amp_subjectrequisition_change' subject_requisition.pk %}">{{ subject_requisition.requisition_identifier }}</a></td>
-                    <td>{{ subject_requisition.specimen_identifier }}</td>
-                    <td>{{ subject_requisition.drawn_datetime|date:"D, d M Y" }}</td>
-                    <td>{{ subject_requisition.panel_name }}</td>
-                    <td>{{ subject_requisition.subject_visit.visit_code }}</td>
-                    <td><a href="#" class="btn btn-sm btn-default">Print</a></td>                            
-                    </tr>
-                {% endfor %}
+                  {% for screening_consent in screening_consents %}
+                  <tr>
+                    <td><a href="{% url dashboard_url_name subject_identifier=screening_consent.subject_identifier %}" role="button" class="btn btn-sm btn-default">Go</a></td>
+                    <td>{{ screening_consent.subject_identifier }} </td>
+                    <td>{{ screening_consent.age }} {{ screening_consent.get_gender_display }}</td>
+                    <td>Screening Consent {{ screening_consent.report_datetime|date:"Y-m-d" }}</td>
+                  </tr>
+                  {% endfor %}
                 </tbody>
               </table>
+            {% endif %}
+          </div>
+        </div>
+        </div>
+        </div>          
+          
+        <div class="col-md-4">
+        <div class="panel panel-info">
+          <div class="panel-heading">Reports</div>
+            <div class="panel-body">
             </div>
-            {% if subject_requisitions %}
-              <div class="text-center">{% include 'amp/paginator_row.html' %}</div>
-            {% endif %}           
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-success">
+          <div class="panel-heading">Statistics</div>
+            <div class="panel-body">
             </div>
-          {% endif %} <!--- end if screening consent --->
-        </div>                        
-      </div>  
-
-  </div> <!-- container -->
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-warning">
+          <div class="panel-heading">Edc Administration</div>
+            <div class="panel-body">
+		      <a role="button" class="btn btn-sm btn-default" href="{% url 'admin:amp_screeningconsent_changelist' %}">Screening Consent List</a>
+            </div>
+        </div>
+      </div>
+  </div>
 {% endblock main %}
