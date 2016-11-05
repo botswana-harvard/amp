@@ -15,6 +15,7 @@ from .forms import (
     AppointmentForm)
 from .admin_mixin import EdcLabelAdminMixin
 from amp.models.appointment import Appointment
+from amp.admin_site import amp_admin
 
 
 admin.site.register(SubjectIdentifier)
@@ -44,6 +45,7 @@ class MembershipBaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormIns
         return request.GET.get('next')
 
 
+@admin.register(Appointment, site=amp_admin)
 class AppointmentAdmin(MembershipBaseModelAdmin):
 
     fields = (
@@ -60,9 +62,8 @@ class AppointmentAdmin(MembershipBaseModelAdmin):
 
     form = AppointmentForm
 
-admin.site.register(Appointment, AppointmentAdmin)
 
-
+@admin.register(ScreeningConsent, site=amp_admin)
 class ScreeningConsentAdmin(MembershipBaseModelAdmin):
     fields = (
         'first_name',
@@ -124,23 +125,20 @@ class ScreeningConsentAdmin(MembershipBaseModelAdmin):
     dashboard_type = 'subject'
     form = ScreeningConsentForm
 
-admin.site.register(ScreeningConsent, ScreeningConsentAdmin)
 
-
+@admin.register(SubjectOffStudy, site=amp_admin)
 class SubjectOffStudyAdmin(MembershipBaseModelAdmin):
 
     dashboard_type = 'maternal'
     form = SubjectOffStudyForm
 
-admin.site.register(SubjectOffStudy, SubjectOffStudyAdmin)
 
-
+@admin.register(SubjectVisit, site=amp_admin)
 class SubjectVisitAdmin(VisitAdminMixin, MembershipBaseModelAdmin):
     form = SubjectVisitForm
 
-admin.site.register(SubjectVisit, SubjectVisitAdmin)
 
-
+@admin.register(SubjectRequisition, site=amp_admin)
 class SubjectRequisitionAdmin(EdcLabelAdminMixin, MembershipBaseModelAdmin):
     panel_model = None
     date_hierarchy = 'requisition_datetime'
@@ -204,5 +202,3 @@ class SubjectRequisitionAdmin(EdcLabelAdminMixin, MembershipBaseModelAdmin):
             kwargs["queryset"] = SubjectVisit.objects.filter(
                 subject_identifier=request.GET.get('subject_identifier', 0))
         return super(SubjectRequisitionAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
-
-admin.site.register(SubjectRequisition, SubjectRequisitionAdmin)
