@@ -10,7 +10,7 @@ class AlreadyAllocatedError(Exception):
 class SubjectIdentifier(BaseUuidModel):
 
     subject_identifier = models.CharField(
-        max_length=12,
+        max_length=15,
         unique=True
     )
 
