@@ -10,8 +10,8 @@ from edc_lab.requisition.forms import RequisitionFormMixin
 from edc_offstudy.forms import OffStudyFormMixin
 
 
-from amp.choices import PANELS, VISIT_REASON, VISIT_INFO_SOURCE
-from edc_constants.constants import ON_STUDY
+from amp.choices import PANELS, VISIT_REASON, VISIT_INFO_SOURCE, GENDER_FEMALE
+from edc_constants.constants import ON_STUDY, FEMALE
 from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 from amp.models.appointment import Appointment
 
@@ -56,6 +56,12 @@ class ScreeningConsentForm(ConsentFormMixin, forms.ModelForm):
         initial=settings.DEFAULT_STUDY_SITE,
         help_text="",
         widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
+
+    gender = forms.ChoiceField(
+        label="Gender",
+        choices=GENDER_FEMALE,
+        initial=FEMALE,
+        widget=forms.RadioSelect())
 
     class Meta:
         model = ScreeningConsent

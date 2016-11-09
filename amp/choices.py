@@ -1,4 +1,6 @@
-from edc_constants.constants import (OTHER, OFF_STUDY, ON_STUDY, FAILED_ELIGIBILITY, PARTICIPANT)
+from django.utils.translation import ugettext_lazy as _
+
+from edc_constants.constants import (OTHER, OFF_STUDY, ON_STUDY, FAILED_ELIGIBILITY, PARTICIPANT, FEMALE)
 
 from edc_visit_tracking.constants import SCHEDULED, UNSCHEDULED, MISSED_VISIT, LOST_VISIT, COMPLETED_PROTOCOL_VISIT
 
@@ -6,6 +8,8 @@ from edc_visit_tracking.constants import SCHEDULED, UNSCHEDULED, MISSED_VISIT, L
 STUDY_SITES = (
     ('40', 'Gaborone'),
 )
+
+GENDER_FEMALE = ((FEMALE, _('Female')),)
 
 PANELS = (
     ('Research Blood Draw', 'Research Blood Draw'),
