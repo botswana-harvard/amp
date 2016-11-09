@@ -18,9 +18,6 @@ from amp.models.appointment import Appointment
 from amp.admin_site import amp_admin
 
 
-admin.site.register(SubjectIdentifier)
-
-
 class BaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin, ModelAdminFormAutoNumberMixin,
                      ModelAdminAuditFieldsMixin, admin.ModelAdmin):
 
@@ -43,6 +40,11 @@ class MembershipBaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormIns
 
     def redirect_url(self, request, obj, post_url_continue=None):
         return request.GET.get('next')
+
+
+@admin.register(SubjectIdentifier, site=amp_admin)
+class SubjectIdentifierAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Appointment, site=amp_admin)

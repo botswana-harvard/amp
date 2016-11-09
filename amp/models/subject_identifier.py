@@ -27,6 +27,9 @@ class SubjectIdentifier(BaseUuidModel):
             self.allocated_datetime = timezone.now()
         super(SubjectIdentifier, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return (self.subject_identifier,)
+
     class Meta:
         app_label = 'amp'
         ordering = ('subject_identifier', )
