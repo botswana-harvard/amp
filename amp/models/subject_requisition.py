@@ -1,20 +1,19 @@
-from django.db import models
-from amp.apps import AmpAppConfig
-from edc_base.model.models.base_uuid_model import BaseUuidModel
-
-from edc_visit_tracking.model_mixins import CrfModelMixin
-from edc_visit_tracking.managers import CrfModelManager
-from edc_consent.model_mixins import RequiresConsentMixin
-
-from edc_metadata.model_mixins import UpdatesRequisitionMetadataModelMixin
-
-
-from edc_lab.requisition.model_mixins import RequisitionModelMixin
-from edc_lab.requisition.managers import RequisitionManager
-from amp.models.subject_visit import SubjectVisit
-from .packing_list import PackingList
 from django.core.urlresolvers import reverse
-from amp.models.screening_consent import ScreeningConsent
+from django.db import models
+
+
+from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_consent.model_mixins import RequiresConsentMixin
+from edc_lab.requisition.managers import RequisitionManager
+from edc_lab.requisition.model_mixins import RequisitionModelMixin
+from edc_metadata.model_mixins import UpdatesRequisitionMetadataModelMixin
+from edc_visit_tracking.managers import CrfModelManager
+from edc_visit_tracking.model_mixins import CrfModelMixin
+
+from ..apps import AmpAppConfig
+from .packing_list import PackingList
+from .subject_visit import SubjectVisit
+from .screening_consent import ScreeningConsent
 
 
 class SubjectRequisitionManager(CrfModelManager):

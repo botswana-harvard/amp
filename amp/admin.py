@@ -1,21 +1,15 @@
-
 from django.contrib import admin
-
 from django.core.urlresolvers import reverse
-from edc_base.modeladmin.mixins import (
-    ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin, ModelAdminFormAutoNumberMixin,
-    ModelAdminAuditFieldsMixin)
 
-from amp.models import SubjectIdentifier, ScreeningConsent, SubjectVisit, SubjectOffStudy, SubjectRequisition
 
+from edc_base.modeladmin.mixins import (ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin,
+                                        ModelAdminFormAutoNumberMixin, ModelAdminAuditFieldsMixin)
 from edc_visit_tracking.admin import VisitAdminMixin
 
-from .forms import (
-    ScreeningConsentForm, SubjectOffStudyForm, SubjectVisitForm, SubjectRequisitionForm,
-    AppointmentForm)
 from .admin_mixin import EdcLabelAdminMixin
-from amp.models.appointment import Appointment
-from amp.admin_site import amp_admin
+from .admin_site import amp_admin
+from .forms import ScreeningConsentForm, SubjectOffStudyForm, SubjectVisitForm, SubjectRequisitionForm, AppointmentForm
+from .models import SubjectIdentifier, ScreeningConsent, SubjectVisit, SubjectOffStudy, SubjectRequisition, Appointment
 
 
 class BaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin, ModelAdminFormAutoNumberMixin,

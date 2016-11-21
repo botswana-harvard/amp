@@ -8,8 +8,8 @@ from django.views.generic.edit import FormView
 from edc_base.view_mixins import EdcBaseViewMixin
 from edc_label.view_mixins import EdcLabelViewMixin
 
-from amp.forms import ScreeningConsentSearchForm
-from amp.models.screening_consent import ScreeningConsent
+from .forms import ScreeningConsentSearchForm
+from .models.screening_consent import ScreeningConsent
 
 
 class HomeView(EdcBaseViewMixin, EdcLabelViewMixin, FormView):

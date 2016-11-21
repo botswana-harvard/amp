@@ -1,12 +1,11 @@
 import csv
 import os
 
-from amp.models import SubjectIdentifier
-from dateutil import parser
 from django.apps import apps as django_apps
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
-from edc_constants.constants import NOT_APPLICABLE
+
+from amp.models import SubjectIdentifier
 
 
 class Command(BaseCommand):

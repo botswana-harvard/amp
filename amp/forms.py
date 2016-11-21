@@ -1,26 +1,21 @@
 from django import forms
 from django.conf import settings
-
-from edc_consent.form_mixins import ConsentFormMixin
-from amp.models.screening_consent import ScreeningConsent
-from .models import SubjectOffStudy, SubjectRequisition, SubjectVisit
-
-from edc_visit_tracking.form_mixins import VisitFormMixin
-from edc_lab.requisition.forms import RequisitionFormMixin
-from edc_offstudy.forms import OffStudyFormMixin
-
-
-from amp.choices import PANELS, VISIT_REASON, VISIT_INFO_SOURCE, GENDER_FEMALE
-from edc_constants.constants import ON_STUDY, FEMALE
 from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
-from amp.models.appointment import Appointment
+from django.core.urlresolvers import reverse
 
 from crispy_forms.bootstrap import FieldWithButtons, StrictButton
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout
-from django.core.urlresolvers import reverse
 
-from amp.choices import STUDY_SITES
+from edc_consent.form_mixins import ConsentFormMixin
+from edc_constants.constants import ON_STUDY, FEMALE
+from edc_lab.requisition.forms import RequisitionFormMixin
+from edc_offstudy.forms import OffStudyFormMixin
+from edc_visit_tracking.form_mixins import VisitFormMixin
+
+
+from .choices import PANELS, VISIT_REASON, VISIT_INFO_SOURCE, GENDER_FEMALE, STUDY_SITES
+from .models import Appointment, SubjectOffStudy, SubjectRequisition, SubjectVisit, ScreeningConsent
 
 
 class ScreeningConsentSearchForm(forms.Form):

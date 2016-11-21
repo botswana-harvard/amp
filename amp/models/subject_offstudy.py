@@ -2,10 +2,9 @@ from django.db import models
 
 from edc_base.model.models import BaseUuidModel
 from edc_consent.model_mixins import RequiresConsentMixin
-
 from edc_offstudy.model_mixins import OffStudyModelMixin
-
 from edc_visit_tracking.model_mixins import CrfModelMixin
+
 from .screening_consent import ScreeningConsent
 from .subject_visit import SubjectVisit
 

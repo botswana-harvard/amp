@@ -1,6 +1,5 @@
-from django.contrib.admin import AdminSite
-
 from django.apps import apps as django_apps
+from django.contrib.admin import AdminSite
 
 app_config = django_apps.get_app_config('edc_base')
 

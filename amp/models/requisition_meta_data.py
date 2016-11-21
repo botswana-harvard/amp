@@ -1,13 +1,11 @@
 from django.db import models
 
-from amp.models import Appointment
-from amp.models import RegisteredSubject
-
 from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_metadata.model_mixins import CrfMetadataModelMixin, RequisitionMetadataModelMixin
 
-from edc_metadata.model_mixins import (
-    CrfMetadataModelMixin, RequisitionMetadataModelMixin)
-from amp.models.subject_requisition import SubjectRequisition
+from .appointment import Appointment
+from .registered_subject import RegisteredSubject
+from .subject_requisition import SubjectRequisition
 
 
 class RequisitionMetadata(RequisitionMetadataModelMixin, BaseUuidModel):

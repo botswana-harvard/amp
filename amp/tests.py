@@ -1,13 +1,9 @@
 from datetime import datetime
 from django.test.testcases import TestCase
 
-from amp.models import ScreeningConsent, SubjectIdentifier, Appointment
-from amp.factories import ScreeningConsentFactory
-from amp.models.enrollment import Enrollment
-from amp.models.registered_subject import RegisteredSubject
-from amp.models.subject_visit import SubjectVisit
-from amp.models.requisition_meta_data import RequisitionMetadata, CrfMetadata
-from amp.models.subject_requisition import SubjectRequisition
+from .factories import ScreeningConsentFactory
+from .models import (ScreeningConsent, SubjectIdentifier, Appointment, Enrollment, RegisteredSubject, SubjectVisit,
+                     RequisitionMetadata, CrfMetadata, SubjectRequisition)
 
 
 class TestScreeningConsentIdentifierAllocation(TestCase):

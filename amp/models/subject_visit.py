@@ -7,7 +7,7 @@ from edc_visit_tracking.model_mixins import VisitModelMixin, PreviousVisitModelM
 
 
 from .appointment import Appointment
-from amp.models.registered_subject import RegisteredSubject
+from .registered_subject import RegisteredSubject
 
 
 class SubjectVisit(VisitModelMixin, CreatesMetadataModelMixin, RequiresConsentMixin,

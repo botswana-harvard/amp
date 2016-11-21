@@ -1,8 +1,8 @@
 import factory
 
-from amp.models import ScreeningConsent
-from datetime import datetime
-from amp.models.enrollment import Enrollment
+from django.utils import timezone
+
+from .models import ScreeningConsent, Enrollment
 
 
 class ScreeningConsentFactory(factory.DjangoModelFactory):
@@ -10,7 +10,7 @@ class ScreeningConsentFactory(factory.DjangoModelFactory):
     class Meta:
         model = ScreeningConsent
 
-    consent_datetime = datetime.today()
+    consent_datetime = timezone.now()
 
     identity = factory.Sequence(lambda n: '31791851{}'.format(n))
 

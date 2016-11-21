@@ -1,4 +1,3 @@
-from dateutil.relativedelta import relativedelta
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -16,7 +15,7 @@ from edc_consent.model_mixins import ConsentModelMixin
 from edc_registration.model_mixins import RegistrationMixin
 
 from .subject_identifier import SubjectIdentifier
-from amp.models.enrollment import Enrollment
+from .enrollment import Enrollment
 
 
 class AlreadyAllocatedError(Exception):

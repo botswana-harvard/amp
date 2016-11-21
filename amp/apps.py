@@ -1,21 +1,22 @@
 import os
-from django.conf import settings
 
 from django.apps import AppConfig
-from edc_protocol.apps import AppConfig as EdcProtocolAppConfigParent
-from edc_base.apps import AppConfig as EdcBaseAppConfigParent
-from edc_appointment.apps import AppConfig as EdcAppointmentAppConfigParent
-from edc_label.apps import AppConfig as EdcLabelAppConfigParent
-from edc_registration.apps import AppConfig as EdcRegistrationAppConfigParent
+from django.conf import settings
 
+from django.utils import timezone
+
+from edc_appointment.apps import AppConfig as EdcAppointmentAppConfigParent
+from edc_base.apps import AppConfig as EdcBaseAppConfigParent
 from edc_consent.apps import AppConfig as EdcConsentAppConfigParent
-from edc_timepoint.apps import AppConfig as EdcTimepointAppConfig
-from edc_lab.apps import AppConfig as EdcLabAppConfig
-from edc_timepoint.timepoint import Timepoint
 from edc_consent.consent_config import ConsentConfig
+from edc_lab.apps import AppConfig as EdcLabAppConfig
+from edc_label.apps import AppConfig as EdcLabelAppConfigParent
 from edc_metadata.apps import AppConfig as EdcMetaDataAppConfigParent
+from edc_protocol.apps import AppConfig as EdcProtocolAppConfigParent
+from edc_registration.apps import AppConfig as EdcRegistrationAppConfigParent
+from edc_timepoint.apps import AppConfig as EdcTimepointAppConfig
+from edc_timepoint.timepoint import Timepoint
 from edc_visit_tracking.apps import AppConfig as EdcVisitTrackingAppConfigParent
-from datetime import datetime
 
 
 class AmpAppConfig(AppConfig):
@@ -38,8 +39,8 @@ class EdcConsentAppConfig(EdcConsentAppConfigParent):
         ConsentConfig(
             'amp.screeningconsent',
             version='1',
-            start=datetime(2016, 5, 1, 0, 0, 0).replace(tzinfo=None),
-            end=datetime(2017, 10, 20, 0, 0, 0).replace(tzinfo=None),
+            start=timezone(2016, 5, 1, 0, 0, 0).replace(tzinfo=None),
+            end=timezone(2017, 10, 20, 0, 0, 0).replace(tzinfo=None),
             age_min=16,
             age_is_adult=18,
             age_max=64,

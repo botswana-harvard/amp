@@ -1,4 +1,4 @@
 from edc_visit_schedule.site_visit_schedules import site_visit_schedules
-from amp.visit_schedule.screening_consent import subject_visit_schedule_screeningconsent
+from .visit_schedule.screening_consent import subject_visit_schedule_screeningconsent
 
 site_visit_schedules.register(subject_visit_schedule_screeningconsent)

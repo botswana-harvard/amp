@@ -2,7 +2,7 @@ from django.db.models import Q
 
 from edc_dashboard.search import BaseSearchByWord
 
-from amp.models import ScreeningConsent
+from .models import ScreeningConsent
 
 
 class ScreeningConsentSearchByWord(BaseSearchByWord):
@@ -18,4 +18,3 @@ class ScreeningConsentSearchByWord(BaseSearchByWord):
             Q(subject_identifier__icontains=self.search_value) |
             Q(first_name__icontains=self.search_value))
         return qset
-

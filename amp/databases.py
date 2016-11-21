@@ -20,15 +20,6 @@ try:
             'PORT': '',
             'ATOMIC_REQUESTS': True,
         },
-#         'lab_api': {
-#             'ENGINE': 'django.db.backends.mysql',
-#             'OPTIONS': {
-#                 'read_default_file': os.path.join(PATH, 'lab_api.cnf'),
-#             },
-#             'HOST': '',
-#             'PORT': '',
-#             'ATOMIC_REQUESTS': True,
-#         },
     }
 except TypeError:
     PRODUCTION_POSTGRES = None
