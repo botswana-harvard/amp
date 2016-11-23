@@ -28,7 +28,7 @@ class SubjectIdentifier(BaseUuidModel):
         super(SubjectIdentifier, self).save(*args, **kwargs)
 
     def __str__(self):
-        return (self.subject_identifier,)
+        return self.subject_identifier
 
     class Meta:
         app_label = 'amp'

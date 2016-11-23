@@ -14,5 +14,4 @@ def screeningconsent_on_post_save(sender, instance, raw, **kwargs):
 
     if not raw:
         if isinstance(instance, (ScreeningConsent, )):
-            instance.registration_update_or_create()
             instance.create_enrollment()

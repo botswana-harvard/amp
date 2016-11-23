@@ -2,8 +2,7 @@ from datetime import datetime
 from django.test.testcases import TestCase
 
 from .factories import ScreeningConsentFactory
-from .models import (ScreeningConsent, SubjectIdentifier, Appointment, Enrollment, RegisteredSubject, SubjectVisit,
-                     RequisitionMetadata, CrfMetadata, SubjectRequisition)
+from .models import ScreeningConsent, SubjectIdentifier, Appointment, Enrollment, RegisteredSubject
 
 
 class TestScreeningConsentIdentifierAllocation(TestCase):
@@ -82,46 +81,3 @@ class TestScreeningConsentIdentifierAllocation(TestCase):
     def test_create_enrollment_post_save_appointments(self):
         ScreeningConsentFactory()
         self.assertEqual(Appointment.objects.all().count(), 25)
-
-    def test_create_subject_visit_and_metadata_at_enrollment(self):
-        ScreeningConsentFactory()
-        appointment = Appointment.objects.all().order_by('visit_code').first()
-
-        SubjectVisit.objects.create(
-            appointment=appointment,
-            report_datetime=datetime.today(),
-            reason='scheduled',
-        )
-        self.assertEqual(CrfMetadata.objects.all().count(), 0)
-        self.assertEqual(RequisitionMetadata.objects.all().count(), 2)
-
-    def test_get_requisitions(self):
-        ScreeningConsentFactory()
-        appointment = Appointment.objects.all().order_by('visit_code').first()
-
-        SubjectVisit.objects.create(
-            appointment=appointment,
-            report_datetime=datetime.today(),
-            reason='scheduled',
-        )
-        self.assertEqual(CrfMetadata.objects.all().count(), 0)
-        self.assertEqual(RequisitionMetadata.objects.all().count(), 2)
-
-    def test_create_subject_requisition(self):
-
-        ScreeningConsentFactory()
-        appointment = Appointment.objects.all().order_by('visit_code').first()
-
-        subject_visit = SubjectVisit.objects.create(
-            appointment=appointment,
-            report_datetime=datetime.today(),
-            reason='scheduled',
-        )
-
-        SubjectRequisition.objects.create(
-            subject_visit=subject_visit,
-            panel_name='Research Blood Draw',
-            requisition_datetime=datetime.today()
-        )
-
-        self.assertEqual(SubjectRequisition.objects.all().count(), 1)

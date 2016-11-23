@@ -55,6 +55,7 @@ class ScreeningConsent(ConsentModelMixin, IdentityFieldsMixin, ReviewFieldsMixin
         except Enrollment.DoesNotExist:
             Enrollment.objects.create(
                 subject_identifier=self.subject_identifier,
+                schedule_name='amp-schedule',
                 is_eligible=False
             )
 
