@@ -1,4 +1,5 @@
-from datetime import datetime
+from django.utils import timezone
+
 from django.test.testcases import TestCase
 
 from .factories import ScreeningConsentFactory
@@ -69,7 +70,7 @@ class TestScreeningConsentIdentifierAllocation(TestCase):
 
     def test_create_enrollment_post_save(self):
         screening = ScreeningConsent.objects.create(
-            consent_datetime=datetime.today(),
+            consent_datetime=timezone.now(),
             identity='317918515',
             is_literate='Yes',
             confirm_identity='317918515',
