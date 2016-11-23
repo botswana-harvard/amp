@@ -1,17 +1,18 @@
+import pytz
+
 import os
+
+from datetime import datetime, tzinfo
 
 from django.apps import AppConfig
 from django.conf import settings
-
-from django.utils import timezone
 
 from edc_appointment.apps import AppConfig as EdcAppointmentAppConfigParent
 from edc_base.apps import AppConfig as EdcBaseAppConfigParent
 from edc_consent.apps import AppConfig as EdcConsentAppConfigParent
 from edc_consent.consent_config import ConsentConfig
-from edc_lab.apps import AppConfig as EdcLabAppConfig
+from edc_identifier.apps import AppConfig as EdcIdentifierAppConfigParent
 from edc_label.apps import AppConfig as EdcLabelAppConfigParent
-from edc_metadata.apps import AppConfig as EdcMetaDataAppConfigParent
 from edc_protocol.apps import AppConfig as EdcProtocolAppConfigParent
 from edc_registration.apps import AppConfig as EdcRegistrationAppConfigParent
 from edc_timepoint.apps import AppConfig as EdcTimepointAppConfig
@@ -39,8 +40,8 @@ class EdcConsentAppConfig(EdcConsentAppConfigParent):
         ConsentConfig(
             'amp.screeningconsent',
             version='1',
-            start=timezone(2016, 5, 1, 0, 0, 0).replace(tzinfo=None),
-            end=timezone(2017, 10, 20, 0, 0, 0).replace(tzinfo=None),
+            start=datetime(2016, 5, 1, 0, 0, 0, tzinfo=pytz.timezone('UTC')),
+            end=datetime(2017, 10, 30, 0, 0, 0, tzinfo=pytz.timezone('UTC')),
             age_min=16,
             age_is_adult=18,
             age_max=64,
@@ -49,9 +50,8 @@ class EdcConsentAppConfig(EdcConsentAppConfigParent):
     ]
 
 
-class EdcLabAppConfig(EdcLabAppConfig):
-    app_label = 'amp'
-    requisition = 'amp.subjectrequisition'
+class EdcIdentifierAppConfig(EdcIdentifierAppConfigParent):
+    identifier_prefix = '084'
 
 
 class EdcTimepointAppConfig(EdcTimepointAppConfig):
@@ -67,7 +67,7 @@ class EdcTimepointAppConfig(EdcTimepointAppConfig):
 
 class EdcLabelAppConfig(EdcLabelAppConfigParent):
     default_cups_server_ip = '192.168.4.145'
-    default_printer_label = 'pharma'
+    default_printer_label = 'amp'
     default_template_folder = os.path.join(settings.BASE_DIR, 'templates', 'static', 'templates', 'label_templates')
     extra_templates_folder = os.path.join(settings.BASE_DIR, 'templates', 'static', 'templates', 'label_templates')
 
@@ -87,12 +87,6 @@ class EdcProtocolAppConfig(EdcProtocolAppConfigParent):
 
 
 class EdcAppointmentAppConfig(EdcAppointmentAppConfigParent):
-    app_label = 'amp'
-
-
-class EdcMetaDataAppConfig(EdcMetaDataAppConfigParent):
-    model_attrs = [('amp', 'crfmetadata'), ('amp', 'requisitionmetadata')]
-    reason_field = {'amp.subjectvisit': 'reason'}
     app_label = 'amp'
 
 

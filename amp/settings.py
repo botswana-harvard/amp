@@ -24,7 +24,7 @@ BASE_DIR = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SECRET_KEY = 're+uw%kaz#7i+y4063lvt$z*h)*%ng=(8410)obn#y_62jv=5c'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -37,28 +37,27 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sessions',
     'django.contrib.staticfiles',
+    'django_crypto_fields.apps.AppConfig',
     'django_revision.apps.AppConfig',
     'crispy_forms',
-    'edc_visit_schedule.apps.AppConfig',
-    'edc_content_type_map',
-    'django_crypto_fields.apps.AppConfig',
-    'amp.apps.EdcBaseAppConfig',
-    'edc_offstudy.apps.AppConfig',
-    'amp.apps.EdcLabAppConfig',
-    'amp.apps.EdcMetaDataAppConfig',
-    'edc_protocol.apps.AppConfig',
-    'edc_device.apps.AppConfig',
-    'amp.apps.EdcVisitTrackingAppConfig',
-    'amp.apps.EdcRegistrationAppConfig',
-    'amp.apps.EdcConsentAppConfig',
+    'simple_history',
     'amp.apps.AmpAppConfig',
-    'amp.apps.EdcLabelAppConfig',
     'amp.apps.EdcAppointmentAppConfig',
+    'amp.apps.EdcBaseAppConfig',
+    'amp.apps.EdcConsentAppConfig',
+    'amp.apps.EdcIdentifierAppConfig',
+    'amp.apps.EdcRegistrationAppConfig',
     'amp.apps.EdcTimepointAppConfig',
+    'amp.apps.EdcVisitTrackingAppConfig',
+    'amp.apps.EdcLabelAppConfig',
     'amp_dashboard.apps.AmpDashboardConfig',
+    'edc_device.apps.AppConfig',
+    'edc_offstudy.apps.AppConfig',
+    'edc_protocol.apps.AppConfig',
+    'edc_visit_schedule.apps.AppConfig',
 ]
 
 MIDDLEWARE_CLASSES = [

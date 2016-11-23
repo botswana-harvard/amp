@@ -4,12 +4,11 @@ from django.core.urlresolvers import reverse
 
 from edc_base.modeladmin.mixins import (ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin,
                                         ModelAdminFormAutoNumberMixin, ModelAdminAuditFieldsMixin)
-from edc_visit_tracking.admin import VisitAdminMixin
+from edc_visit_tracking.modeladmin_mixins import VisitModelAdminMixin
 
-from .admin_mixin import EdcLabelAdminMixin
 from .admin_site import amp_admin
-from .forms import ScreeningConsentForm, SubjectOffStudyForm, SubjectVisitForm, SubjectRequisitionForm, AppointmentForm
-from .models import SubjectIdentifier, ScreeningConsent, SubjectVisit, SubjectOffStudy, SubjectRequisition, Appointment
+from .forms import ScreeningConsentForm, SubjectOffStudyForm, SubjectVisitForm, AppointmentForm
+from .models import SubjectIdentifier, ScreeningConsent, SubjectVisit, SubjectOffstudy, Appointment
 
 
 class BaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin, ModelAdminFormAutoNumberMixin,
@@ -122,7 +121,7 @@ class ScreeningConsentAdmin(MembershipBaseModelAdmin):
     form = ScreeningConsentForm
 
 
-@admin.register(SubjectOffStudy, site=amp_admin)
+@admin.register(SubjectOffstudy, site=amp_admin)
 class SubjectOffStudyAdmin(MembershipBaseModelAdmin):
 
     dashboard_type = 'maternal'
@@ -130,71 +129,5 @@ class SubjectOffStudyAdmin(MembershipBaseModelAdmin):
 
 
 @admin.register(SubjectVisit, site=amp_admin)
-class SubjectVisitAdmin(VisitAdminMixin, MembershipBaseModelAdmin):
+class SubjectVisitAdmin(VisitModelAdminMixin, MembershipBaseModelAdmin):
     form = SubjectVisitForm
-
-
-@admin.register(SubjectRequisition, site=amp_admin)
-class SubjectRequisitionAdmin(EdcLabelAdminMixin, MembershipBaseModelAdmin):
-    panel_model = None
-    date_hierarchy = 'requisition_datetime'
-
-    fields = [
-        'subject_visit',
-        'report_datetime',
-        "requisition_datetime",
-        "is_drawn",
-        "reason_not_drawn",
-        "drawn_datetime",
-        "panel_name",
-        "item_type",
-        "estimated_volume",
-        "comments",
-    ]
-
-    radio_fields = {
-        "is_drawn": admin.VERTICAL,
-        "reason_not_drawn": admin.VERTICAL,
-        "item_type": admin.VERTICAL,
-    }
-
-    list_display = [
-        'dashboard',
-        'requisition_identifier',
-        'specimen_identifier',
-        'subject',
-        "requisition_datetime",
-        "panel_name",
-        'hostname_created',
-    ]
-
-    list_filter = [
-        'panel_name',
-        "requisition_datetime",
-        'study_site',
-        'user_created',
-        'hostname_created',
-        'user_modified',
-    ]
-    search_fields = [
-        'specimen_identifier',
-        'requisition_identifier',
-        'panel_name'
-    ]
-
-    actions = ['print_requisition_barcode_labels']
-
-    def print_requisition_barcode_labels(self, request, queryset):
-        for requisition in queryset:
-            self.print_barcode_label('amp_requisition_label_template', context=requisition.label_context())
-    print_requisition_barcode_labels.short_description = "Print requisitions labels"
-
-    form = SubjectRequisitionForm
-    label_template_name = 'requisition_label'
-    visit_attr = 'subject_visit'
-
-    def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "subject_visit":
-            kwargs["queryset"] = SubjectVisit.objects.filter(
-                subject_identifier=request.GET.get('subject_identifier', 0))
-        return super(SubjectRequisitionAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)

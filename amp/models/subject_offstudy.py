@@ -1,23 +1,16 @@
 from django.db import models
 
-from edc_base.model.models import BaseUuidModel
-from edc_consent.model_mixins import RequiresConsentMixin
-from edc_offstudy.model_mixins import OffStudyModelMixin
-from edc_visit_tracking.model_mixins import CrfModelMixin
-
-from .screening_consent import ScreeningConsent
-from .subject_visit import SubjectVisit
+from edc_base.model.models import BaseUuidModel, HistoricalRecords
+from edc_offstudy.model_mixins import OffstudyModelMixin
 
 
-class SubjectOffStudy(OffStudyModelMixin, CrfModelMixin,
-                      RequiresConsentMixin, BaseUuidModel):
+class SubjectOffstudy(OffstudyModelMixin, BaseUuidModel):
 
-    """ A model completed by the user on the visit when the subject is taken off-study. """
+    objects = models.Manager()
 
-    consent_model = ScreeningConsent
-
-    maternal_visit = models.OneToOneField(SubjectVisit)
+    history = HistoricalRecords()
 
     class Meta:
         app_label = 'amp'
-        verbose_name = "Subject Off Study"
+        visit_schedule_name = 'subject_visit_schedule'
+        consent_model = 'amp.screeningconsent'

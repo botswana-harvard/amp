@@ -13,9 +13,7 @@ from edc_visit_tracking.constants import SCHEDULED
 
 from amp.apps import AmpAppConfig
 from amp.constants import SUBJECT
-from amp.models.appointment import Appointment
-from amp.models.screening_consent import ScreeningConsent
-from amp.models.subject_visit import SubjectVisit
+from amp.models import Appointment, ScreeningConsent, SubjectVisit
 
 
 class AppointmentSubjectVisitCRFViewMixin:

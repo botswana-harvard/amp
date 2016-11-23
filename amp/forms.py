@@ -9,13 +9,12 @@ from crispy_forms.layout import Layout
 
 from edc_consent.form_mixins import ConsentFormMixin
 from edc_constants.constants import ON_STUDY, FEMALE
-from edc_lab.requisition.forms import RequisitionFormMixin
 from edc_offstudy.forms import OffStudyFormMixin
 from edc_visit_tracking.form_mixins import VisitFormMixin
 
 
-from .choices import PANELS, VISIT_REASON, VISIT_INFO_SOURCE, GENDER_FEMALE, STUDY_SITES
-from .models import Appointment, SubjectOffStudy, SubjectRequisition, SubjectVisit, ScreeningConsent
+from .choices import VISIT_REASON, VISIT_INFO_SOURCE, GENDER_FEMALE, STUDY_SITES
+from .models import Appointment, SubjectOffstudy, SubjectVisit, ScreeningConsent
 
 
 class ScreeningConsentSearchForm(forms.Form):
@@ -66,20 +65,7 @@ class ScreeningConsentForm(ConsentFormMixin, forms.ModelForm):
 class SubjectOffStudyForm(OffStudyFormMixin, forms.ModelForm):
 
     class Meta:
-        model = SubjectOffStudy
-        fields = '__all__'
-
-
-class SubjectRequisitionForm(RequisitionFormMixin, forms.ModelForm):
-    panel_name = forms.ChoiceField(
-        choices=PANELS,
-        required=True,
-        widget=forms.RadioSelect(),
-        label="Panel"
-    )
-
-    class Meta:
-        model = SubjectRequisition
+        model = SubjectOffstudy
         fields = '__all__'
 
 
