@@ -6,6 +6,6 @@ from edc_visit_schedule.model_mixins import DisenrollmentModelMixin
 class Disenrollment(DisenrollmentModelMixin, RequiresConsentMixin, BaseUuidModel):
 
     class Meta(DisenrollmentModelMixin.Meta):
-        visit_schedule_name = 'subject_visit_schedule'
+        visit_schedule_name = 'subject_visit_schedule.amp-schedule'
         consent_model = 'amp.screeningconsent'
         app_label = 'amp'

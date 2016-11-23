@@ -12,6 +12,7 @@ from edc_consent.field_mixins import ReviewFieldsMixin, PersonalFieldsMixin, Cit
 from edc_consent.field_mixins.bw.identity_fields_mixin import IdentityFieldsMixin
 from edc_consent.managers import ConsentManager
 from edc_consent.model_mixins import ConsentModelMixin
+from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
 
 from .subject_identifier import SubjectIdentifier
 from .enrollment import Enrollment
@@ -21,7 +22,7 @@ class AlreadyAllocatedError(Exception):
     pass
 
 
-class ScreeningConsent(ConsentModelMixin, IdentityFieldsMixin, ReviewFieldsMixin,
+class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin, IdentityFieldsMixin, ReviewFieldsMixin,
                        PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin,
                        BaseUuidModel):
 
@@ -55,7 +56,6 @@ class ScreeningConsent(ConsentModelMixin, IdentityFieldsMixin, ReviewFieldsMixin
         except Enrollment.DoesNotExist:
             Enrollment.objects.create(
                 subject_identifier=self.subject_identifier,
-                schedule_name='amp-schedule',
                 is_eligible=False
             )
 

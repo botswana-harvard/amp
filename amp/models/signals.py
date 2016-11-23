@@ -13,5 +13,5 @@ def screeningconsent_on_post_save(sender, instance, raw, **kwargs):
         subject_identifier=instance.subject_identifier).update(allocated_datetime=timezone.now())
 
     if not raw:
-        if isinstance(instance, (ScreeningConsent, )):
-            instance.create_enrollment()
+        instance.registration_update_or_create()
+        instance.create_enrollment()

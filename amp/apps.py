@@ -41,7 +41,7 @@ class EdcConsentAppConfig(EdcConsentAppConfigParent):
             'amp.screeningconsent',
             version='1',
             start=datetime(2016, 5, 1, 0, 0, 0, tzinfo=pytz.timezone('UTC')),
-            end=datetime(2017, 10, 30, 0, 0, 0, tzinfo=pytz.timezone('UTC')),
+            end=datetime(2020, 10, 30, 0, 0, 0, tzinfo=pytz.timezone('UTC')),
             age_min=16,
             age_is_adult=18,
             age_max=64,
