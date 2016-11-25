@@ -10,30 +10,27 @@
 {% block appointments %}
 	<div class="panel-group">
 	<div class="panel panel-warning">
-      <div class="panel-heading"><h5>Appointments</h5></div>
+      	<div class="panel-heading clearfix">Clinic Visit Reports
+			{% for consent in consents %}
+				 {% if forloop.counter > 1%}
+				 		|
+				 {% endif %}
+					<span class="pull-right">
+						<a href="{{consent.1.get_absolute_url}}?next={% url 'subject_dashboard_url' consent.1.subject_identifier %}" role="button" class="btn btn-sm btn-default">{{consent.0}}</a>
+					</span>
+ 			{% endfor %}
+      </div>
      <div class="panel-body">                              
-	<script>
-	function queryParams() {
-	    return {
-	        type: 'owner',
-	        sort: 'updated',
-	        direction: 'desc',
-	        per_page: 100,
-	        page: 1
-	    };
-	}
-	</script>
 	{% if scheduled_entry_meta_data %} <I>(Hint: to see all appointments, click 'show appointments' in the Action column below)</I>{% endif%}
-	    <table data-toggle="table"
-	       data-pagination="true"
-	       data-search="true">
+	    <table class="table table-striped">
 	    <thead>
-	    <th data-field="code">Code</th>
-	    <th data-field="visit_type">Visit Type</th>
-	    <th data-field="appointment_date">Appt. Date</th>
-	    <th data-field="status">Status</th>
-	    <th data-field="visit_report">Visit Report</th>     
-	    <th data-field="action">Action</th>                                    
+	    <th>Code</th>
+	    <th>Visit Type</th>
+	    <th>Appt. Date</th>
+	    <th>Status</th>
+	    <th>Visit Report</th>     
+	    <th>Action</th> 
+	    <th>Print Label</th>                                    
 	    </thead>
 	    <tbody>
 	    {% if not appointments%}
@@ -52,8 +49,15 @@
 		        		<a href="{% url 'amp_admin:amp_subjectvisit_add' %}?subject_identifier={{ appointment.subject_identifier }}&next={% url 'subject_dashboard_url' appointment.subject_identifier %}">Add Visit</a>
 		        	{% endif %}
 		        </td>
+		        <td>
+		        	{% if appointment.visit_code_is_interger %}
+						<a href="{% url 'amp_admin:amp_appointment_add' %}?subject_identifier={{ appointment.subject_identifier }}&visit_schedule_name={{appointment.visit_schedule_name}}&schedule_name={{appointment.schedule_name}}&visit_code_sequence={{appointment.visit_code_sequence}}&visit_code={{appointment.visit_code}}&next={% url 'subject_dashboard_url' appointment.subject_identifier %}" role="button" class="btn btn-sm btn-default">Add Interim Appt</a>
+					{% else %}
+						-------
+					{% endif %}
+		        </td>
 			    <td>
-			    	<a href="{% url 'subject_dashboard_url' appointment.subject_identifier %}?subject_identifier={{appointment.subject_identifier}}&appointment_pk={{appointment.pk}}&print='yes'&next={% url 'subject_dashboard_url' appointment.subject_identifier %}"><button type="button" id="btn-print-label" class="btn btn-primary btn-sm pull-right"><span class="glyphicon glyphicon-print"></span></button></a>
+			    	<a href="{% url 'subject_dashboard_url' appointment.subject_identifier %}?subject_identifier={{appointment.subject_identifier}}&appointment_pk={{appointment.pk}}&print='yes'&next={% url 'subject_dashboard_url' appointment.subject_identifier %}" role="button" class="btn btn-sm btn-default">Print</a>
 			    </td>
 	            </tr>
 	        {% endfor %}
@@ -62,6 +66,44 @@
 	    </table>
 	    </div>
 	    </div>
+	    
+	     <div class="paginator" style="text-align:center">
+     		<span class="step-links">
+	     	{% if appointments %}
+	    	 <a href="{% url 'subject_dashboard_url' subject_identifier=subject_identifier page=1 %}" class="btn btn-sm btn-default"><<</a>
+	    	{% else %}
+	    	<a class="btn btn-sm disabled btn-default"><<</a>
+	    	{% endif %}
+	    	
+	        {% if appointments.has_previous %}
+	            <a href="{% url 'subject_dashboard_url' subject_identifier=subject_identifier page=appointments.previous_page_number %}" class="btn btn-sm btn-default"><</a>
+	        {% else %}
+	        	<a class="btn btn-sm disabled btn-default"><</a>
+	        {% endif %}
+	
+			{% if appointments %}
+	        	<span class="text small">
+	            	Page {{ appointments.number }} of {{ appointments.paginator.num_pages }}
+	        	</span>
+	        {% else %}
+	        	<span class="text small">
+	            	Page 1 of 1
+	        	</span>        
+	        {% endif %}
+	        
+	        {% if appointments.has_next %}
+	            <a href="{% url 'subject_dashboard_url' subject_identifier=subject_identifier page=appointments.next_page_number %}" class="btn btn-sm btn-default">></a>
+	        {% else %}
+	        	<a class="btn btn-sm disabled btn-default">></a>
+	        {% endif %}
+	        
+	        {% if appointments %}
+	        	<a href="{% url 'subject_dashboard_url' subject_identifier=subject_identifier page=appointments.paginator.num_pages %}" class="btn btn-sm btn-default">>></a>
+	        {% else %}
+	        	<a class="btn btn-sm disabled btn-default">>></a>
+	        {% endif %}       
+    	</span>
+    	</div>
 	    </div>	    
 {% endblock appointments %}
 

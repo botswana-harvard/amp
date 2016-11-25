@@ -2,6 +2,7 @@ from operator import itemgetter
 
 from django.conf import settings
 from django.contrib import admin
+from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -17,6 +18,8 @@ from amp.models import Appointment, ScreeningConsent, SubjectVisit
 
 
 class AppointmentSubjectVisitCRFViewMixin:
+
+    paginate_by = 10
 
     @property
     def appointments(self):
@@ -52,6 +55,11 @@ class AppointmentSubjectVisitCRFViewMixin:
                         report_datetime=timezone.now(),
                         reason=SCHEDULED,
                         study_status=SCHEDULED)
+        paginator = Paginator(appointments_list, self.paginate_by)
+        try:
+            appointments_list = paginator.page(self.kwargs.get('page', 1))
+        except EmptyPage:
+            appointments_list = paginator.page(paginator.num_pages)
         return appointments_list
 
     @property

@@ -24,8 +24,8 @@ class BaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsM
         return reverse(url_name, kwargs={'section_name': section_name})
 
 
-class MembershipBaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin,
-                               ModelAdminFormAutoNumberMixin, ModelAdminAuditFieldsMixin, admin.ModelAdmin):
+class AmpBaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin,
+                        ModelAdminFormAutoNumberMixin, ModelAdminAuditFieldsMixin, admin.ModelAdmin):
 
     list_per_page = 10
     date_hierarchy = 'modified'
@@ -41,7 +41,7 @@ class SubjectIdentifierAdmin(admin.ModelAdmin):
 
 
 @admin.register(Appointment, site=amp_admin)
-class AppointmentAdmin(MembershipBaseModelAdmin):
+class AppointmentAdmin(AmpBaseModelAdmin):
 
     fields = (
         'appt_datetime',
@@ -57,9 +57,37 @@ class AppointmentAdmin(MembershipBaseModelAdmin):
 
     form = AppointmentForm
 
+    def save_model(self, request, obj, form, change):
+        subject_identifier = request.GET.get('subject_identifier')
+        visit_code = request.GET.get('visit_code')
+        visit_schedule_name = request.GET.get('visit_schedule_name')
+        schedule_name = request.GET.get('schedule_name')
+        obj.subject_identifier = subject_identifier
+        obj.visit_code_sequence = self.new_visit_code_sequence(visit_code, subject_identifier)
+        obj.visit_code = self.new_visit_code(visit_code, subject_identifier)
+        obj.visit_schedule_name = visit_schedule_name
+        obj.schedule_name = schedule_name
+        super(AppointmentAdmin, self).save_model(request, obj, form, change)
+
+    def new_visit_code(self, visit_code, subject_identifier):
+        return round(float(self.previous_appt(visit_code, subject_identifier).visit_code) + 0.1, 1)
+
+    def new_visit_code_sequence(self, visit_code, subject_identifier):
+        return str(int(self.previous_appt(visit_code, subject_identifier).visit_code_sequence) + 1)
+
+    def previous_appt(self, visit_code, subject_identifier):
+        appts = []
+        for ap in Appointment.objects.filter(subject_identifier=subject_identifier):
+            parent_appt_visit_code = int(float(visit_code))
+            appt_visit_code = int(float(ap.visit_code))
+            if appt_visit_code < (parent_appt_visit_code + 1) and appt_visit_code >= parent_appt_visit_code:
+                appts.append(ap.pk)
+        appontment = Appointment.objects.filter(pk__in=appts).latest('created')
+        return appontment
+
 
 @admin.register(ScreeningConsent, site=amp_admin)
-class ScreeningConsentAdmin(MembershipBaseModelAdmin):
+class ScreeningConsentAdmin(AmpBaseModelAdmin):
     fields = (
         'first_name',
         'last_name',
@@ -122,12 +150,12 @@ class ScreeningConsentAdmin(MembershipBaseModelAdmin):
 
 
 @admin.register(SubjectOffstudy, site=amp_admin)
-class SubjectOffStudyAdmin(MembershipBaseModelAdmin):
+class SubjectOffStudyAdmin(AmpBaseModelAdmin):
 
     dashboard_type = 'maternal'
     form = SubjectOffStudyForm
 
 
 @admin.register(SubjectVisit, site=amp_admin)
-class SubjectVisitAdmin(VisitModelAdminMixin, MembershipBaseModelAdmin):
+class SubjectVisitAdmin(VisitModelAdminMixin, AmpBaseModelAdmin):
     form = SubjectVisitForm

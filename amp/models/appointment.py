@@ -22,3 +22,6 @@ class Appointment(AppointmentModelMixin, RequiresConsentMixin, BaseUuidModel):
             return SubjectVisit.objects.get(appointment=self)
         except SubjectVisit.DoesNotExist:
             return None
+
+    def visit_code_is_interger(self):
+        return float(self.visit_code).is_integer()

@@ -18,7 +18,7 @@
 <!-- Beginning of Demographic Div -->
   <div class="panel-group">
 	<div class="panel panel-info">
-      <div class="panel-heading">{{subject_identifier}}
+      <div class="panel-heading clearfix">{{subject_identifier}}
       <span class="pull-right">
          <a href="{% url 'home_url' subject_identifier=subject_identifier %}" role="button" class="btn btn-sm btn-primary">Close</a>
        </span>
@@ -37,37 +37,10 @@
 </div>
 
 <!-- End of Demographic Div -->
-
-<div class="panel-group">
-<div class="panel panel-warning">
-     <div class="panel-heading">
-     <h4 class="panel-title">
-          <a data-toggle="collapse" href="#collapse1">Membership forms</a>
-        </h4>
-     </div>
-   <div id="collapse1" class="panel-collapse collapse">
-    <div class="panel-body"> 
-	{% block membership_forms %}
-		<blockquote class="blockquote" style="margin:0px">
-  		<ul class="list-inline text-primary">
-  			<li class="list-inline-item small">
-  				 {% for consent in consents %}
-  				 	{% if forloop.counter > 1%}
-  				 		|
-  				 	{% endif %}
-  					<a href="{{consent.1.get_absolute_url}}?next={% url 'subject_dashboard_url' consent.1.subject_identifier %}">{{consent.0}}</a>
-	 			{% endfor %}
-  			</li>
-		</ul>
-	</blockquote>
-	{% endblock membership_forms %}
-</div>
-</div>
-</div>
-</div>
 	{% block appointments %}
     	{% include "amp_dashboard/appointments.html" %}
 	{% endblock appointments %}
 
-</div>
+
 {% endblock main %}
+</div>

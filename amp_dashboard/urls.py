@@ -18,6 +18,7 @@ from django.conf.urls import url
 from amp_dashboard.views import SubjectDashboardView
 
 urlpatterns = [
-    url(r'^subject_dashboard/(?P<subject_identifier>[0-9A-Z-]+)/', SubjectDashboardView.as_view(), name='subject_dashboard_url'),
-    url(r'^subject_dashboard/(?P<appointment_pk>[0-9a-z-]+)/(?P<subject_identifier>[0-9A-Z-]+)/', SubjectDashboardView.as_view(), name='subject_dashboard_url'),
+    url(r'^subject_dashboard/(?P<subject_identifier>[-\w]+)/(?P<page>\d+)/$', SubjectDashboardView.as_view(), name='subject_dashboard_url'),
+    url(r'^subject_dashboard/(?P<subject_identifier>[0-9A-Z-]+)/$', SubjectDashboardView.as_view(), name='subject_dashboard_url'),
+    url(r'^subject_dashboard/(?P<appointment_pk>[0-9a-z-]+)/(?P<subject_identifier>[0-9A-Z-]+)/$', SubjectDashboardView.as_view(), name='subject_dashboard_url'),
 ]
