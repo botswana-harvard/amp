@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib import admin
+from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
@@ -22,6 +23,11 @@ class HomeView(EdcBaseViewMixin, EdcLabelViewMixin, FormView):
 
     def __init__(self, **kwargs):
         self.screening_consents = ScreeningConsent.objects.all().order_by('-consent_datetime')[0:15]
+        paginator = Paginator(self.screening_consents, self.paginate_by)
+        try:
+            self.screening_consents = paginator.page(kwargs.get('page', 1))
+        except EmptyPage:
+            self.screening_consents = paginator.page(paginator.num_pages)
         super(HomeView, self).__init__(**kwargs)
 
     def get_success_url(self):

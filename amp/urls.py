@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^home/', HomeView.as_view(), name='home_url'),
     url(r'^amp_dashboard/', include('amp_dashboard.urls')),
+    url(r'^(?P<page>\d+)/$', HomeView.as_view(), name='home_url'),
     url(r'^(?P<subject_identifier>[-\w]+)/(?P<page>\d+)/$', HomeView.as_view(), name='home_url'),
     url(r'^(?P<subject_identifier>[-\w]+)/$', HomeView.as_view(), name='home_url'),
     url(r'^', HomeView.as_view(), name='home_url'),

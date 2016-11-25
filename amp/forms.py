@@ -61,6 +61,12 @@ class ScreeningConsentForm(ConsentFormMixin, forms.ModelForm):
         model = ScreeningConsent
         fields = '__all__'
 
+    def clean(self):
+        cleaned_data = super(ScreeningConsentForm, self).clean()
+        subject_identifier = cleaned_data.get('subject_identifier')
+        self.instance.confirm_identity_exist(subject_identifier)
+        return cleaned_data
+
 
 class SubjectOffStudyForm(OffStudyFormMixin, forms.ModelForm):
 

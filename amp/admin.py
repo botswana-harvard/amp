@@ -89,6 +89,7 @@ class AppointmentAdmin(AmpBaseModelAdmin):
 @admin.register(ScreeningConsent, site=amp_admin)
 class ScreeningConsentAdmin(AmpBaseModelAdmin):
     fields = (
+        'subject_identifier',
         'first_name',
         'last_name',
         'initials',

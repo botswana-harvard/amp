@@ -27,10 +27,49 @@
                 </tbody>
               </table>
             {% endif %}
+            
+            <div class="paginator" style="text-align:center">
+	     		<span class="step-links">
+			     	{% if screening_consents %}
+			    	 <a href="{% url 'home_url' page=1 %}" class="btn btn-sm btn-default"><<</a>
+			    	{% else %}
+			    	<a class="btn btn-sm disabled btn-default"><<</a>
+			    	{% endif %}
+			    	
+			        {% if screening_consents.has_previous %}
+			            <a href="{% url url 'home_url' page=screening_consents.previous_page_number %}" class="btn btn-sm btn-default"><</a>
+			        {% else %}
+			        	<a class="btn btn-sm disabled btn-default"><</a>
+			        {% endif %}
+			
+					{% if screening_consents %}
+			        	<span class="text small">
+			            	Page {{ screening_consents.number }} of {{ screening_consents.paginator.num_pages }}
+			        	</span>
+			        {% else %}
+			        	<span class="text small">
+			            	Page 1 of 1
+			        	</span>        
+			        {% endif %}
+			        
+			        {% if screening_consents.has_next %}
+			            <a href="{% url 'home_url' page=screening_consents.next_page_number %}" class="btn btn-sm btn-default">></a>
+			        {% else %}
+			        	<a class="btn btn-sm disabled btn-default">></a>
+			        {% endif %}
+			        
+			        {% if screening_consents %}
+			        	<a href="{% url 'home_url' page=screening_consents.paginator.num_pages %}" class="btn btn-sm btn-default">>></a>
+			        {% else %}
+			        	<a class="btn btn-sm disabled btn-default">>></a>
+			        {% endif %}       
+	    		</span>
+	    	</div>
+            
           </div>
         </div>
         </div>
-        </div>
+   </div>
           
       <div class="col-md-12">
         <div class="panel panel-warning">

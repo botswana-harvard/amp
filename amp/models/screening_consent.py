@@ -15,6 +15,7 @@ from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
 
 from .subject_identifier import SubjectIdentifier
 from .enrollment import Enrollment
+from django.core.exceptions import ValidationError
 
 
 class AlreadyAllocatedError(Exception):
@@ -58,9 +59,18 @@ class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin
                 is_eligible=False
             )
 
+    def confirm_identity_exist(self, subject_identifier):
+        subject_identifiers_list = []
+        subject_identifiers = SubjectIdentifier.objects.all()
+        for identifier_instance in subject_identifiers:
+            subject_identifiers_list.append(identifier_instance.subject_identifier)
+        if subject_identifier not in subject_identifiers_list:
+            raise ValidationError("The Subject Identifier entered does not exist in the list of identifiers provided. Got {}".format(subject_identifier))
+
     def save(self, *args, **kwargs):
         if not self.id:
-            self.subject_identifier = self.identifier  # SubjectIdentifier(site_code='99').get_identifier()
+            if not self.subject_identifier:
+                self.subject_identifier = self.identifier
         super(ScreeningConsent, self).save(*args, **kwargs)
 
     class Meta:
