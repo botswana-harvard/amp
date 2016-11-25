@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.core.urlresolvers import reverse
 
-
-from edc_base.modeladmin.mixins import (ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin,
+from edc_base.modeladmin_mixins import (ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin,
                                         ModelAdminFormAutoNumberMixin, ModelAdminAuditFieldsMixin)
 from edc_visit_tracking.modeladmin_mixins import VisitModelAdminMixin
 
