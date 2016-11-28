@@ -18,6 +18,7 @@ from edc_registration.apps import AppConfig as EdcRegistrationAppConfigParent
 from edc_timepoint.apps import AppConfig as EdcTimepointAppConfig
 from edc_timepoint.timepoint import Timepoint
 from edc_visit_tracking.apps import AppConfig as EdcVisitTrackingAppConfigParent
+from django.utils import timezone
 
 
 class AmpAppConfig(AppConfig):
@@ -83,6 +84,7 @@ class EdcProtocolAppConfig(EdcProtocolAppConfigParent):
     protocol_title = 'AMP Study'
     protocol_number = 'HVTN 081'
     verbose_name = 'AMP Study'
+    study_open_datetime = datetime(2016, 7, 20, 0, 0, 0, tzinfo=pytz.timezone('UTC')),
     enrollment_caps = {'amp.enrollment': ('subject', 500)}  # {label_lower: (key, count)}
 
 
