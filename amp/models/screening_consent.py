@@ -59,7 +59,7 @@ class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin
                 is_eligible=False
             )
 
-    def confirm_identity_exist(self, subject_identifier):
+    def valid_subject_identity(self, subject_identifier):
         subject_identifiers_list = []
         subject_identifiers = SubjectIdentifier.objects.all()
         for identifier_instance in subject_identifiers:
@@ -69,7 +69,9 @@ class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin
 
     def save(self, *args, **kwargs):
         if not self.id:
-            if not self.subject_identifier:
+            if self.subject_identifier:
+                self.confirm_identity_exist(self.subject_identifier)
+            else:
                 self.subject_identifier = self.identifier
         super(ScreeningConsent, self).save(*args, **kwargs)
 

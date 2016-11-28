@@ -13,7 +13,7 @@ from .registered_subject import RegisteredSubject
 class SubjectVisit(VisitModelMixin, CreatesMetadataModelMixin, RequiresConsentMixin,
                    PreviousVisitModelMixin, BaseUuidModel):
 
-    appointment = models.OneToOneField(Appointment)
+    appointment = models.OneToOneField(Appointment, on_delete=models.PROTECT)
 
     @property
     def metadata_query_options(self):

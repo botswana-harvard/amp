@@ -9,12 +9,11 @@ from crispy_forms.layout import Layout
 
 from edc_consent.form_mixins import ConsentFormMixin
 from edc_constants.constants import ON_STUDY, FEMALE
-from edc_offstudy.forms import OffStudyFormMixin
 from edc_visit_tracking.form_mixins import VisitFormMixin
 
 
 from .choices import VISIT_REASON, VISIT_INFO_SOURCE, GENDER_FEMALE, STUDY_SITES
-from .models import Appointment, SubjectOffstudy, SubjectVisit, ScreeningConsent
+from .models import Appointment, SubjectVisit, ScreeningConsent
 
 
 class ScreeningConsentSearchForm(forms.Form):
@@ -59,19 +58,6 @@ class ScreeningConsentForm(ConsentFormMixin, forms.ModelForm):
 
     class Meta:
         model = ScreeningConsent
-        fields = '__all__'
-
-    def clean(self):
-        cleaned_data = super(ScreeningConsentForm, self).clean()
-        subject_identifier = cleaned_data.get('subject_identifier')
-        self.instance.confirm_identity_exist(subject_identifier)
-        return cleaned_data
-
-
-class SubjectOffStudyForm(OffStudyFormMixin, forms.ModelForm):
-
-    class Meta:
-        model = SubjectOffstudy
         fields = '__all__'
 
 

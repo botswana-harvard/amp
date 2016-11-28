@@ -6,8 +6,8 @@ from edc_base.modeladmin_mixins import (ModelAdminNextUrlRedirectMixin, ModelAdm
 from edc_visit_tracking.modeladmin_mixins import VisitModelAdminMixin
 
 from .admin_site import amp_admin
-from .forms import ScreeningConsentForm, SubjectOffStudyForm, SubjectVisitForm, AppointmentForm
-from .models import SubjectIdentifier, ScreeningConsent, SubjectVisit, SubjectOffstudy, Appointment
+from .forms import ScreeningConsentForm, SubjectVisitForm, AppointmentForm
+from .models import SubjectIdentifier, ScreeningConsent, SubjectVisit, Appointment
 
 
 class BaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin, ModelAdminFormAutoNumberMixin,
@@ -147,13 +147,6 @@ class ScreeningConsentAdmin(AmpBaseModelAdmin):
 
     dashboard_type = 'subject'
     form = ScreeningConsentForm
-
-
-@admin.register(SubjectOffstudy, site=amp_admin)
-class SubjectOffStudyAdmin(AmpBaseModelAdmin):
-
-    dashboard_type = 'maternal'
-    form = SubjectOffStudyForm
 
 
 @admin.register(SubjectVisit, site=amp_admin)
