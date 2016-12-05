@@ -65,12 +65,21 @@ class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin
         for identifier_instance in subject_identifiers:
             subject_identifiers_list.append(identifier_instance.subject_identifier)
         if subject_identifier not in subject_identifiers_list:
-            raise ValidationError("The Subject Identifier entered does not exist in the list of identifiers provided. Got {}".format(subject_identifier))
+            raise ValidationError('The Subject Identifier entered does not exist in the list of identifiers provided. Got {}'.format(subject_identifier))
+
+    def used_idetifier(self, subject_identifier):
+        if not self.id:
+            try:
+                self.__class__.objects.get(subject_identifier=subject_identifier)
+                raise ValidationError("The Subject Identifier entered is already used. Got {}".format(subject_identifier))
+            except self.__class__.DoesNotExist:
+                pass
 
     def save(self, *args, **kwargs):
         if not self.id:
             if self.subject_identifier:
                 self.confirm_identity_exist(self.subject_identifier)
+                self.used_idetifier(self.subject_identifier)
             else:
                 self.subject_identifier = self.identifier
         super(ScreeningConsent, self).save(*args, **kwargs)

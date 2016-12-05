@@ -8,6 +8,7 @@ from edc_constants.constants import FEMALE
 
 from .models import ScreeningConsent, SubjectIdentifier, Appointment, Enrollment, RegisteredSubject
 from .forms import ScreeningConsentForm
+from django.core.exceptions import ValidationError
 
 
 class TestScreeningConsentIdentifierAllocation(TestCase):
@@ -92,30 +93,23 @@ class TestEnrollmentCreation(TestCase):
 class TestConsentScreeningForm(TestCase):
 
     def setUp(self):
-
-        self.data = {
-            'initials': 'LB',
-            'dob': timezone.datetime(1990, 12, 16).date(),
-            'identity': '111121345',
-            'identity_type': 'omang',
-            'is_literate': 'Yes',
-            'confirm_identity': '111121345',
-            'first_name': 'LAME',
-            'gender': FEMALE,
-            'consent_datetime': timezone.now(),
-            'last_name': 'BAME',
-            'subject_identifier': '1223423-23'}
-        self.subject_identifier = '1223423-23'
+        pass
 
         for identifier in ['123143-34', '123143-32', '123143-31', '123143-33']:
             SubjectIdentifier.objects.create(
                 subject_identifier=identifier
             )
 
-    def test_wrong_subject_identifier(self):
-        """Test to verify that validation for initial visit date works"""
-        form = ScreeningConsentForm(data=self.data)
-        errors = ''.join(form.errors.get('__all__'))
-        self.assertIn(
-            'The Subject Identifier entered does not exist in the list of identifiers provided. Got {}'.format(
-                self.subject_identifier), errors)
+    def test_subject_identifier_does_not_exist(self):
+        with self.assertRaisesMessage(
+                ValidationError,
+                'The Subject Identifier entered does not exist in the list of identifiers provided. Got 43-34'):
+            mommy.make(
+                ScreeningConsent, identity='317928919', confirm_identity='317928919', subject_identifier='43-34')
+
+    def test_reusing_identifier(self):
+        mommy.make(
+            ScreeningConsent, identity='317928919', confirm_identity='317928919', subject_identifier='123143-34')
+        with self.assertRaisesMessage(ValidationError, 'The Subject Identifier entered is already used. Got 123143-34'):
+            mommy.make(
+                ScreeningConsent, identity='317928919', confirm_identity='317928919', subject_identifier='123143-34')
