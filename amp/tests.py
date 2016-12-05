@@ -103,7 +103,7 @@ class TestConsentScreeningForm(TestCase):
     def test_subject_identifier_does_not_exist(self):
         with self.assertRaisesMessage(
                 ValidationError,
-                'The Subject Identifier entered does not exist in the list of identifiers provided. Got 43-34'):
+                "Invalid subject identifier. Got \'43-34\'"):
             mommy.make(
                 ScreeningConsent, identity='317928919', confirm_identity='317928919', subject_identifier='43-34')
 
