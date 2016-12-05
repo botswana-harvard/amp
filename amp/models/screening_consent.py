@@ -26,17 +26,11 @@ class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin
                        PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin,
                        BaseUuidModel):
 
-    interviewed = models.BooleanField(default=False, editable=False)
-
-    idi = models.BooleanField(default=False, editable=False)
-
-    fgd = models.BooleanField(default=False, editable=False)
-
     history = HistoricalRecords()
 
-    consent = ConsentManager()
-
     objects = models.Manager()
+
+    consent = ConsentManager()
 
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name, self.identity, self.subject_identifier)
@@ -47,7 +41,7 @@ class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin
     @property
     def identifier(self):
         subject_identifier = SubjectIdentifier.objects.filter(
-            allocated_datetime=None).order_by('created').first()
+            allocated_datetime__isnull=True).order_by('created').first()
         return subject_identifier.subject_identifier
 
     def create_enrollment(self):
