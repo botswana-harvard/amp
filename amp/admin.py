@@ -61,11 +61,12 @@ class AppointmentAdmin(AmpBaseModelAdmin):
         visit_code = request.GET.get('visit_code')
         visit_schedule_name = request.GET.get('visit_schedule_name')
         schedule_name = request.GET.get('schedule_name')
-        obj.subject_identifier = subject_identifier
-        obj.visit_code_sequence = self.new_visit_code_sequence(visit_code, subject_identifier)
-        obj.visit_code = self.new_visit_code(visit_code, subject_identifier)
-        obj.visit_schedule_name = visit_schedule_name
-        obj.schedule_name = schedule_name
+        if schedule_name and visit_schedule_name and visit_code and subject_identifier:
+            obj.subject_identifier = subject_identifier
+            obj.visit_code_sequence = self.new_visit_code_sequence(visit_code, subject_identifier)
+            obj.visit_code = self.new_visit_code(visit_code, subject_identifier)
+            obj.visit_schedule_name = visit_schedule_name
+            obj.schedule_name = schedule_name
         super(AppointmentAdmin, self).save_model(request, obj, form, change)
 
     def new_visit_code(self, visit_code, subject_identifier):

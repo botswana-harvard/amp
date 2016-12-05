@@ -82,7 +82,6 @@ class SubjectDashboardView(
         self.screening_consent = None
         self.markey_next_row = 15
         self.consent_model = None
-        self.context = {}
         self.template_name = 'amp_dashboard/subject_dashboard.html'
         super(EdcLabelViewMixin, self).__init__()
 

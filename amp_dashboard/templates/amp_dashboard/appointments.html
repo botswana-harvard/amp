@@ -16,7 +16,7 @@
 				 		|
 				 {% endif %}
 					<span class="pull-right">
-						<a href="{{consent.1.get_absolute_url}}?next={% url 'subject_dashboard_url' consent.1.subject_identifier %}" role="button" class="btn btn-sm btn-default">{{consent.0}}</a>
+						<a href="{% url 'amp_admin:amp_screeningconsent_change' consent.1.pk %}?next={% url 'subject_dashboard_url' consent.1.subject_identifier %}" role="button" class="btn btn-sm btn-default">{{consent.0}}</a>
 					</span>
  			{% endfor %}
       </div>

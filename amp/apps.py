@@ -2,7 +2,7 @@ import pytz
 
 import os
 
-from datetime import datetime, tzinfo
+from datetime import datetime
 
 from django.apps import AppConfig
 from django.conf import settings
@@ -18,7 +18,6 @@ from edc_registration.apps import AppConfig as EdcRegistrationAppConfigParent
 from edc_timepoint.apps import AppConfig as EdcTimepointAppConfig
 from edc_timepoint.timepoint import Timepoint
 from edc_visit_tracking.apps import AppConfig as EdcVisitTrackingAppConfigParent
-from django.utils import timezone
 
 
 class AmpAppConfig(AppConfig):
