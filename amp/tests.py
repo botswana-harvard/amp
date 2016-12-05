@@ -103,13 +103,13 @@ class TestConsentScreeningForm(TestCase):
     def test_subject_identifier_does_not_exist(self):
         with self.assertRaisesMessage(
                 ValidationError,
-                "Invalid subject identifier. Got \'43-34\'"):
+                'Invalid subject identifier or identifier already in use. Got 43-34'):
             mommy.make(
                 ScreeningConsent, identity='317928919', confirm_identity='317928919', subject_identifier='43-34')
 
     def test_reusing_identifier(self):
         mommy.make(
             ScreeningConsent, identity='317928919', confirm_identity='317928919', subject_identifier='123143-34')
-        with self.assertRaisesMessage(ValidationError, 'The Subject Identifier entered is already used. Got 123143-34'):
+        with self.assertRaisesMessage(ValidationError, 'Invalid subject identifier or identifier already in use. Got 123143-34'):
             mommy.make(
                 ScreeningConsent, identity='317928919', confirm_identity='317928919', subject_identifier='123143-34')

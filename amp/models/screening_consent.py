@@ -53,28 +53,21 @@ class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin
                 is_eligible=False
             )
 
-    def confirm_identity_exist(self, subject_identifier):
-        try:
-            SubjectIdentifier.objects.get(subject_identifier=subject_identifier)
-        except SubjectIdentifier.DoesNotExist:
-            raise ValidationError(
-                'Invalid subject identifier. Got \'{}\''.format(subject_identifier))
-
-    def used_idetifier(self, subject_identifier):
-        if not self.id:
-            try:
-                self.__class__.objects.get(subject_identifier=subject_identifier)
-                raise ValidationError("The Subject Identifier entered is already used. Got {}".format(subject_identifier))
-            except self.__class__.DoesNotExist:
-                pass
-
     def save(self, *args, **kwargs):
         if not self.id:
             if self.subject_identifier:
-                self.confirm_identity_exist(self.subject_identifier)
-                self.used_idetifier(self.subject_identifier)
+                try:
+                    SubjectIdentifier.objects.get(subject_identifier=self.subject_identifier)
+                    SubjectIdentifier.objects.get(
+                        subject_identifier=self.subject_identifier,
+                        allocated_datetime__isnull=True)
+                except SubjectIdentifier.DoesNotExist:
+                    raise ValidationError(
+                        'Invalid subject identifier or identifier already in use. Got {}'.format(
+                            self.subject_identifier))
             else:
-                self.subject_identifier = self.identifier
+                self.subject_identifier = SubjectIdentifier.objects.filter(
+                    allocated_datetime__isnull=True).order_by('created').first()
         super(ScreeningConsent, self).save(*args, **kwargs)
 
     class Meta:
