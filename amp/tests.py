@@ -54,7 +54,7 @@ class TestScreeningConsentIdentifierAllocation(TestCase):
                 allocated_datetime__isnull=False)
         except SubjectIdentifier.DoesNotExist:
             self.fail('SubjectIdentifier.DoesNotExist unexpectedly raised')
-        self.aseertRaises(
+        self.assertRaises(
             ValidationError,
             mommy.make,
             ScreeningConsent, identity='111121119', confirm_identity='111121119', subject_identifier='1001243-1')
