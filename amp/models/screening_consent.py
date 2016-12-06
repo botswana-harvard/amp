@@ -26,32 +26,14 @@ class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin
                        PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin,
                        BaseUuidModel):
 
-    history = HistoricalRecords()
-
     objects = models.Manager()
+
+    history = HistoricalRecords()
 
     consent = ConsentManager()
 
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name, self.identity, self.subject_identifier)
-
-    def natural_key(self):
-        return (self.subject_identifier, )
-
-    @property
-    def identifier(self):
-        subject_identifier = SubjectIdentifier.objects.filter(
-            allocated_datetime__isnull=True).order_by('created').first()
-        return subject_identifier.subject_identifier
-
-    def create_enrollment(self):
-        try:
-            Enrollment.objects.get(subject_identifier=self.subject_identifier)
-        except Enrollment.DoesNotExist:
-            Enrollment.objects.create(
-                subject_identifier=self.subject_identifier,
-                is_eligible=False
-            )
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -67,15 +49,22 @@ class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin
                         'Invalid subject identifier or identifier already in use. Got {}'.format(
                             self.subject_identifier))
             else:
+                # you should tell SubjectIdentifier you took an subject identifier now.
                 self.subject_identifier = SubjectIdentifier.objects.filter(
                     allocated_datetime__isnull=True).order_by('created').first()
         super(ScreeningConsent, self).save(*args, **kwargs)
 
-    class Meta:
-        app_label = 'amp'
-        get_latest_by = 'consent_datetime'
-        unique_together = (('first_name', 'dob', 'initials', 'version'), )
-        ordering = ('created', )
+    def natural_key(self):
+        return (self.subject_identifier, )
+
+    def create_enrollment(self):
+        try:
+            Enrollment.objects.get(subject_identifier=self.subject_identifier)
+        except Enrollment.DoesNotExist:
+            Enrollment.objects.create(
+                subject_identifier=self.subject_identifier,
+                is_eligible=False
+            )
 
     def age(self):
         return "Age : %d" % ((timezone.now().date() - self.dob).days / 365)
@@ -90,3 +79,11 @@ class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin
         ret = """<a href="{url}" >dashboard</a>""".format(url=url)
         return ret
     dashboard.allow_tags = True
+
+    class Meta:
+        app_label = 'amp'
+        get_latest_by = 'consent_datetime'
+        unique_together = (
+            ('first_name', 'dob', 'initials', 'version'),
+            ('subject_identifier', ))
+        ordering = ('created', )
