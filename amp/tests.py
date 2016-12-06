@@ -9,6 +9,7 @@ from edc_constants.constants import FEMALE
 from .models import ScreeningConsent, SubjectIdentifier, Appointment, Enrollment, RegisteredSubject
 from .forms import ScreeningConsentForm
 from django.core.exceptions import ValidationError
+from edc_registration.exceptions import RegisteredSubjectError
 
 
 class TestScreeningConsentIdentifierAllocation(TestCase):
@@ -29,6 +30,34 @@ class TestScreeningConsentIdentifierAllocation(TestCase):
         self.assertEqual(RegisteredSubject.objects.filter(subject_identifier='1001243-1').count(), 1)
 
         self.assertEqual(ScreeningConsent.objects.filter(subject_identifier='1001243-1').count(), 1)
+
+    def test_allocate_identifier2(self):
+        """Asserts screening consent updates SubjectIdentifier list."""
+        screening_consent = mommy.make(ScreeningConsent, identity='111121118', confirm_identity='111121118')
+        self.assertEqual(SubjectIdentifier.objects.filter(
+            subject_identifier=screening_consent.subject_identifier,
+            allocated_datetime__isnull=False).count(), 1)
+
+    def test_allocate_identifier3(self):
+        """Asserts duplicate identity raises Exception."""
+        mommy.make(ScreeningConsent, identity='111121118', confirm_identity='111121118')
+        self.assertRaises(
+            RegisteredSubjectError,
+            mommy.make(ScreeningConsent, identity='111121118', confirm_identity='111121118')
+        )
+
+    def test_allocate_identifier4(self):
+        """Asserts attempt to add duplicate subject_identifier raises Exception."""
+        screening_consent = mommy.make(
+            ScreeningConsent, identity='111121118', confirm_identity='111121118', subject_identifier='1001243-1')
+        try:
+            SubjectIdentifier.objects.get(
+                subject_identifier=screening_consent.subject_identifier,
+                allocated_datetime__isnull=False)
+        except SubjectIdentifier.DoesNotExist:
+            self.fail('SubjectIdentifier.DoesNotExist unexpectedly raised')
+        screening_consent = mommy.make(
+            ScreeningConsent, identity='111121119', confirm_identity='111121119', subject_identifier='1001243-1')
 
     def test_allocate_identifier_on_resave(self):
 

@@ -40,16 +40,15 @@ class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin
             if self.subject_identifier:
                 try:
                     SubjectIdentifier.objects.get(subject_identifier=self.subject_identifier)
+                    SubjectIdentifier.objects.get(
+                        subject_identifier=self.subject_identifier,
+                        allocated_datetime__isnull=True)
                 except SubjectIdentifier.DoesNotExist:
                     raise ValidationError(
                         'Invalid subject identifier or identifier already in use. Got {}'.format(
                             self.subject_identifier))
-                if self.__class__.objects.filter(subject_identifier=self.subject_identifier).exists():
-                    raise ValidationError(
-                        'Invalid subject identifier or identifier already in use. Got {}'.format(
-                            self.subject_identifier))
             else:
-                # you should tell SubjectIdentifier you took an subject identifier now.
+                # SubjectIdentifier updated in the post_save
                 self.subject_identifier = SubjectIdentifier.objects.filter(
                     allocated_datetime__isnull=True).order_by('created').first()
         super(ScreeningConsent, self).save(*args, **kwargs)
