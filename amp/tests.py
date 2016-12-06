@@ -1,15 +1,14 @@
-from django.utils import timezone
-
-from django.test.testcases import TestCase
-
 from model_mommy import mommy
 
+from django.utils import timezone
+from django.test.testcases import TestCase
+from django.core.exceptions import ValidationError
+
 from edc_constants.constants import FEMALE
+from edc_registration.exceptions import RegisteredSubjectError
 
 from .models import ScreeningConsent, SubjectIdentifier, Appointment, Enrollment, RegisteredSubject
 from .forms import ScreeningConsentForm
-from django.core.exceptions import ValidationError
-from edc_registration.exceptions import RegisteredSubjectError
 
 
 class TestScreeningConsentIdentifierAllocation(TestCase):
@@ -43,8 +42,7 @@ class TestScreeningConsentIdentifierAllocation(TestCase):
         mommy.make(ScreeningConsent, identity='111121118', confirm_identity='111121118')
         self.assertRaises(
             RegisteredSubjectError,
-            mommy.make(ScreeningConsent, identity='111121118', confirm_identity='111121118')
-        )
+            mommy.make, ScreeningConsent, identity='111121118', confirm_identity='111121118')
 
     def test_allocate_identifier4(self):
         """Asserts attempt to add duplicate subject_identifier raises Exception."""
@@ -56,7 +54,9 @@ class TestScreeningConsentIdentifierAllocation(TestCase):
                 allocated_datetime__isnull=False)
         except SubjectIdentifier.DoesNotExist:
             self.fail('SubjectIdentifier.DoesNotExist unexpectedly raised')
-        screening_consent = mommy.make(
+        self.aseertRaises(
+            ValidationError,
+            mommy.make,
             ScreeningConsent, identity='111121119', confirm_identity='111121119', subject_identifier='1001243-1')
 
     def test_allocate_identifier_on_resave(self):
