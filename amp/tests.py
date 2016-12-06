@@ -70,7 +70,7 @@ class TestScreeningConsentIdentifierAllocation(TestCase):
 
         self.assertEqual(SubjectIdentifier.objects.filter(allocated_datetime=None).count(), 5)
 
-    def test_allocate_identifier2(self):
+    def test_allocate_identifier5(self):
 
         mommy.make(ScreeningConsent, identity='111121115', confirm_identity='111121115')
 
