@@ -4,11 +4,9 @@ from django.utils import timezone
 from django.test.testcases import TestCase
 from django.core.exceptions import ValidationError
 
-from edc_constants.constants import FEMALE
 from edc_registration.exceptions import RegisteredSubjectError
 
 from .models import ScreeningConsent, SubjectIdentifier, Appointment, Enrollment, RegisteredSubject
-from .forms import ScreeningConsentForm
 
 
 class TestScreeningConsentIdentifierAllocation(TestCase):
