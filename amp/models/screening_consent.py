@@ -66,7 +66,7 @@ class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin
             )
 
     def age(self):
-        return "Age : %d" % ((timezone.now().date() - self.dob).days / 365)
+        return (timezone.now().date() - self.dob).days / 365
 
     def dashboard(self):
         """Returns a hyperink for the Admin page."""
