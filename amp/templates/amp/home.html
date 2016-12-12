@@ -15,15 +15,16 @@
             <span class="pull-right">{% crispy form %}</span>
             {% if screening_consents %}
               <table class="table table-condensed table-striped table-responsive">
-              	<thead><th></th><th> Subject Identifier </th><th> Initials </th> <th> Age </th> <th> Consent date </th> <th></th></thead>
+              	<thead><th></th><th> Subject Identifier </th><th> Initials </th> <th> Age </th> <th> Gender </th> <th> Consent date </th> <th></th></thead>
                 <tbody>
                   {% for screening_consent in screening_consents %}
                   <tr>
                     <td><a href="{% url dashboard_url_name subject_identifier=screening_consent.subject_identifier %}" role="button" class="btn btn-sm btn-default">Go</a></td>
                     <td>{{ screening_consent.subject_identifier }} </td>
                     <td>{{ screening_consent.initials }} </td>
-                    <td>{{ screening_consent.age }} {{ screening_consent.get_gender_display }}</td>
-                    <td>Screening Consent {{ screening_consent.report_datetime|date:"Y-m-d" }}</td>
+                    <td>{{ screening_consent.age }}</td>
+                    <td>{{ screening_consent.get_gender_display }}</td>
+                    <td>{{ screening_consent.report_datetime|date:"Y-m-d" }}</td>
                   </tr>
                   {% endfor %}
                 </tbody>
