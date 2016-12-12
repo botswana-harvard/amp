@@ -6,6 +6,7 @@ from django.utils import timezone
 from simple_history.models import HistoricalRecords
 
 from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_base.utils import formatted_age
 
 from edc_consent.field_mixins import ReviewFieldsMixin, PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin
 from edc_consent.field_mixins.bw.identity_fields_mixin import IdentityFieldsMixin
@@ -66,7 +67,7 @@ class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin
             )
 
     def age(self):
-        return (timezone.now().date() - self.dob).days / 365
+        return formatted_age(self.dob, timezone.now().date())
 
     def dashboard(self):
         """Returns a hyperink for the Admin page."""
