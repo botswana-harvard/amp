@@ -67,7 +67,7 @@ class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin
             )
 
     def age(self):
-        return formatted_age(self.dob, timezone.now().date())
+        return formatted_age(self.dob)
 
     def dashboard(self):
         """Returns a hyperink for the Admin page."""
