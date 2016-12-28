@@ -12,6 +12,7 @@ from edc_consent.field_mixins import ReviewFieldsMixin, PersonalFieldsMixin, Cit
 from edc_consent.field_mixins.bw.identity_fields_mixin import IdentityFieldsMixin
 from edc_consent.managers import ConsentManager
 from edc_consent.model_mixins import ConsentModelMixin
+from edc_identifier.model_mixins import SubjectIdentifierModelMixin
 from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
 
 from .subject_identifier import SubjectIdentifier
@@ -23,9 +24,9 @@ class AlreadyAllocatedError(Exception):
     pass
 
 
-class ScreeningConsent(ConsentModelMixin, UpdatesOrCreatesRegistrationModelMixin, IdentityFieldsMixin, ReviewFieldsMixin,
-                       PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin,
-                       BaseUuidModel):
+class ScreeningConsent(ConsentModelMixin, SubjectIdentifierModelMixin, UpdatesOrCreatesRegistrationModelMixin,
+                       IdentityFieldsMixin, ReviewFieldsMixin, PersonalFieldsMixin, CitizenFieldsMixin,
+                       VulnerabilityFieldsMixin, BaseUuidModel):
 
     objects = models.Manager()
 

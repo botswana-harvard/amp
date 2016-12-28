@@ -9,8 +9,6 @@ from django.conf import settings
 
 from edc_appointment.apps import AppConfig as EdcAppointmentAppConfigParent
 from edc_base.apps import AppConfig as EdcBaseAppConfigParent
-from edc_consent.apps import AppConfig as EdcConsentAppConfigParent
-from edc_consent.consent_config import ConsentConfig
 from edc_identifier.apps import AppConfig as EdcIdentifierAppConfigParent
 from edc_label.apps import AppConfig as EdcLabelAppConfigParent
 from edc_protocol.apps import AppConfig as EdcProtocolAppConfigParent
@@ -33,21 +31,6 @@ class AmpAppConfig(AppConfig):
 class EdcBaseAppConfig(EdcBaseAppConfigParent):
     institution = 'Botswana Harvard AIDS Institute Partnership'
     project_name = 'AMP STUDY'
-
-
-class EdcConsentAppConfig(EdcConsentAppConfigParent):
-    consent_configs = [
-        ConsentConfig(
-            'amp.screeningconsent',
-            version='1',
-            start=datetime(2016, 5, 1, 0, 0, 0, tzinfo=pytz.timezone('UTC')),
-            end=datetime(2020, 10, 30, 0, 0, 0, tzinfo=pytz.timezone('UTC')),
-            age_min=16,
-            age_is_adult=18,
-            age_max=64,
-            gender=['M', 'F']
-        )
-    ]
 
 
 class EdcIdentifierAppConfig(EdcIdentifierAppConfigParent):

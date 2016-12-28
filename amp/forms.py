@@ -7,7 +7,7 @@ from crispy_forms.bootstrap import FieldWithButtons, StrictButton
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout
 
-from edc_consent.form_mixins import ConsentFormMixin
+from edc_consent.modelform_mixins import ConsentModelFormMixin
 from edc_constants.constants import ON_STUDY, FEMALE
 from edc_visit_tracking.form_mixins import VisitFormMixin
 
@@ -41,7 +41,7 @@ class AppointmentForm(forms.ModelForm):
         fields = '__all__'
 
 
-class ScreeningConsentForm(ConsentFormMixin, forms.ModelForm):
+class ScreeningConsentForm(ConsentModelFormMixin, forms.ModelForm):
 
     study_site = forms.ChoiceField(
         label='Study site',
