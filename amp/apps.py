@@ -20,7 +20,7 @@ from edc_visit_tracking.apps import AppConfig as EdcVisitTrackingAppConfigParent
 
 class AmpAppConfig(AppConfig):
     name = 'amp'
-    protocol_number = 'HVTN 081'
+    protocol_number = 'HPTN 081'
     datafax_site_number = 283
     datafax_site_name = 'Botswana, Gabarone'
     institution = 'Botswana Harvard AIDS Institute Partnership'
@@ -64,7 +64,7 @@ class EdcProtocolAppConfig(EdcProtocolAppConfigParent):
     protocol = 'AMP'
     protocol_name = 'AMP Study'
     protocol_title = 'AMP Study'
-    protocol_number = 'HVTN 081'
+    protocol_number = 'HPTN 081'
     verbose_name = 'AMP Study'
     study_open_datetime = datetime(2016, 7, 20, 0, 0, 0, tzinfo=pytz.timezone('UTC')),
     enrollment_caps = {'amp.enrollment': ('subject', 500)}  # {label_lower: (key, count)}
