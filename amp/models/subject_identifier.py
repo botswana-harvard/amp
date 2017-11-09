@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_base.model_mixins.base_uuid_model import BaseUuidModel
 
 
 class AlreadyAllocatedError(Exception):

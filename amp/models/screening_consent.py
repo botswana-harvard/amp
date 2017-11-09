@@ -1,30 +1,27 @@
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.db import models
-
 from django.utils import timezone
-
-from simple_history.models import HistoricalRecords
-
-from edc_base.model.models.base_uuid_model import BaseUuidModel
+from edc_base.model_mixins.base_uuid_model import BaseUuidModel
 from edc_base.utils import formatted_age
+from edc_identifier.model_mixins import UniqueSubjectIdentifierModelMixin
+from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
+from simple_history.models import HistoricalRecords
 
 from edc_consent.field_mixins import ReviewFieldsMixin, PersonalFieldsMixin, CitizenFieldsMixin, VulnerabilityFieldsMixin
 from edc_consent.field_mixins.bw.identity_fields_mixin import IdentityFieldsMixin
 from edc_consent.managers import ConsentManager
 from edc_consent.model_mixins import ConsentModelMixin
-from edc_identifier.model_mixins import SubjectIdentifierModelMixin
-from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
 
-from .subject_identifier import SubjectIdentifier
 from .enrollment import Enrollment
-from django.core.exceptions import ValidationError
+from .subject_identifier import SubjectIdentifier
 
 
 class AlreadyAllocatedError(Exception):
     pass
 
 
-class ScreeningConsent(ConsentModelMixin, SubjectIdentifierModelMixin, UpdatesOrCreatesRegistrationModelMixin,
+class ScreeningConsent(ConsentModelMixin, UniqueSubjectIdentifierModelMixin, UpdatesOrCreatesRegistrationModelMixin,
                        IdentityFieldsMixin, ReviewFieldsMixin, PersonalFieldsMixin, CitizenFieldsMixin,
                        VulnerabilityFieldsMixin, BaseUuidModel):
 
@@ -44,7 +41,8 @@ class ScreeningConsent(ConsentModelMixin, SubjectIdentifierModelMixin, UpdatesOr
                     raise ValidationError(
                         'Identifier already in use. Got {}'.format(self.subject_identifier))
                 try:
-                    SubjectIdentifier.objects.get(subject_identifier=self.subject_identifier)
+                    SubjectIdentifier.objects.get(
+                        subject_identifier=self.subject_identifier)
                 except SubjectIdentifier.DoesNotExist:
                     raise ValidationError(
                         'Invalid subject identifier. Got {}'.format(
@@ -81,7 +79,7 @@ class ScreeningConsent(ConsentModelMixin, SubjectIdentifierModelMixin, UpdatesOr
         return ret
     dashboard.allow_tags = True
 
-    class Meta:
+    class Meta(ConsentModelMixin.Meta):
         app_label = 'amp'
         get_latest_by = 'consent_datetime'
         unique_together = (

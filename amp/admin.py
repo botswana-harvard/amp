@@ -1,13 +1,19 @@
 from django.contrib import admin
+from django.contrib import admin
 from django.core.urlresolvers import reverse
-
+from django.urls.base import reverse
+from django.urls.exceptions import NoReverseMatch
 from edc_base.modeladmin_mixins import (ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin,
                                         ModelAdminFormAutoNumberMixin, ModelAdminAuditFieldsMixin)
+from edc_base.modeladmin_mixins import audit_fieldset_tuple
+from edc_base.modeladmin_mixins.model_admin_audit_fields_mixin import audit_fields
+from edc_visit_schedule.admin import visit_schedule_fieldset_tuple,\
+    visit_schedule_fields
 from edc_visit_tracking.modeladmin_mixins import VisitModelAdminMixin
 
 from .admin_site import amp_admin
 from .forms import ScreeningConsentForm, SubjectVisitForm, AppointmentForm
-from .models import SubjectIdentifier, ScreeningConsent, SubjectVisit, Appointment
+from .models import SubjectIdentifier, ScreeningConsent, Appointment, SubjectVisit
 
 
 class BaseModelAdmin(ModelAdminNextUrlRedirectMixin, ModelAdminFormInstructionsMixin, ModelAdminFormAutoNumberMixin,
@@ -63,8 +69,10 @@ class AppointmentAdmin(AmpBaseModelAdmin):
         schedule_name = request.GET.get('schedule_name')
         if schedule_name and visit_schedule_name and visit_code and subject_identifier:
             obj.subject_identifier = subject_identifier
-            obj.visit_code_sequence = self.new_visit_code_sequence(visit_code, subject_identifier)
-            obj.visit_code = self.new_visit_code(visit_code, subject_identifier)
+            obj.visit_code_sequence = self.new_visit_code_sequence(
+                visit_code, subject_identifier)
+            obj.visit_code = self.new_visit_code(
+                visit_code, subject_identifier)
             obj.visit_schedule_name = visit_schedule_name
             obj.schedule_name = schedule_name
         super(AppointmentAdmin, self).save_model(request, obj, form, change)
@@ -113,7 +121,8 @@ class ScreeningConsentAdmin(AmpBaseModelAdmin):
         'consent_copy'
     )
 
-    search_fields = ('subject_identifier', 'id', 'identity', 'first_name', 'last_name')
+    search_fields = ('subject_identifier', 'id',
+                     'identity', 'first_name', 'last_name')
 
     radio_fields = {
         'assessment_score': admin.VERTICAL,
@@ -151,5 +160,54 @@ class ScreeningConsentAdmin(AmpBaseModelAdmin):
 
 
 @admin.register(SubjectVisit, site=amp_admin)
-class SubjectVisitAdmin(VisitModelAdminMixin, AmpBaseModelAdmin):
+class SubjectVisitAdmin(VisitModelAdminMixin, admin.ModelAdmin):
+
     form = SubjectVisitForm
+
+    dashboard_type = 'subject'
+
+    fieldsets = (
+        (None, {
+            'fields': [
+                'appointment',
+                'report_datetime',
+                'comments']}),
+        visit_schedule_fieldset_tuple,
+        audit_fieldset_tuple)
+
+    list_display = (
+        'appointment',
+        'report_datetime',
+        'reason',
+        "info_source",
+        'created',
+        'user_created',
+    )
+
+    list_filter = (
+        'report_datetime',
+        'reason',
+        'appointment__appt_status',
+        'appointment__visit_code',
+    )
+
+    search_fields = (
+        'appointment__subject_identifier',
+        'appointment__registered_subject__registration_identifier',
+        'appointment__registered_subject__first_name',
+        'appointment__registered_subject__identity',
+    )
+
+    def get_readonly_fields(self, request, obj=None):
+        return (super().get_readonly_fields(request, obj=obj) + audit_fields
+                + visit_schedule_fields)
+
+    def view_on_site(self, obj):
+        try:
+            return reverse(
+                'amp_dashboard:dashboard_url', kwargs=dict(
+                    subject_identifier=obj.subject_identifier,
+                    appointment=str(obj.appointment.id)))
+        except NoReverseMatch as e:
+            print(e)
+            return super().view_on_site(obj)

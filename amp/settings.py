@@ -11,10 +11,13 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-from unipath import Path
+from pathlib import PurePath
+
+# from unipath import Path
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -43,14 +46,14 @@ INSTALLED_APPS = [
     'django_crypto_fields.apps.AppConfig',
     'django_revision.apps.AppConfig',
     'crispy_forms',
+    'tz_detect',
     'simple_history',
-    'edc_base.apps.AppConfig',
     'edc_device.apps.AppConfig',
     'edc_offstudy.apps.AppConfig',
-    'edc_protocol.apps.AppConfig',
+    #     'edc_protocol.apps.AppConfig',
     'edc_visit_schedule.apps.AppConfig',
     'edc_consent.apps.AppConfig',
-    'amp.apps.AmpAppConfig',
+    'amp.apps.EdcProtocolAppConfig',
     'amp.apps.EdcAppointmentAppConfig',
     'amp.apps.EdcBaseAppConfig',
     'amp.apps.EdcIdentifierAppConfig',
@@ -59,6 +62,7 @@ INSTALLED_APPS = [
     'amp.apps.EdcVisitTrackingAppConfig',
     'amp.apps.EdcLabelAppConfig',
     'amp_dashboard.apps.AmpDashboardConfig',
+    'amp.apps.AmpAppConfig',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -152,3 +156,4 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 ETC_DIR = os.path.join(BASE_DIR, 'etc')
 GIT_DIR = BASE_DIR
 KEY_PATH = os.path.join(BASE_DIR, 'crypto_fields')
+LABEL_PRINTER = 'dmc_testing'

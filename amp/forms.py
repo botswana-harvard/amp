@@ -1,21 +1,19 @@
-from django import forms
-from django.conf import settings
-from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
-from django.core.urlresolvers import reverse
-
 from crispy_forms.bootstrap import FieldWithButtons, StrictButton
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout
-
+from django import forms
+from django.conf import settings
+from django.core.urlresolvers import reverse
 from edc_consent.modelform_mixins import ConsentModelFormMixin
 from edc_constants.constants import ON_STUDY, FEMALE
-from edc_visit_tracking.form_mixins import VisitFormMixin
+from edc_visit_tracking.modelform_mixins import VisitTrackingModelFormMixin
 
 
 from .choices import VISIT_REASON, VISIT_INFO_SOURCE, GENDER_FEMALE, STUDY_SITES
 from .models import Appointment, SubjectVisit, ScreeningConsent
 
 
+# from django.contrib.admin.widgets import AdminRadioSelect, AdminRadioFieldRenderer
 class ScreeningConsentSearchForm(forms.Form):
 
     subject_identifier = forms.CharField(
@@ -47,8 +45,8 @@ class ScreeningConsentForm(ConsentModelFormMixin, forms.ModelForm):
         label='Study site',
         choices=STUDY_SITES,
         initial=settings.DEFAULT_STUDY_SITE,
-        help_text="",
-        widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
+        help_text="")
+#         widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
 
     gender = forms.ChoiceField(
         label="Gender",
@@ -61,27 +59,27 @@ class ScreeningConsentForm(ConsentModelFormMixin, forms.ModelForm):
         fields = '__all__'
 
 
-class SubjectVisitForm(VisitFormMixin, forms.ModelForm):
+class SubjectVisitForm(VisitTrackingModelFormMixin, forms.ModelForm):
 
     study_status = forms.ChoiceField(
         label='What is the mother\'s current study status',
         choices=VISIT_REASON,
         initial=ON_STUDY,
-        help_text="",
-        widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer)
+        help_text=""
+        #         widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer)
     )
 
     reason = forms.ChoiceField(
         label='Reason for visit',
         choices=[choice for choice in VISIT_REASON],
-        help_text="",
-        widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
+        help_text="")
+#         widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
 
     info_source = forms.ChoiceField(
         label='Source of information',
         required=False,
-        choices=[choice for choice in VISIT_INFO_SOURCE],
-        widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
+        choices=[choice for choice in VISIT_INFO_SOURCE])
+#         widget=AdminRadioSelect(renderer=AdminRadioFieldRenderer))
 
     dashboard_type = 'maternal'
 

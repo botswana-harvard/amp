@@ -14,8 +14,8 @@ from lis.labeling.classes import LabelPrinterTuple, ZplTemplateTuple, ClientTupl
 from lis.specimen.lab_aliquot_list.classes import AliquotTypeTuple
 from lis.specimen.lab_panel.classes import PanelTuple
 
-study_start_datetime = datetime(2016, 07, 22, 8, 00, 00)
-study_end_datetime = datetime(2016, 9, 30, 23, 49, 40)
+study_start_datetime = datetime(2016, 10, 18, 0, 0, 0)
+study_end_datetime = datetime(2019, 4, 30, 23, 59, 59)
 
 
 class AppConfiguration(BaseAppConfiguration):
@@ -48,7 +48,7 @@ class AppConfiguration(BaseAppConfiguration):
         'machine_type': 'SERVER',
         'hostname_prefix': 's007',
         'device_id': '0'}
-    
+
     # NO CONSENT
     v1_consent_catalogue_setup = {
         'name': 'amp',
@@ -116,7 +116,8 @@ class AppConfiguration(BaseAppConfiguration):
                 PanelTuple('Serum', 'STORAGE', 'WB'),
                 PanelTuple('Host Genetics', 'STORAGE', 'WB'),
                 PanelTuple('PBMC', 'STORAGE', 'WB'),
-                PanelTuple('Chlamydia trachomatis/neisseria gonorrhoeae pcr', 'TEST', 'WB'),
+                PanelTuple(
+                    'Chlamydia trachomatis/neisseria gonorrhoeae pcr', 'TEST', 'WB'),
                 PanelTuple('Screening Hiv Test', 'TEST', 'WB'),
                 PanelTuple('Syphillis', 'TEST', 'WB'),
             ],
@@ -138,7 +139,8 @@ class AppConfiguration(BaseAppConfiguration):
         'label_printer': [
             LabelPrinterTuple('ZebraF', 'eit020', '10.113.201.??', True), ],
         'client': [
-            ClientTuple(hostname='ampprinter', aliases=None, ip=None, printer_name='ZebraG', cups_hostname='eitprinter',),
+            ClientTuple(hostname='ampprinter', aliases=None, ip=None,
+                        printer_name='ZebraG', cups_hostname='eitprinter',),
         ],
         'zpl_template': [
             aliquot_label or ZplTemplateTuple(

@@ -29,7 +29,8 @@ class EdcLabelAdminMixin:
             if self.print_server:
                 for printer in self.print_server.printers.items():
                     printer = str(printer[0])
-                    printer_properties = {k.replace('-', '_'): v for k, v in self.print_server.printers[printer].items()}
+                    printer_properties = {
+                        k.replace('-', '_'): v for k, v in self.print_server.printers[printer].items()}
                     self._printers.update({printer: printer_properties})
         return self._printers
 
@@ -37,6 +38,7 @@ class EdcLabelAdminMixin:
         copies = 1 if copies is None else copies
         label_template = app_config.label_templates.get(label_name)
         context = label_template.test_context if context is None else context
-        label = Label(label_name, print_server=self.print_server, context=context)
+        label = Label(label_name, print_server=self.print_server,
+                      context=context)
         label.print_label(copies)
         return label

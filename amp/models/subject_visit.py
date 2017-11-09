@@ -1,10 +1,10 @@
 from django.db import models
-
-from edc_base.model.models import BaseUuidModel
-from edc_consent.model_mixins import RequiresConsentMixin
-from edc_metadata.model_mixins import CreatesMetadataModelMixin
+from edc_base.model_mixins.base_uuid_model import BaseUuidModel
 from edc_visit_tracking.model_mixins import VisitModelMixin, PreviousVisitModelMixin
+from edc_visit_tracking.modelform_mixins import VisitTrackingModelFormMixin
 
+from edc_consent.model_mixins import RequiresConsentMixin
+from edc_metadata.model_mixins.creates import CreatesMetadataModelMixin
 
 from .appointment import Appointment
 from .registered_subject import RegisteredSubject
@@ -25,7 +25,8 @@ class SubjectVisit(VisitModelMixin, CreatesMetadataModelMixin, RequiresConsentMi
     @property
     def registered_subject(self):
         try:
-            registered_subject = RegisteredSubject.objects.get(subject_identifier=self.subject_identifier)
+            registered_subject = RegisteredSubject.objects.get(
+                subject_identifier=self.subject_identifier)
         except RegisteredSubject.DoesNotExist:
             return RegisteredSubject.objects.none()
         return registered_subject

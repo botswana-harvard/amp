@@ -1,21 +1,20 @@
-import pytz
-
+from datetime import datetime
 import os
 
-from datetime import datetime
-
+from dateutil.tz.tz import gettz
 from django.apps import AppConfig
 from django.conf import settings
-
-from edc_appointment.apps import AppConfig as EdcAppointmentAppConfigParent
 from edc_base.apps import AppConfig as EdcBaseAppConfigParent
 from edc_identifier.apps import AppConfig as EdcIdentifierAppConfigParent
-from edc_label.apps import AppConfig as EdcLabelAppConfigParent
 from edc_protocol.apps import AppConfig as EdcProtocolAppConfigParent
 from edc_registration.apps import AppConfig as EdcRegistrationAppConfigParent
 from edc_timepoint.apps import AppConfig as EdcTimepointAppConfig
 from edc_timepoint.timepoint import Timepoint
 from edc_visit_tracking.apps import AppConfig as EdcVisitTrackingAppConfigParent
+import pytz
+
+from edc_appointment.apps import AppConfig as EdcAppointmentAppConfigParent
+from edc_label.apps import AppConfig as EdcLabelAppConfigParent
 
 
 class AmpAppConfig(AppConfig):
@@ -49,10 +48,11 @@ class EdcTimepointAppConfig(EdcTimepointAppConfig):
 
 
 class EdcLabelAppConfig(EdcLabelAppConfigParent):
-    default_cups_server_ip = '192.168.4.145'
     default_printer_label = 'amp'
-    default_template_folder = os.path.join(settings.BASE_DIR, 'templates', 'static', 'templates', 'label_templates')
-    extra_templates_folder = os.path.join(settings.BASE_DIR, 'templates', 'static', 'templates', 'label_templates')
+    default_template_folder = os.path.join(
+        settings.BASE_DIR, 'templates', 'static', 'templates', 'label_templates')
+    extra_templates_folder = os.path.join(
+        settings.BASE_DIR, 'templates', 'static', 'templates', 'label_templates')
 
 
 class EdcRegistrationAppConfig(EdcRegistrationAppConfigParent):
@@ -60,14 +60,15 @@ class EdcRegistrationAppConfig(EdcRegistrationAppConfigParent):
 
 
 class EdcProtocolAppConfig(EdcProtocolAppConfigParent):
-    name = 'amp'
     protocol = 'AMP'
     protocol_name = 'AMP Study'
     protocol_title = 'AMP Study'
     protocol_number = 'HPTN 081'
     verbose_name = 'AMP Study'
-    study_open_datetime = datetime(2016, 7, 20, 0, 0, 0, tzinfo=pytz.timezone('UTC')),
-    enrollment_caps = {'amp.enrollment': ('subject', 500)}  # {label_lower: (key, count)}
+    study_open_datetime = datetime(
+        2016, 10, 18, 0, 0, 0, tzinfo=gettz('UTC'))
+    study_close_datetime = datetime(
+        2019, 4, 30, 23, 59, 59, tzinfo=gettz('UTC'))
 
 
 class EdcAppointmentAppConfig(EdcAppointmentAppConfigParent):
