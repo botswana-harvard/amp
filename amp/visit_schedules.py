@@ -13,5 +13,4 @@ visit_schedule1 = VisitSchedule(
     previous_visit_schedule=None)
 
 visit_schedule1.add_schedule(schedule1)
-
 site_visit_schedules.register(visit_schedule1)
