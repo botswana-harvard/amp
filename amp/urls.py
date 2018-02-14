@@ -33,4 +33,5 @@ urlpatterns = [
     url(r'^(?P<subject_identifier>[-\w]+)/$', HomeView.as_view(), name='home_url'),
     url(r'^', HomeView.as_view(), name='home_url'),
     url(r'', include('edc_base.urls', 'edc-base')),
+    url(r'^tz_detect/', include('tz_detect.urls')),
 ]

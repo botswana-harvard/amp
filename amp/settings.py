@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django_revision.apps.AppConfig',
     'crispy_forms',
     'simple_history',
-    'edc_base.apps.AppConfig',
+    'tz_detect',
+    #'edc_base.apps.AppConfig',
     'edc_device.apps.AppConfig',
     'edc_offstudy.apps.AppConfig',
     'edc_protocol.apps.AppConfig',
@@ -96,12 +97,25 @@ WSGI_APPLICATION = 'amp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+#DATABASES = {
+ #   'default': {
+  #      'ENGINE': 'django.db.backends.sqlite3',
+   #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+   # }
+#}
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'amp',
+        'USER': 'root',
+        'PASSWORD': 'cc3721b',
+        'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
     }
 }
+
 
 
 # Password validation
@@ -134,7 +148,9 @@ DEFAULT_STUDY_SITE = '40'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Africa/Gaborone'
+#TIME_ZONE = 'Africa/Gaborone'
+
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
